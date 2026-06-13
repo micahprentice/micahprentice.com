@@ -518,7 +518,8 @@ section:nth-child(even) { background: var(--bg-alt); }
   border-radius: var(--radius-sm); padding: 22px;
   box-shadow: var(--shadow); transition: all 0.15s;
 }
-.book-card:hover { border-color: var(--primary-light); }
+.book-card { cursor: pointer; }
+.book-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 .book-header { display: flex; gap: 14px; margin-bottom: 14px; }
 .book-cover {
   width: 48px; height: 64px; border-radius: 6px;
@@ -531,6 +532,77 @@ section:nth-child(even) { background: var(--bg-alt); }
 .book-meta .rating { font-size: 13px; color: #F59E0B; }
 .book-summary { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
 .book-expand { font-size: 12px; font-weight: 600; color: var(--primary); background: none; border: none; cursor: pointer; margin-top: 10px; font-family: inherit; padding: 0; }
+
+/* ─── BOOK DETAIL OVERLAY ─── */
+.book-overlay {
+  position: fixed; inset: 0; z-index: 600;
+  background: var(--bg);
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+.book-overlay.open { transform: translateY(0); }
+.book-overlay-inner { max-width: 680px; margin: 0 auto; padding: 40px 5vw 100px; }
+.book-overlay-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 600; color: var(--muted);
+  background: none; border: none; cursor: pointer;
+  font-family: inherit; padding: 0; margin-bottom: 36px;
+  transition: color 0.15s;
+}
+.book-overlay-back:hover { color: var(--primary); }
+.book-overlay-back svg { width: 16px; height: 16px; }
+.book-overlay-cover {
+  width: 80px; height: 108px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; color: #fff; margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+.book-overlay-genre {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--primary);
+  background: var(--primary-xlight); border: 1px solid var(--primary-light);
+  border-radius: 99px; padding: 4px 12px;
+  display: inline-block; margin-bottom: 12px;
+}
+.book-overlay-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(26px, 4vw, 36px); font-weight: 800;
+  color: var(--text); letter-spacing: -0.5px; line-height: 1.15;
+  margin-bottom: 6px;
+}
+.book-overlay-author { font-size: 15px; color: var(--muted); margin-bottom: 14px; }
+.book-overlay-rating { font-size: 20px; color: #F59E0B; margin-bottom: 28px; }
+.book-overlay-divider { border: none; border-top: 1px solid var(--border-light); margin: 0 0 28px; }
+.book-overlay-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--muted2); margin-bottom: 10px;
+}
+.book-overlay-summary {
+  font-size: 17px; font-weight: 600; color: var(--text);
+  line-height: 1.55; margin-bottom: 28px;
+  padding-left: 16px; border-left: 3px solid var(--primary);
+}
+.book-overlay-review {
+  font-size: 16px; color: var(--muted); line-height: 1.8;
+}
+.book-overlay-nav {
+  display: flex; gap: 12px; margin-top: 48px; padding-top: 28px;
+  border-top: 1px solid var(--border-light);
+}
+.book-nav-btn {
+  flex: 1; padding: 12px; border-radius: 10px;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  border: 1.5px solid var(--border); background: #fff;
+  color: var(--text); font-family: inherit;
+  transition: all 0.15s; display: flex; align-items: center;
+  justify-content: center; gap: 6px;
+}
+.book-nav-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-xlight); }
+.book-nav-btn svg { width: 14px; height: 14px; }
+@media (max-width: 768px) {
+  .book-overlay-inner { padding: 28px 5vw 80px; }
+}
 
 /* ─── RESOURCES ─── */
 .resources-grid {
@@ -853,7 +925,6 @@ footer {
     <a href="#media" class="nav-link">Media</a>
     <a href="#resources" class="nav-link">Resources</a>
     <a href="#speedbiz" class="nav-link">Speeedbiz</a>
-    <a href="#chat" class="nav-link">AI Chat</a>
     <a href="#support" class="nav-link" style="color:#F59E0B;font-weight:600;">In Your Corner</a>
   </div>
   <a href="#booking" class="nav-cta">Book a Call</a>
@@ -961,12 +1032,12 @@ footer {
       <div class="venture-link">Visit Speeedbiz <i data-lucide="arrow-up-right"></i></div>
     </a>
 
-    <a href="#" class="venture-card" onclick="return false;">
-      <div class="venture-icon">📊</div>
-      <span class="venture-badge badge-building">Building</span>
-      <div class="venture-name">HQ Dashboard</div>
-      <div class="venture-desc">A personal headquarters for entrepreneurs to track goals, ventures, and ideas — all in one place.</div>
-      <div class="venture-link">In development <i data-lucide="arrow-up-right"></i></div>
+    <a href="https://instantplumbingky.com" target="_blank" rel="noopener" class="venture-card">
+      <div class="venture-icon">🔧</div>
+      <span class="venture-badge badge-active">Active</span>
+      <div class="venture-name">Instant Plumbing</div>
+      <div class="venture-desc">On-demand plumbing in Louisville, KY. 10 service calls a day, dispatched fast, fixed right. Built to run like a machine.</div>
+      <div class="venture-link">Visit Instant Plumbing <i data-lucide="arrow-up-right"></i></div>
     </a>
 
     <a href="#" class="venture-card" onclick="return false;">
@@ -1030,58 +1101,36 @@ footer {
   </div>
 
   <div class="media-panel" id="panel-books">
-    <div class="books-grid">
+    <div style="margin-bottom:36px;">
+      <div style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:var(--text);letter-spacing:-0.3px;margin-bottom:8px;">Books that shaped how I think</div>
+      <div style="font-size:15px;color:var(--muted);">A running shelf of reads — what they're about, and the one idea I keep coming back to.</div>
+    </div>
+    <div class="books-grid" id="books-grid"></div>
+    <div id="books-count" style="margin-top:28px;font-size:13px;color:var(--muted2);"></div>
+  </div>
 
-      <div class="book-card">
-        <div class="book-header">
-          <div class="book-cover">📖</div>
-          <div class="book-meta">
-            <div class="title">The Lean Startup</div>
-            <div class="author">Eric Ries</div>
-            <div class="rating">★★★★★</div>
-          </div>
-        </div>
-        <div class="book-summary">The single most useful framework for building something people actually want. Build → Measure → Learn isn't just a loop, it's a discipline. Every time you think you know what the customer wants, you probably don't.</div>
-      </div>
-
-      <div class="book-card">
-        <div class="book-header">
-          <div class="book-cover" style="background: linear-gradient(135deg, #7C3AED, #A855F7);">📖</div>
-          <div class="book-meta">
-            <div class="title">$100M Offers</div>
-            <div class="author">Alex Hormozi</div>
-            <div class="rating">★★★★★</div>
-          </div>
-        </div>
-        <div class="book-summary">If your offer isn't so good people feel stupid saying no, it's not good enough. Hormozi breaks down exactly how to construct value propositions that sell themselves. Required reading before you price anything.</div>
-      </div>
-
-      <div class="book-card">
-        <div class="book-header">
-          <div class="book-cover" style="background: linear-gradient(135deg, #059669, #10B981);">📖</div>
-          <div class="book-meta">
-            <div class="title">Zero to One</div>
-            <div class="author">Peter Thiel</div>
-            <div class="rating">★★★★☆</div>
-          </div>
-        </div>
-        <div class="book-summary">The most contrarian business book out there. Thiel argues that competition is for losers and that the only real businesses are monopolies. Disagree with half of it, learn from all of it.</div>
-      </div>
-
-      <div class="book-card">
-        <div class="book-header">
-          <div class="book-cover" style="background: linear-gradient(135deg, #DC2626, #F87171);">📖</div>
-          <div class="book-meta">
-            <div class="title">The E-Myth Revisited</div>
-            <div class="author">Michael Gerber</div>
-            <div class="rating">★★★★☆</div>
-          </div>
-        </div>
-        <div class="book-summary">Most small businesses fail because the owner is a technician who suddenly has to be a manager and entrepreneur. The fix is building systems so the business runs without you. This one hit different the second time I read it.</div>
-      </div>
-
+<!-- BOOK DETAIL OVERLAY -->
+<div class="book-overlay" id="book-overlay" aria-hidden="true">
+  <div class="book-overlay-inner">
+    <button class="book-overlay-back" onclick="closeBook()">
+      <i data-lucide="arrow-left"></i> Back to Library
+    </button>
+    <div class="book-overlay-cover" id="ov-cover"></div>
+    <div class="book-overlay-genre" id="ov-genre"></div>
+    <div class="book-overlay-title" id="ov-title"></div>
+    <div class="book-overlay-author" id="ov-author"></div>
+    <div class="book-overlay-rating" id="ov-rating"></div>
+    <hr class="book-overlay-divider" />
+    <div class="book-overlay-label">The One Idea</div>
+    <div class="book-overlay-summary" id="ov-summary"></div>
+    <div class="book-overlay-label">What It's About</div>
+    <div class="book-overlay-review" id="ov-review"></div>
+    <div class="book-overlay-nav">
+      <button class="book-nav-btn" id="btn-prev" onclick="navBook(-1)"><i data-lucide="chevron-left"></i> Previous</button>
+      <button class="book-nav-btn" id="btn-next" onclick="navBook(1)">Next <i data-lucide="chevron-right"></i></button>
     </div>
   </div>
+</div>
 </section>
 
 <!-- RESOURCES -->
@@ -1145,7 +1194,7 @@ footer {
   <div class="speedbiz-inner">
     <div class="speedbiz-text">
       <div class="section-label">Featured Venture</div>
-      <div class="section-title">Search or start a business at the speed of thought.</div>
+      <div class="section-title">Search or start a business at the sp<span style="color:#7DD3FC;">eee</span>d of thought.</div>
       <div class="section-sub">Speeedbiz is built for people who move fast. Research any industry, validate any idea, and find your path to first dollar — faster than you thought possible.</div>
       <a href="https://speeedbiz.com" target="_blank" rel="noopener" class="speedbiz-btn">
         <span>⚡</span> Visit Speeedbiz.com
@@ -1160,44 +1209,13 @@ footer {
   </div>
 </section>
 
-<!-- AI CHAT (full section) -->
-<section id="chat" style="background: var(--bg-alt);">
-  <div class="fade-up" style="max-width:700px;margin:0 auto;text-align:center;">
-    <div class="section-label">AI Assistant</div>
-    <div class="section-title">What's on your mind?</div>
-    <div class="section-sub" style="margin:0 auto 40px;">Have a business question? Not sure where to start? Just tell me what you're trying to do — I'll point you somewhere useful or loop Micah in directly.</div>
-  </div>
-  <div style="max-width:660px;margin:0 auto;" class="fade-up">
-    <div class="chat-widget">
-      <div class="chat-widget-header">
-        <div class="chat-widget-avatar">🤝</div>
-        <div class="chat-widget-info">
-          <div class="name">Micah's AI</div>
-          <div class="status"><span class="status-dot"></span> Always on</div>
-        </div>
-      </div>
-      <div class="chat-messages" id="chat-messages-2" style="height:380px;">
-        <div class="msg ai">
-          <div class="msg-avatar">M</div>
-          <div class="msg-bubble">Hey there! I'm Micah's AI. What are you trying to do? Tell me anything — a business idea, a goal, a problem you're stuck on. I'm here to help point you in the right direction. 🚀</div>
-        </div>
-      </div>
-      <div class="chat-input-row">
-        <input type="text" id="chat-input-2" placeholder="What are you trying to do?" autocomplete="off" />
-        <button class="chat-send-btn" onclick="sendChatMessage2()">
-          <i data-lucide="send"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- SUPPORT / HARD TIME -->
 <section id="support">
   <div class="support-inner">
 
     <!-- LEFT: Micah's message -->
-    <div class="fade-up">
+    <div class="support-left fade-up">
       <div class="section-label">In Your Corner</div>
       <div class="section-title">Having a<br/>hard time?</div>
       <div class="section-sub">I've been in dark places. Financially tight, mentally drained, feeling like there's no clear way out. I know what it's like to need someone in your corner — not to judge, just to help you move.</div>
@@ -1339,7 +1357,7 @@ footer {
         <div class="success-icon"><i data-lucide="check"></i></div>
         <h3>Micah's got you.</h3>
         <p>Your info was sent directly to Micah. He'll review your situation before the call so you don't have to explain everything twice.<br/><br/>Now book your time slot — pick whatever works for you.</p>
-        <a href="https://calendly.com/YOUR_SUPPORT_CALENDLY_URL" target="_blank" rel="noopener" class="book-now-btn">
+        <a href="https://calendly.com/hq-micahprentice/30min" target="_blank" rel="noopener" class="book-now-btn">
           <i data-lucide="calendar"></i> Book Your Free Call
         </a>
         <p style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:4px;">No fee · No judgment · Just movement</p>
@@ -1378,24 +1396,9 @@ footer {
       </div>
     </div>
 
-    <!-- BOOKING CARD -->
-    <div class="booking-card fade-up">
-      <div class="booking-card-header">
-        <div class="bk-title">Strategy Call with Micah</div>
-        <div class="bk-sub">30 minutes · Free</div>
-      </div>
-      <div class="booking-card-body">
-        <div class="booking-detail"><i data-lucide="clock"></i> 30 minutes</div>
-        <div class="booking-detail"><i data-lucide="video"></i> Google Meet or Zoom</div>
-        <div class="booking-detail"><i data-lucide="globe"></i> Available worldwide</div>
-        <div class="booking-detail"><i data-lucide="calendar"></i> Usually within a week</div>
-        <div style="margin-top:8px;">
-          <!-- Swap YOUR_CALENDLY_URL with your actual Calendly link -->
-          <a href="https://calendly.com/YOUR_CALENDLY_URL" target="_blank" rel="noopener" class="btn-primary" style="width:100%;justify-content:center;border-radius:12px;margin-top:4px;">
-            <i data-lucide="calendar"></i> Book Your Free Call
-          </a>
-        </div>
-      </div>
+    <!-- BOOKING CARD — Calendly inline widget -->
+    <div class="booking-card fade-up" style="overflow:hidden;padding:0;">
+      <div class="calendly-inline-widget" data-url="https://calendly.com/hq-micahprentice/30min" style="min-width:280px;height:700px;"></div>
     </div>
 
   </div>
@@ -1435,7 +1438,7 @@ const CONFIG = {
   AI_ENDPOINT: '',
 
   // Your Calendly URL (also update the link in the booking section above)
-  CALENDLY_URL: 'https://calendly.com/YOUR_CALENDLY_URL',
+  CALENDLY_URL: 'https://calendly.com/hq-micahprentice/30min',
 
   // Where lead notification emails go
   LEAD_EMAIL: 'hq@micahprentice.com',
@@ -1857,11 +1860,184 @@ ${snapshot.goal}
 }
 
 // ═══════════════════════════════════════════
+// BOOK LIBRARY
+// ═══════════════════════════════════════════
+
+// ── ADD BOOKS HERE ──
+// To add a new book, copy one block and paste above the closing line.
+// rating: number 1–5 | coverColor: any CSS gradient string
+const BOOKS = [
+  {
+    id: 1,
+    title: "Never Split the Difference",
+    author: "Chris Voss",
+    rating: 5,
+    genre: "Negotiation",
+    coverColor: "linear-gradient(135deg, #1E293B, #334155)",
+    summary: '"How am I supposed to do that?" is the most powerful negotiation question you can ask.',
+    review: "A former FBI hostage negotiator argues that emotion, not logic, drives every deal. Tactical empathy — genuinely understanding the other side's perspective — gets you further than any rational argument. Calibrated questions and mirroring create space for the other person to reveal what they actually want."
+  },
+  {
+    id: 2,
+    title: "How to Invest",
+    author: "David Rubenstein",
+    rating: 5,
+    genre: "Investing",
+    coverColor: "linear-gradient(135deg, #B45309, #F59E0B)",
+    summary: "Risk management matters more than picking winners.",
+    review: "Through conversations with the world's top investors, Rubenstein distills what separates great allocators from the rest: patience, discipline, deep research, and a willingness to be contrarian when everyone else is panicking. The best investors aren't smarter — they're more honest about what they don't know."
+  },
+  {
+    id: 3,
+    title: "Clockwork",
+    author: "Mike Michalowicz",
+    rating: 5,
+    genre: "Productivity",
+    coverColor: "linear-gradient(135deg, #EA580C, #F97316)",
+    summary: "If your business can't run without you, you don't own a business — you own a job.",
+    review: "Most business owners build a job for themselves, not a company. Clockwork shows how to design your business so it runs without you — by identifying your \"Queen Bee Role,\" delegating systematically, and protecting the four key activities that drive the whole operation. The goal: a four-week vacation that the business survives."
+  },
+  {
+    id: 4,
+    title: "The 4-Hour Work Week",
+    author: "Tim Ferriss",
+    rating: 5,
+    genre: "Lifestyle Design",
+    coverColor: "linear-gradient(135deg, #0891B2, #06B6D4)",
+    summary: "Doing less is not laziness. Focus on the 20% of work that drives 80% of the results.",
+    review: "Ferriss dismantles the idea that you have to defer life until retirement. Using the DEAL framework — Define, Eliminate, Automate, Liberate — he shows how to outsource low-value tasks, create income that doesn't require your constant presence, and design a life of \"mini-retirements\" now rather than later."
+  },
+  {
+    id: 5,
+    title: "Atomic Habits",
+    author: "James Clear",
+    rating: 5,
+    genre: "Habits",
+    coverColor: "linear-gradient(135deg, #16A34A, #22C55E)",
+    summary: "You don't rise to the level of your goals. You fall to the level of your systems.",
+    review: "Small changes compound into remarkable results — but only if the system is right. Clear explains how habits are built (cue → craving → response → reward) and how to redesign your environment so good behaviors are obvious, attractive, easy, and satisfying. Identity, not outcomes, is the real lever: become the person, and the results follow."
+  },
+  {
+    id: 6,
+    title: "How to Win Friends and Influence People",
+    author: "Dale Carnegie",
+    rating: 5,
+    genre: "Influence",
+    coverColor: "linear-gradient(135deg, #9A3412, #EA580C)",
+    summary: "You can make more friends in two months by being interested in others than in two years trying to get people interested in you.",
+    review: "Published in 1936 and still devastatingly relevant. Carnegie's insight: people are not creatures of logic but of emotion. Genuine interest in others, remembering names, letting people feel heard, and avoiding criticism outperforms any clever argument. The principles sound obvious until you catch yourself doing the opposite."
+  },
+  {
+    id: 7,
+    title: "Buy Then Build",
+    author: "Walker Deibel",
+    rating: 5,
+    genre: "Wealth Building",
+    coverColor: "linear-gradient(135deg, #1D4ED8, #3B82F6)",
+    summary: "Starting up is optional. Entrepreneurship through acquisition skips years of proof-of-concept pain.",
+    review: "Starting a business from scratch is the hardest way to become an entrepreneur. Deibel makes the case for acquisition entrepreneurship — buying an existing, profitable business and growing it — as a faster, lower-risk path to ownership. He walks through how to find, evaluate, finance, and close a deal even without prior M&A experience."
+  },
+  {
+    id: 8,
+    title: "The E-Myth Revisited",
+    author: "Michael Gerber",
+    rating: 5,
+    genre: "Entrepreneurship",
+    coverColor: "linear-gradient(135deg, #DC2626, #F87171)",
+    summary: "Work on your business, not just in it.",
+    review: "The \"entrepreneurial myth\" is that most businesses are started by entrepreneurs — they're not. They're started by technicians who had a good idea and suddenly found themselves running a company they hate. Gerber's fix: think like a franchisor. Document every process, systematize everything, and build a business that works without depending on your personal expertise."
+  }
+  // ── PASTE NEW BOOKS ABOVE THIS LINE ──
+];
+
+let currentBookId = null;
+
+function starsHTML(n) {
+  return '★'.repeat(n) + '☆'.repeat(5 - n);
+}
+
+function renderBooks() {
+  const grid = document.getElementById('books-grid');
+  if (!grid) return;
+  const countEl = document.getElementById('books-count');
+  if (countEl) {
+    const mo = new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
+    countEl.textContent = `${BOOKS.length} books · last updated ${mo}`;
+  }
+  grid.innerHTML = BOOKS.map(b => `
+    <div class="book-card" onclick="openBook(${b.id})" role="button" tabindex="0" aria-label="Open ${b.title}">
+      <div class="book-header">
+        <div class="book-cover" style="background:${b.coverColor};">📖</div>
+        <div class="book-meta">
+          <div class="title">${b.title}</div>
+          <div class="author">${b.author}</div>
+          <div class="rating" style="color:#F59E0B;">${starsHTML(b.rating)}</div>
+        </div>
+      </div>
+      <div class="book-summary">${b.summary}</div>
+      <div class="book-expand">Read my review →</div>
+    </div>
+  `).join('');
+}
+
+function openBook(id) {
+  const book = BOOKS.find(b => b.id === id);
+  if (!book) return;
+  currentBookId = id;
+
+  document.getElementById('ov-cover').style.background = book.coverColor;
+  document.getElementById('ov-cover').textContent = '📖';
+  document.getElementById('ov-genre').textContent = book.genre;
+  document.getElementById('ov-title').textContent = book.title;
+  document.getElementById('ov-author').textContent = 'by ' + book.author;
+  document.getElementById('ov-rating').textContent = starsHTML(book.rating);
+  document.getElementById('ov-summary').textContent = book.summary;
+  document.getElementById('ov-review').textContent = book.review;
+
+  const idx = BOOKS.findIndex(b => b.id === id);
+  document.getElementById('btn-prev').disabled = idx === 0;
+  document.getElementById('btn-prev').style.opacity = idx === 0 ? '0.35' : '1';
+  document.getElementById('btn-next').disabled = idx === BOOKS.length - 1;
+  document.getElementById('btn-next').style.opacity = idx === BOOKS.length - 1 ? '0.35' : '1';
+
+  const overlay = document.getElementById('book-overlay');
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden', 'false');
+  overlay.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+  lucide.createIcons();
+}
+
+function closeBook() {
+  const overlay = document.getElementById('book-overlay');
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  currentBookId = null;
+}
+
+function navBook(dir) {
+  const idx = BOOKS.findIndex(b => b.id === currentBookId);
+  const next = BOOKS[idx + dir];
+  if (next) {
+    document.getElementById('book-overlay').scrollTop = 0;
+    openBook(next.id);
+  }
+}
+
+// Close overlay on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('book-overlay').classList.contains('open')) closeBook();
+});
+
+// ═══════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons();
+  renderBooks();
 });
 </script>
+<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>

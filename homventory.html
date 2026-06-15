@@ -3,221 +3,432 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Homventory — what conveys with the home</title>
+<title>Homventory — What Conveys With the Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#1a1d1a; --paper:#f6f4ee; --line:#d9d4c7; --soft:#8a8576;
-    --brand:#356470;            /* petrol — wordmark + primary, non-semantic */
-    --keep:#2f7d4f; --keep-bg:#e3f1e7; --keep-ln:#bcdcc6;
-    --excl:#b4452f; --excl-bg:#f6e3dd; --excl-ln:#e7c4ba;
-    --neg:#b8862b;  --neg-bg:#f7eed8;  --neg-ln:#e6d2a3;
-    --shadow:0 2px 14px rgba(26,29,26,.10);
-    --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
-    --serif:"Iowan Old Style",Georgia,"Times New Roman",serif;
+  :root {
+    --bg:       #F4F6F8;
+    --surface:  #FFFFFF;
+    --border:   #E2E7EE;
+    --border2:  #C8D0DC;
+    --brand:    #006AFF;
+    --brand-dk: #0052CC;
+    --brand-xl: #EBF3FF;
+    --ink:      #1A1A2E;
+    --ink2:     #3D4459;
+    --muted:    #6B7280;
+    --muted2:   #9CA3AF;
+    --keep:  #00875A; --keep-bg: #E3F5EE; --keep-ln: #A3D9C5;
+    --excl:  #D93025; --excl-bg: #FDECEA; --excl-ln: #F5B8B4;
+    --neg:   #D97706; --neg-bg:  #FEF3E2; --neg-ln:  #F8D8A0;
+    --r: 12px; --r-sm: 8px; --r-xs: 6px;
+    --shadow-xs: 0 1px 3px rgba(0,0,0,.06);
+    --shadow:    0 2px 12px rgba(0,0,0,.08);
+    --shadow-md: 0 4px 24px rgba(0,0,0,.10);
+    --shadow-lg: 0 12px 48px rgba(0,0,0,.14);
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
   }
-  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:1.5}
-  body{padding-bottom:120px}
-  button{font-family:inherit;cursor:pointer}
-  .wrap{max-width:920px;margin:0 auto;padding:0 16px}
-  .hidden{display:none!important}
+  *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: var(--font); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  body { padding-bottom: 140px; }
+  button { font-family: inherit; cursor: pointer; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+  .hidden { display: none !important; }
 
-  /* ---- top brand bar ---- */
-  .top{position:sticky;top:0;z-index:30;background:rgba(246,244,238,.97);backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line)}
-  .top .wrap{display:flex;align-items:center;gap:12px;padding:11px 16px}
-  .mark{display:flex;align-items:center;gap:9px;font-weight:600;font-size:18px;letter-spacing:-.01em}
-  .mark .key{width:22px;height:22px;flex:0 0 auto}
-  .mark b{color:var(--brand)}
-  .mark .v{color:var(--ink)}
-  .spacer{flex:1}
-  .ghost{background:none;border:1px solid var(--line);border-radius:30px;padding:7px 13px;font-size:12px;
-    font-family:var(--mono);letter-spacing:.04em;color:var(--ink)}
-  .ghost:active{background:var(--ink);color:var(--paper)}
+  /* ───────── TOP BAR ───────── */
+  .top {
+    position: sticky; top: 0; z-index: 30;
+    background: rgba(255,255,255,.97);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-xs);
+  }
+  .top .wrap { display: flex; align-items: center; gap: 14px; padding: 13px 20px; }
+  .mark { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .mark-logo {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: var(--brand); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .mark-logo svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .mark-name { font-size: 17px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
+  .mark-name b { color: var(--brand); font-weight: 800; }
+  .spacer { flex: 1; }
+  .top-pill {
+    background: none; border: 1.5px solid var(--border); border-radius: 40px;
+    padding: 7px 16px; font-size: 13px; font-weight: 500; color: var(--muted);
+    transition: border-color .15s, color .15s;
+  }
+  .top-pill:hover { border-color: var(--brand); color: var(--brand); }
 
-  /* ---- home view ---- */
-  .hero{padding:46px 0 8px;text-align:center}
-  .stamp{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;
-    color:var(--brand);border:1.5px solid var(--brand);border-radius:6px;padding:6px 12px;transform:rotate(-2.2deg);
-    opacity:.92;margin-bottom:22px}
-  .hero h1{font-size:40px;line-height:1.08;margin:0 0 14px;letter-spacing:-.02em}
-  .hero h1 .em{font-style:italic;color:var(--brand)}
-  .hero p{font-size:16.5px;color:#4f4c44;max-width:520px;margin:0 auto}
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:34px 0 10px}
-  @media(max-width:640px){.cards{grid-template-columns:1fr}.hero h1{font-size:31px}}
-  .card{border:1px solid var(--line);border-radius:14px;padding:22px;background:#fff;box-shadow:var(--shadow);
-    text-align:left;display:flex;flex-direction:column;gap:9px}
-  .card h3{margin:0;font-size:19px}
-  .card p{margin:0;font-size:14px;color:#5d5a50}
-  .card .go{margin-top:6px;align-self:flex-start;background:var(--ink);color:var(--paper);border:none;
-    border-radius:9px;padding:11px 16px;font-size:14.5px;font-weight:600}
-  .card .go.alt{background:var(--brand)}
-  .card .go:active{opacity:.85}
-  .soonrow{margin:18px 0 0;border:1px dashed var(--line);border-radius:12px;padding:15px 16px;
-    display:flex;gap:12px;align-items:flex-start;background:#fbfaf6}
-  .soonrow .badge{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--soft);border:1px solid var(--line);border-radius:30px;padding:4px 9px;flex:0 0 auto;margin-top:1px}
-  .soonrow div p{margin:0;font-size:13.5px;color:#5d5a50}
-  .soonrow div b{display:block;font-size:14.5px;margin-bottom:2px}
-  .legendrow{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:26px 0 0;font-family:var(--mono);font-size:11px}
-  .legendrow span{padding:5px 11px;border-radius:40px;border:1px solid var(--line);letter-spacing:.04em}
-  .lk{background:var(--keep-bg);color:var(--keep);border-color:var(--keep-ln)}
-  .lx{background:var(--excl-bg);color:var(--excl);border-color:var(--excl-ln)}
-  .ln{background:var(--neg-bg);color:var(--neg);border-color:var(--neg-ln)}
-  .foot{margin:40px 0 8px;text-align:center;font-size:12px;color:var(--soft);font-style:italic;max-width:540px;margin-left:auto;margin-right:auto}
+  /* ───────── HOME HERO ───────── */
+  .hero { padding: 64px 0 20px; text-align: center; }
+  .hero-chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--brand-xl); color: var(--brand);
+    font-size: 11.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    padding: 7px 16px; border-radius: 40px; margin-bottom: 22px;
+  }
+  .hero-chip svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.4; stroke-linecap: round; }
+  .hero h1 {
+    font-size: 48px; font-weight: 800; line-height: 1.06;
+    letter-spacing: -.03em; margin-bottom: 18px; color: var(--ink);
+  }
+  .hero h1 em { font-style: normal; color: var(--brand); }
+  .hero-sub { font-size: 17px; color: var(--muted); max-width: 520px; margin: 0 auto; line-height: 1.65; }
+  @media(max-width: 640px) { .hero h1 { font-size: 33px; } .hero-sub { font-size: 15px; } }
 
-  /* ---- shared: rooms ---- */
-  .pageintro{padding:22px 0 4px}
-  .pageintro h2{margin:0 0 4px;font-size:23px;letter-spacing:-.01em}
-  .pageintro p{margin:0;font-size:14px;color:#5d5a50}
-  .projname{font-family:var(--serif);font-size:18px;border:none;border-bottom:1.5px solid var(--line);
-    background:none;padding:4px 2px;width:100%;max-width:380px;margin-top:10px;color:var(--ink)}
-  .projname:focus{outline:none;border-color:var(--brand)}
+  /* ───────── HOME CARDS ───────── */
+  .home-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 36px 0 14px; }
+  @media(max-width: 600px) { .home-cards { grid-template-columns: 1fr; } }
+  .home-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 28px; text-align: left;
+    display: flex; flex-direction: column; gap: 10px;
+    box-shadow: var(--shadow); transition: box-shadow .2s, transform .2s;
+  }
+  .home-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .hc-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 2px; flex-shrink: 0;
+  }
+  .hc-icon svg { width: 24px; height: 24px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hc-icon.blue  { background: var(--brand-xl); } .hc-icon.blue  svg { stroke: var(--brand); }
+  .hc-icon.dark  { background: #EEF0F5; }         .hc-icon.dark  svg { stroke: var(--ink2); }
+  .home-card h3  { font-size: 17px; font-weight: 700; color: var(--ink); line-height: 1.25; }
+  .home-card p   { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+  .hc-btn {
+    margin-top: 10px; align-self: flex-start;
+    padding: 11px 20px; border-radius: var(--r-sm); border: none;
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: all .15s;
+  }
+  .hc-btn.primary { background: var(--brand); color: #fff; }
+  .hc-btn.primary:hover { background: var(--brand-dk); }
+  .hc-btn.secondary { background: var(--ink); color: #fff; }
+  .hc-btn.secondary:hover { background: #2a2d3e; }
 
-  .room{padding:22px 0 6px;border-top:1px solid var(--line);margin-top:18px}
-  .room:first-of-type{border-top:none;margin-top:6px}
-  .room .rhead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
-  .roomname{font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#4f4c44;
-    font-weight:600;background:none;border:none;border-bottom:1px dashed transparent;padding:2px 0;min-width:120px}
-  .roomname:focus{outline:none;border-bottom-color:var(--brand)}
-  .rhead .del{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--excl);background:none;border:none}
-  .frame{position:relative;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);line-height:0}
-  .frame img{width:100%;display:block}
-  .editbanner{font-family:var(--mono);font-size:11px;color:var(--brand);margin:9px 2px 0;letter-spacing:.02em}
+  /* ───────── COMING SOON ROW ───────── */
+  .soon-row {
+    border: 1.5px dashed var(--border2); border-radius: var(--r);
+    padding: 18px 22px; display: flex; gap: 14px; align-items: flex-start;
+    background: var(--surface); text-align: left; margin-top: 14px;
+  }
+  .soon-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted2); border: 1px solid var(--border); border-radius: 40px;
+    padding: 4px 11px; flex-shrink: 0; margin-top: 3px; white-space: nowrap;
+  }
+  .soon-row b  { display: block; font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .soon-row p  { font-size: 13px; color: var(--muted); line-height: 1.5; }
 
-  .dot{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;border:2.5px solid #fff;
-    background:rgba(26,29,26,.62);box-shadow:0 2px 8px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;
-    z-index:2;transition:transform .12s,background .2s}
-  .dot:active{transform:translate(-50%,-50%) scale(.9)}
-  .dot svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:2.4}
-  .dot.keep{background:var(--keep)} .dot.excl{background:var(--excl)} .dot.neg{background:var(--neg)}
-  .dot.pulse{animation:p 2.4s ease-out infinite}
-  .dot.editdot{background:var(--brand)}
-  @keyframes p{0%{box-shadow:0 0 0 0 rgba(255,255,255,.55)}70%{box-shadow:0 0 0 11px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
-  .tag{position:absolute;transform:translate(-50%,calc(-50% - 26px));font-family:var(--mono);font-size:10.5px;white-space:nowrap;
-    background:#fff;padding:3px 8px;border-radius:30px;box-shadow:0 1px 6px rgba(0,0,0,.18);pointer-events:none;opacity:0;
-    transition:opacity .18s;z-index:3;letter-spacing:.02em}
-  .dot.set + .tag,.frame:hover .dot:hover + .tag,.dot.editdot + .tag{opacity:1}
+  /* ───────── LEGEND ───────── */
+  .legend { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 26px 0 0; }
+  .legend span {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 40px; border: 1px solid;
+  }
+  .legend .dot-pip { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+  .lk { background: var(--keep-bg); color: var(--keep); border-color: var(--keep-ln); }
+  .lk .dot-pip { background: var(--keep); }
+  .lx { background: var(--excl-bg); color: var(--excl); border-color: var(--excl-ln); }
+  .lx .dot-pip { background: var(--excl); }
+  .ln { background: var(--neg-bg);  color: var(--neg);  border-color: var(--neg-ln);  }
+  .ln .dot-pip { background: var(--neg); }
 
-  .list{margin-top:12px}
-  .li{display:flex;align-items:center;gap:11px;padding:11px 2px;border-bottom:1px solid var(--line)}
-  .li:last-child{border-bottom:none}
-  .li .num{width:20px;font-family:var(--mono);font-size:11px;color:#b3ae9f}
-  .li .name{flex:1;font-size:15.5px}
-  .li .state{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;
-    border-radius:30px;border:1px solid var(--line);color:var(--soft)}
-  .li.keep .state{background:var(--keep-bg);color:var(--keep);border-color:var(--keep-ln)}
-  .li.excl .state{background:var(--excl-bg);color:var(--excl);border-color:var(--excl-ln)}
-  .li.neg .state{background:var(--neg-bg);color:var(--neg);border-color:var(--neg-ln)}
-  .li .rm{font-family:var(--mono);font-size:11px;color:var(--soft);background:none;border:none}
+  /* ───────── FOOTER ───────── */
+  .page-foot { text-align: center; font-size: 12px; color: var(--muted2); max-width: 540px; margin: 28px auto 0; line-height: 1.6; }
+  .page-foot a { color: var(--brand); text-decoration: none; font-weight: 500; }
+  .page-foot a:hover { text-decoration: underline; }
 
-  .addroom{display:flex;gap:10px;margin:22px 0 4px;flex-wrap:wrap}
-  .addroom label{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#fff;border-radius:9px;
-    padding:12px 16px;font-size:14.5px;font-weight:600}
-  .addroom label:active{opacity:.85}
-  .addroom label.lib{background:#fff;color:var(--ink);border:1px solid var(--line)}
-  .addroom label svg{flex:0 0 auto}
-  .addroom .sec{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:12px 16px;font-size:14px}
+  /* ───────── PAGE INTRO ───────── */
+  .pageintro { padding: 28px 0 10px; }
+  .pageintro h2 { font-size: 24px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; margin-bottom: 4px; }
+  .pageintro p  { font-size: 14px; color: var(--muted); line-height: 1.55; }
+  .projname {
+    font-family: var(--font); font-size: 15px; font-weight: 500;
+    border: 1.5px solid var(--border); border-radius: var(--r-sm);
+    background: var(--surface); padding: 11px 14px; width: 100%; max-width: 420px;
+    margin-top: 16px; color: var(--ink); transition: border-color .15s, box-shadow .15s;
+  }
+  .projname:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-xl); }
+  .projname::placeholder { color: var(--muted2); }
 
-  /* ---- bottom bar ---- */
-  .bar{position:fixed;left:0;right:0;bottom:0;background:rgba(246,244,238,.97);backdrop-filter:blur(8px);
-    border-top:1px solid var(--line);padding:11px 16px 15px;z-index:25}
-  .bar .wrap{padding:0 16px}
-  .tally{display:flex;gap:8px;margin:0 auto 9px;font-family:var(--mono);font-size:11.5px}
-  .tally div{flex:1;text-align:center;padding:6px 4px;border-radius:8px;border:1px solid var(--line)}
-  .tally b{font-size:17px;display:block;font-family:Georgia,serif}
-  .tk{background:var(--keep-bg);color:var(--keep)} .tx{background:var(--excl-bg);color:var(--excl)}
-  .tn{background:var(--neg-bg);color:var(--neg)} .tu{color:var(--soft)}
-  .barbtns{display:flex;gap:9px}
-  .btn{flex:1;padding:14px;border:none;border-radius:10px;background:var(--ink);color:var(--paper);font-size:15px;font-weight:600;letter-spacing:.02em}
-  .btn:active{opacity:.85}
-  .btn.sec{background:#fff;color:var(--ink);border:1px solid var(--line)}
-  .savehint{font-family:var(--mono);font-size:10.5px;color:var(--soft);text-align:center;margin:0 0 8px}
+  /* ───────── ROOMS ───────── */
+  .room { padding: 26px 0 8px; border-top: 1px solid var(--border); margin-top: 20px; }
+  .room:first-of-type { border-top: none; margin-top: 6px; }
+  .rhead { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .roomname {
+    font-family: var(--font); font-size: 11px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted); background: none; border: none;
+    border-bottom: 1.5px solid transparent; padding: 2px 0; min-width: 120px; transition: all .15s;
+  }
+  .roomname:focus { outline: none; border-bottom-color: var(--brand); color: var(--ink); }
+  .rhead .del {
+    margin-left: auto; font-size: 12px; font-weight: 600; color: var(--excl);
+    background: none; border: none; padding: 5px 10px; border-radius: var(--r-xs); transition: background .15s;
+  }
+  .rhead .del:hover { background: var(--excl-bg); }
 
-  /* ---- modal ---- */
-  .modal{position:fixed;inset:0;background:rgba(26,29,26,.55);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
-  .modal.on{display:flex}
-  .mcard{background:var(--paper);border-radius:14px;max-width:560px;width:100%;max-height:84vh;overflow:auto;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-  .mcard h3{margin:0 0 4px;font-size:20px}
-  .mcard p{margin:0 0 14px;font-size:13.5px;color:#5d5a50}
-  textarea{width:100%;height:220px;border:1px solid var(--line);border-radius:9px;padding:12px;font-family:var(--mono);
-    font-size:12px;line-height:1.55;background:#fff;resize:vertical}
-  .mrow{display:flex;gap:9px;margin-top:13px}
-  .mrow button{flex:1;padding:12px;border-radius:9px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600}
-  .mrow button.primary{background:var(--ink);color:var(--paper);border:none}
-  .nameinput{width:100%;border:1px solid var(--line);border-radius:9px;padding:12px;font-size:15px;font-family:var(--serif);background:#fff}
-  .nameinput:focus{outline:none;border-color:var(--brand)}
-  .empty{text-align:center;padding:50px 20px;color:var(--soft)}
-  .empty svg{width:46px;height:46px;opacity:.4;margin-bottom:12px}
+  .frame {
+    position: relative; border-radius: var(--r); overflow: hidden;
+    box-shadow: var(--shadow); border: 1px solid var(--border); line-height: 0;
+  }
+  .frame img { width: 100%; display: block; }
+  .editbanner { font-size: 12px; font-weight: 500; color: var(--brand); margin: 10px 2px 0; }
+
+  /* ───────── DOTS / PINS ───────── */
+  .dot {
+    position: absolute; transform: translate(-50%, -50%);
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 2.5px solid #fff;
+    background: rgba(26,26,46,.70);
+    box-shadow: 0 2px 12px rgba(0,0,0,.32);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2; cursor: pointer;
+    transition: transform .12s, background .15s, box-shadow .15s;
+  }
+  .dot:hover { box-shadow: 0 4px 18px rgba(0,0,0,.40); transform: translate(-50%,-50%) scale(1.08); }
+  .dot:active { transform: translate(-50%,-50%) scale(.9); }
+  .dot svg { width: 15px; height: 15px; fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .dot.keep { background: var(--keep); }
+  .dot.excl { background: var(--excl); }
+  .dot.neg  { background: var(--neg);  }
+  .dot.pulse { animation: dotpulse 2.2s ease-out infinite; }
+  .dot.editdot { background: var(--brand); }
+  @keyframes dotpulse {
+    0%   { box-shadow: 0 0 0 0   rgba(0,106,255,.50); }
+    70%  { box-shadow: 0 0 0 12px rgba(0,106,255,0);   }
+    100% { box-shadow: 0 0 0 0   rgba(0,106,255,0);   }
+  }
+  .tag {
+    position: absolute; transform: translate(-50%, calc(-50% - 30px));
+    font-size: 11px; font-weight: 600; white-space: nowrap;
+    background: var(--ink); color: #fff;
+    padding: 5px 11px; border-radius: 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.22);
+    pointer-events: none; opacity: 0; transition: opacity .15s; z-index: 3;
+    letter-spacing: .01em;
+  }
+  .dot.set + .tag, .frame:hover .dot:hover + .tag, .dot.editdot + .tag { opacity: 1; }
+
+  /* ───────── ITEM LIST ───────── */
+  .list {
+    margin-top: 14px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
+    box-shadow: var(--shadow-xs);
+  }
+  .li {
+    display: flex; align-items: center; gap: 12px; padding: 13px 18px;
+    border-bottom: 1px solid var(--border); transition: background .1s; cursor: pointer;
+  }
+  .li:last-child { border-bottom: none; }
+  .li:hover { background: #F8FAFC; }
+  .li .num  { width: 22px; font-size: 11px; font-weight: 600; color: var(--muted2); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .li .name { flex: 1; font-size: 14.5px; font-weight: 500; color: var(--ink); }
+  .li .state {
+    font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 40px; border: 1px solid var(--border); color: var(--muted2);
+    background: #F4F6F8; flex-shrink: 0;
+  }
+  .li.keep .state { background: var(--keep-bg); color: var(--keep); border-color: var(--keep-ln); }
+  .li.excl .state { background: var(--excl-bg); color: var(--excl); border-color: var(--excl-ln); }
+  .li.neg  .state { background: var(--neg-bg);  color: var(--neg);  border-color: var(--neg-ln);  }
+  .li .rm {
+    font-size: 11px; font-weight: 600; color: var(--muted2);
+    background: none; border: none; padding: 4px 9px; border-radius: var(--r-xs); transition: all .15s;
+  }
+  .li .rm:hover { color: var(--excl); background: var(--excl-bg); }
+
+  /* ───────── ADD ROOM BUTTONS ───────── */
+  .addroom { display: flex; gap: 10px; margin: 24px 0 4px; flex-wrap: wrap; }
+  .addroom label {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--brand); color: #fff; border-radius: var(--r-sm);
+    padding: 12px 18px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s;
+  }
+  .addroom label:hover { background: var(--brand-dk); }
+  .addroom label.lib {
+    background: var(--surface); color: var(--ink2);
+    border: 1.5px solid var(--border);
+  }
+  .addroom label.lib:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-xl); }
+  .addroom label svg { flex: 0 0 auto; width: 16px; height: 16px; }
+  .addroom .sec {
+    background: var(--surface); color: var(--ink2);
+    border: 1.5px solid var(--border); border-radius: var(--r-sm);
+    padding: 12px 18px; font-size: 14px; font-weight: 500; transition: all .15s;
+  }
+  .addroom .sec:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-xl); }
+
+  /* ───────── EMPTY STATE ───────── */
+  .empty {
+    text-align: center; padding: 60px 20px; color: var(--muted2);
+    background: var(--surface); border: 1.5px dashed var(--border2);
+    border-radius: var(--r); margin-top: 8px;
+  }
+  .empty svg { width: 48px; height: 48px; opacity: .28; margin: 0 auto 14px; display: block; }
+  .empty div { font-size: 14px; font-weight: 500; }
+
+  /* ───────── BOTTOM BAR ───────── */
+  .bar {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: rgba(255,255,255,.97); backdrop-filter: blur(14px);
+    border-top: 1px solid var(--border); box-shadow: 0 -4px 24px rgba(0,0,0,.08);
+    padding: 12px 20px 22px; z-index: 25;
+  }
+  .bar .wrap { padding: 0 20px; }
+  .tally { display: flex; gap: 8px; margin: 0 auto 10px; }
+  .tally div {
+    flex: 1; text-align: center; padding: 8px 6px;
+    border-radius: var(--r-sm); border: 1px solid var(--border);
+    font-size: 10.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  }
+  .tally b { font-size: 21px; display: block; font-weight: 800; line-height: 1.15; margin-bottom: 2px; letter-spacing: -.01em; }
+  .tk { background: var(--keep-bg); color: var(--keep); border-color: var(--keep-ln); }
+  .tx { background: var(--excl-bg); color: var(--excl); border-color: var(--excl-ln); }
+  .tn { background: var(--neg-bg);  color: var(--neg);  border-color: var(--neg-ln);  }
+  .tu { background: #F4F6F8; color: var(--muted); border-color: var(--border); }
+  .barbtns { display: flex; gap: 10px; }
+  .btn {
+    flex: 1; padding: 15px; border: none; border-radius: var(--r-sm);
+    background: var(--brand); color: #fff; font-size: 15px; font-weight: 700;
+    letter-spacing: .01em; transition: background .15s, transform .1s;
+  }
+  .btn:hover { background: var(--brand-dk); }
+  .btn:active { transform: scale(.98); }
+  .btn.sec { background: var(--surface); color: var(--ink2); border: 1.5px solid var(--border); font-weight: 600; }
+  .btn.sec:hover { border-color: var(--ink); color: var(--ink); }
+  .savehint { font-size: 11px; color: var(--muted2); text-align: center; margin: 0 0 10px; font-weight: 500; }
+
+  /* ───────── MODAL ───────── */
+  .modal {
+    position: fixed; inset: 0; background: rgba(10,12,30,.52);
+    z-index: 50; display: none; align-items: center; justify-content: center;
+    padding: 20px; backdrop-filter: blur(6px);
+  }
+  .modal.on { display: flex; }
+  .mcard {
+    background: var(--surface); border-radius: 16px;
+    max-width: 540px; width: 100%; max-height: 86vh; overflow: auto;
+    padding: 28px 28px 24px; box-shadow: var(--shadow-lg);
+  }
+  .mcard h3  { font-size: 20px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; margin-bottom: 6px; }
+  .mcard > p { font-size: 13.5px; color: var(--muted); line-height: 1.55; margin-bottom: 18px; }
+  textarea {
+    width: 100%; height: 220px; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+    padding: 12px 14px; font-family: var(--mono); font-size: 12px; line-height: 1.6;
+    background: #F8FAFC; resize: vertical; color: var(--ink2); transition: border-color .15s;
+  }
+  textarea:focus { outline: none; border-color: var(--brand); }
+  .mrow { display: flex; gap: 10px; margin-top: 12px; }
+  .mrow button {
+    flex: 1; padding: 12px; border-radius: var(--r-sm);
+    border: 1.5px solid var(--border); background: var(--surface);
+    font-size: 14px; font-weight: 600; color: var(--ink2); transition: all .15s;
+    font-family: var(--font);
+  }
+  .mrow button:hover { border-color: var(--ink); color: var(--ink); }
+  .mrow button.primary { background: var(--brand); color: #fff; border: none; }
+  .mrow button.primary:hover { background: var(--brand-dk); }
+  .nameinput {
+    width: 100%; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+    padding: 12px 14px; font-size: 15px; font-family: var(--font); font-weight: 500;
+    background: var(--surface); color: var(--ink); transition: all .15s;
+  }
+  .nameinput:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-xl); }
+  .nameinput::placeholder { color: var(--muted2); }
 </style>
 </head>
 <body>
 
+<!-- ───────── TOP BAR ───────── -->
 <div class="top">
   <div class="wrap">
     <div class="mark">
-      <svg class="key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--brand)">
-        <circle cx="8" cy="8" r="5"></circle><path d="M11.5 11.5 L21 21"></path><path d="M17 17 l2 -2"></path><path d="M19.5 19.5 l2 -2"></path>
-      </svg>
-      <span><b>Hom</b><span class="v">ventory</span></span>
+      <div class="mark-logo">
+        <svg viewBox="0 0 24 24"><circle cx="8.5" cy="8.5" r="4.5"/><path d="M12.5 12.5 L20 20"/><path d="M17 17 l2-2"/><path d="M19.5 19.5 l2-2"/></svg>
+      </div>
+      <span class="mark-name"><b>Hom</b>ventory</span>
     </div>
     <div class="spacer"></div>
-    <button class="ghost" id="homeBtn" onclick="go('home')">Home</button>
+    <button class="top-pill" id="homeBtn" onclick="go('home')">← Home</button>
   </div>
 </div>
 
-<!-- ============ HOME ============ -->
+<!-- ───────── HOME ───────── -->
 <section id="view-home" class="wrap">
   <div class="hero">
-    <div class="stamp">What conveys with the home</div>
-    <h1>Turn your listing photos into a <span class="em">tap-to-decide</span> inventory.</h1>
-    <p>Upload your rooms, drop a pin on each piece of furniture, and send it to your buyer. They tap what they want included, excluded, or left open — and send their picks back. No more messy email threads at closing.</p>
-    <div class="cards">
-      <div class="card">
+    <div class="hero-chip">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      What conveys with the home
+    </div>
+    <h1>Turn listing photos into a <em>tap-to-decide</em> inventory.</h1>
+    <p class="hero-sub">Upload your rooms, drop a pin on each item, and send it to your buyer. They tap what they want included, excluded, or negotiated — no more messy email threads at closing.</p>
+
+    <div class="home-cards">
+      <div class="home-card">
+        <div class="hc-icon blue">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
         <h3>Create an inventory</h3>
-        <p>Upload photos of your rooms and label the items. Takes a few minutes.</p>
-        <button class="go alt" onclick="startNew()">Start &rarr;</button>
+        <p>Upload photos of your rooms and label the items. Takes a few minutes. Share a file when you're done.</p>
+        <button class="hc-btn primary" onclick="startNew()">Start building →</button>
       </div>
-      <div class="card">
+      <div class="home-card">
+        <div class="hc-icon dark">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="11" y2="17"/></svg>
+        </div>
         <h3>Review one you were sent</h3>
-        <p>Open a Homventory file from a seller and mark what you'd like in the offer.</p>
-        <button class="go" onclick="importProject()">Open a file &rarr;</button>
+        <p>Open a Homventory file from a seller and mark what you'd like included in the offer.</p>
+        <button class="hc-btn secondary" onclick="importProject()">Open a file →</button>
       </div>
     </div>
-    <div class="soonrow">
-      <span class="badge">Coming later</span>
+
+    <div class="soon-row">
+      <span class="soon-badge">Coming later</span>
       <div>
         <b>Import straight from a Zillow / Realtor.com listing</b>
         <p>Pulling photos automatically from a listing link needs licensed MLS access — it's on the roadmap. For now, upload the photos directly (you already have them).</p>
       </div>
     </div>
-    <div class="legendrow">
-      <span class="lk">&#9679; Include</span>
-      <span class="lx">&#9679; Exclude</span>
-      <span class="ln">&#9679; Negotiable</span>
+
+    <div class="legend">
+      <span class="lk"><span class="dot-pip"></span>Include</span>
+      <span class="lx"><span class="dot-pip"></span>Exclude</span>
+      <span class="ln"><span class="dot-pip"></span>Negotiable</span>
     </div>
-    <p class="foot">Homventory records preferences only. What's actually binding is your purchase contract or addendum — this tool feeds that conversation, it doesn't replace the paperwork.</p>
-    <!-- EDIT THIS LINE to change the credit / link -->
-    <p class="foot" style="margin-top:12px"><a href="https://micahprentice.com" style="color:var(--brand);text-decoration:none;font-style:normal">A free resource from Micah Prentice</a></p>
+
+    <p class="page-foot" style="margin-top:28px">Homventory records preferences only. What's actually binding is your purchase contract or addendum — this tool feeds that conversation, it doesn't replace the paperwork.</p>
+    <p class="page-foot" style="margin-top:10px"><a href="https://micahprentice.com">A free resource from Micah Prentice</a></p>
   </div>
 </section>
 
-<!-- ============ CREATE ============ -->
+<!-- ───────── CREATE ───────── -->
 <section id="view-create" class="wrap hidden">
   <div class="pageintro">
     <h2>Build your inventory</h2>
     <p>Add a photo for each room, then tap anywhere on the photo to drop a labeled item.</p>
-    <input class="projname" id="projName" placeholder="Property name or address" oninput="onName(this.value)">
+    <input class="projname" id="projName" placeholder="Property address or name" oninput="onName(this.value)">
   </div>
   <div id="createRooms"></div>
   <div class="addroom">
-    <label><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Take a photo<input type="file" accept="image/*" capture="environment" style="display:none" onchange="addRoomPhoto(event)"></label>
-    <label class="lib"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Add from library<input type="file" accept="image/*" multiple style="display:none" onchange="addRoomPhoto(event)"></label>
+    <label>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      Take a photo
+      <input type="file" accept="image/*" capture="environment" style="display:none" onchange="addRoomPhoto(event)">
+    </label>
+    <label class="lib">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      Add from library
+      <input type="file" accept="image/*" multiple style="display:none" onchange="addRoomPhoto(event)">
+    </label>
     <button class="sec" onclick="previewBuyer()">Preview buyer view</button>
   </div>
 </section>
 
-<!-- ============ PREVIEW / BUYER ============ -->
+<!-- ───────── PREVIEW / BUYER ───────── -->
 <section id="view-preview" class="wrap hidden">
   <div class="pageintro">
     <h2 id="pvTitle">Tap an item. Tell us what you'd like.</h2>
@@ -226,13 +437,13 @@
   <div id="previewRooms"></div>
 </section>
 
-<!-- ============ BOTTOM BAR ============ -->
+<!-- ───────── BOTTOM BARS ───────── -->
 <div class="bar hidden" id="barCreate">
   <div class="wrap">
     <p class="savehint" id="saveHint">Saves automatically in your browser</p>
     <div class="barbtns">
       <button class="btn sec" onclick="shareOrSaveProject()">Save / share file</button>
-      <button class="btn" onclick="previewBuyer()">Preview &amp; share &rarr;</button>
+      <button class="btn" onclick="previewBuyer()">Preview &amp; share →</button>
     </div>
   </div>
 </div>
@@ -246,17 +457,17 @@
       <div class="tu"><b id="t-uns">0</b>Untouched</div>
     </div>
     <div class="barbtns">
-      <button class="btn sec" onclick="go('create')">&larr; Back to edit</button>
-      <button class="btn" onclick="buildList()">Build my list &rarr;</button>
+      <button class="btn sec" onclick="go('create')">← Back to edit</button>
+      <button class="btn" onclick="buildList()">Build my list →</button>
     </div>
   </div>
 </div>
 
-<!-- ============ MODALS ============ -->
+<!-- ───────── MODALS ───────── -->
 <div class="modal" id="labelModal">
   <div class="mcard">
     <h3>Name this item</h3>
-    <p>What's at this spot? e.g. "White couch", "Wall-mounted TV", "Brown chair Jack liked".</p>
+    <p>What's at this spot? e.g. "White sectional", "Wall-mounted TV", "Dining table".</p>
     <input class="nameinput" id="labelInput" placeholder="Item name" autocomplete="off">
     <div class="mrow">
       <button onclick="closeLabel()">Cancel</button>
@@ -275,7 +486,7 @@
       <button onclick="emailSelections()">Email</button>
     </div>
     <div class="mrow">
-      <button onclick="copyOut()" id="copybtn">Copy</button>
+      <button onclick="copyOut()" id="copybtn">Copy to clipboard</button>
       <button onclick="downloadOut()">Download .txt</button>
     </div>
     <div class="mrow"><button onclick="closeModal('exportModal')">Keep editing</button></div>
@@ -298,7 +509,7 @@ let uid=0; const nid=()=> 'x'+(Date.now().toString(36))+(uid++);
 /* ---------------- persistence (graceful if storage absent) ---------------- */
 function save(){
   try{ localStorage.setItem('homventory:project', JSON.stringify(project)); flagSaved('Saved in this browser'); }
-  catch(e){ flagSaved('Storage full — use “Save / send file” to keep your work'); }
+  catch(e){ flagSaved('Storage full — use "Save / send file" to keep your work'); }
 }
 function loadSaved(){
   try{ const v=localStorage.getItem('homventory:project'); if(v){ const p=JSON.parse(v); if(p&&p.rooms&&p.rooms.length){ project=p; } } }
@@ -359,7 +570,7 @@ async function addRoomPhoto(e){
 function renderCreate(){
   const host=document.getElementById('createRooms'); host.innerHTML='';
   if(!project.rooms.length){
-    host.innerHTML='<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><div>No rooms yet. Add your first room photo below.</div></div>';
+    host.innerHTML='<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><div>No rooms yet — add your first photo below.</div></div>';
     return;
   }
   project.rooms.forEach(room=>{
@@ -435,7 +646,7 @@ document.getElementById('labelInput').addEventListener('keydown',e=>{ if(e.key==
 function previewBuyer(){
   if(!project.rooms.length || !project.rooms.some(r=>r.spots.length)){ alert('Add at least one room with one item first.'); return; }
   mode='preview'; renderPreview(); go('preview');
-  document.getElementById('pvTitle').textContent = project.name ? ('“'+project.name+'” — tell us what you\u2019d like') : 'Tap an item. Tell us what you\u2019d like.';
+  document.getElementById('pvTitle').textContent = project.name ? ('"'+project.name+'" — tell us what you’d like') : 'Tap an item. Tell us what you’d like.';
 }
 
 function renderPreview(){
@@ -461,7 +672,7 @@ function renderPreview(){
       const li=document.createElement('div'); li.className='li'+(sp.state?' '+sp.state:''); li.dataset.id=sp.id;
       const num=document.createElement('span'); num.className='num'; num.textContent=String(i+1).padStart(2,'0');
       const name=document.createElement('span'); name.className='name'; name.textContent=sp.label;
-      const st=document.createElement('span'); st.className='state'; st.textContent=sp.state?LBL[sp.state]:'\u2014';
+      const st=document.createElement('span'); st.className='state'; st.textContent=sp.state?LBL[sp.state]:'—';
       li.appendChild(num); li.appendChild(name); li.appendChild(st);
       li.onclick=()=>{ const dot=[...frame.querySelectorAll('.dot')].find((d,idx)=>room.spots[idx].id===sp.id); cyclePreview(sp,dot,dot.nextSibling,room); };
       list.appendChild(li);
@@ -479,7 +690,7 @@ function cyclePreview(sp,dot,tag,room){
   if(sp.state){ dot.classList.add('set',sp.state); svg.innerHTML=ICON[sp.state]; } else { svg.innerHTML=''; }
   const li=document.querySelector('.li[data-id="'+sp.id+'"]');
   if(li){ li.classList.remove('keep','excl','neg'); const stt=li.querySelector('.state');
-    if(sp.state){ li.classList.add(sp.state); stt.textContent=LBL[sp.state]; } else { stt.textContent='\u2014'; } }
+    if(sp.state){ li.classList.add(sp.state); stt.textContent=LBL[sp.state]; } else { stt.textContent='—'; } }
   save(); tally();
 }
 
@@ -523,7 +734,7 @@ function emailSelections(){
   window.location.href='mailto:?subject='+subject+'&body='+body;
 }
 function copyOut(){ const t=document.getElementById('out'); t.select();
-  navigator.clipboard.writeText(t.value).then(()=>{ const b=document.getElementById('copybtn'); b.textContent='Copied \u2713'; setTimeout(()=>b.textContent='Copy to clipboard',1600); }).catch(()=>{document.execCommand('copy');}); }
+  navigator.clipboard.writeText(t.value).then(()=>{ const b=document.getElementById('copybtn'); b.textContent='Copied ✓'; setTimeout(()=>b.textContent='Copy to clipboard',1600); }).catch(()=>{document.execCommand('copy');}); }
 function downloadOut(){ const blob=new Blob([document.getElementById('out').value],{type:'text/plain'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='homventory-selections.txt'; a.click(); }
 

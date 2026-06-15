@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Homventory — what conveys with the home</title>
+<style>
+  :root{
+    --ink:#1a1d1a; --paper:#f6f4ee; --line:#d9d4c7; --soft:#8a8576;
+    --brand:#356470;            /* petrol — wordmark + primary, non-semantic */
+    --keep:#2f7d4f; --keep-bg:#e3f1e7; --keep-ln:#bcdcc6;
+    --excl:#b4452f; --excl-bg:#f6e3dd; --excl-ln:#e7c4ba;
+    --neg:#b8862b;  --neg-bg:#f7eed8;  --neg-ln:#e6d2a3;
+    --shadow:0 2px 14px rgba(26,29,26,.10);
+    --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    --serif:"Iowan Old Style",Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:1.5}
+  body{padding-bottom:120px}
+  button{font-family:inherit;cursor:pointer}
+  .wrap{max-width:920px;margin:0 auto;padding:0 16px}
+  .hidden{display:none!important}
+
+  /* ---- top brand bar ---- */
+  .top{position:sticky;top:0;z-index:30;background:rgba(246,244,238,.97);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;gap:12px;padding:11px 16px}
+  .mark{display:flex;align-items:center;gap:9px;font-weight:600;font-size:18px;letter-spacing:-.01em}
+  .mark .key{width:22px;height:22px;flex:0 0 auto}
+  .mark b{color:var(--brand)}
+  .mark .v{color:var(--ink)}
+  .spacer{flex:1}
+  .ghost{background:none;border:1px solid var(--line);border-radius:30px;padding:7px 13px;font-size:12px;
+    font-family:var(--mono);letter-spacing:.04em;color:var(--ink)}
+  .ghost:active{background:var(--ink);color:var(--paper)}
+
+  /* ---- home view ---- */
+  .hero{padding:46px 0 8px;text-align:center}
+  .stamp{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--brand);border:1.5px solid var(--brand);border-radius:6px;padding:6px 12px;transform:rotate(-2.2deg);
+    opacity:.92;margin-bottom:22px}
+  .hero h1{font-size:40px;line-height:1.08;margin:0 0 14px;letter-spacing:-.02em}
+  .hero h1 .em{font-style:italic;color:var(--brand)}
+  .hero p{font-size:16.5px;color:#4f4c44;max-width:520px;margin:0 auto}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:34px 0 10px}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}.hero h1{font-size:31px}}
+  .card{border:1px solid var(--line);border-radius:14px;padding:22px;background:#fff;box-shadow:var(--shadow);
+    text-align:left;display:flex;flex-direction:column;gap:9px}
+  .card h3{margin:0;font-size:19px}
+  .card p{margin:0;font-size:14px;color:#5d5a50}
+  .card .go{margin-top:6px;align-self:flex-start;background:var(--ink);color:var(--paper);border:none;
+    border-radius:9px;padding:11px 16px;font-size:14.5px;font-weight:600}
+  .card .go.alt{background:var(--brand)}
+  .card .go:active{opacity:.85}
+  .soonrow{margin:18px 0 0;border:1px dashed var(--line);border-radius:12px;padding:15px 16px;
+    display:flex;gap:12px;align-items:flex-start;background:#fbfaf6}
+  .soonrow .badge{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--soft);border:1px solid var(--line);border-radius:30px;padding:4px 9px;flex:0 0 auto;margin-top:1px}
+  .soonrow div p{margin:0;font-size:13.5px;color:#5d5a50}
+  .soonrow div b{display:block;font-size:14.5px;margin-bottom:2px}
+  .legendrow{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:26px 0 0;font-family:var(--mono);font-size:11px}
+  .legendrow span{padding:5px 11px;border-radius:40px;border:1px solid var(--line);letter-spacing:.04em}
+  .lk{background:var(--keep-bg);color:var(--keep);border-color:var(--keep-ln)}
+  .lx{background:var(--excl-bg);color:var(--excl);border-color:var(--excl-ln)}
+  .ln{background:var(--neg-bg);color:var(--neg);border-color:var(--neg-ln)}
+  .foot{margin:40px 0 8px;text-align:center;font-size:12px;color:var(--soft);font-style:italic;max-width:540px;margin-left:auto;margin-right:auto}
+
+  /* ---- shared: rooms ---- */
+  .pageintro{padding:22px 0 4px}
+  .pageintro h2{margin:0 0 4px;font-size:23px;letter-spacing:-.01em}
+  .pageintro p{margin:0;font-size:14px;color:#5d5a50}
+  .projname{font-family:var(--serif);font-size:18px;border:none;border-bottom:1.5px solid var(--line);
+    background:none;padding:4px 2px;width:100%;max-width:380px;margin-top:10px;color:var(--ink)}
+  .projname:focus{outline:none;border-color:var(--brand)}
+
+  .room{padding:22px 0 6px;border-top:1px solid var(--line);margin-top:18px}
+  .room:first-of-type{border-top:none;margin-top:6px}
+  .room .rhead{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  .roomname{font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#4f4c44;
+    font-weight:600;background:none;border:none;border-bottom:1px dashed transparent;padding:2px 0;min-width:120px}
+  .roomname:focus{outline:none;border-bottom-color:var(--brand)}
+  .rhead .del{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--excl);background:none;border:none}
+  .frame{position:relative;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);line-height:0}
+  .frame img{width:100%;display:block}
+  .editbanner{font-family:var(--mono);font-size:11px;color:var(--brand);margin:9px 2px 0;letter-spacing:.02em}
+
+  .dot{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;border:2.5px solid #fff;
+    background:rgba(26,29,26,.62);box-shadow:0 2px 8px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;
+    z-index:2;transition:transform .12s,background .2s}
+  .dot:active{transform:translate(-50%,-50%) scale(.9)}
+  .dot svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:2.4}
+  .dot.keep{background:var(--keep)} .dot.excl{background:var(--excl)} .dot.neg{background:var(--neg)}
+  .dot.pulse{animation:p 2.4s ease-out infinite}
+  .dot.editdot{background:var(--brand)}
+  @keyframes p{0%{box-shadow:0 0 0 0 rgba(255,255,255,.55)}70%{box-shadow:0 0 0 11px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+  .tag{position:absolute;transform:translate(-50%,calc(-50% - 26px));font-family:var(--mono);font-size:10.5px;white-space:nowrap;
+    background:#fff;padding:3px 8px;border-radius:30px;box-shadow:0 1px 6px rgba(0,0,0,.18);pointer-events:none;opacity:0;
+    transition:opacity .18s;z-index:3;letter-spacing:.02em}
+  .dot.set + .tag,.frame:hover .dot:hover + .tag,.dot.editdot + .tag{opacity:1}
+
+  .list{margin-top:12px}
+  .li{display:flex;align-items:center;gap:11px;padding:11px 2px;border-bottom:1px solid var(--line)}
+  .li:last-child{border-bottom:none}
+  .li .num{width:20px;font-family:var(--mono);font-size:11px;color:#b3ae9f}
+  .li .name{flex:1;font-size:15.5px}
+  .li .state{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;
+    border-radius:30px;border:1px solid var(--line);color:var(--soft)}
+  .li.keep .state{background:var(--keep-bg);color:var(--keep);border-color:var(--keep-ln)}
+  .li.excl .state{background:var(--excl-bg);color:var(--excl);border-color:var(--excl-ln)}
+  .li.neg .state{background:var(--neg-bg);color:var(--neg);border-color:var(--neg-ln)}
+  .li .rm{font-family:var(--mono);font-size:11px;color:var(--soft);background:none;border:none}
+
+  .addroom{display:flex;gap:10px;margin:22px 0 4px;flex-wrap:wrap}
+  .addroom label{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#fff;border-radius:9px;
+    padding:12px 16px;font-size:14.5px;font-weight:600}
+  .addroom label:active{opacity:.85}
+  .addroom label.lib{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .addroom label svg{flex:0 0 auto}
+  .addroom .sec{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:12px 16px;font-size:14px}
+
+  /* ---- bottom bar ---- */
+  .bar{position:fixed;left:0;right:0;bottom:0;background:rgba(246,244,238,.97);backdrop-filter:blur(8px);
+    border-top:1px solid var(--line);padding:11px 16px 15px;z-index:25}
+  .bar .wrap{padding:0 16px}
+  .tally{display:flex;gap:8px;margin:0 auto 9px;font-family:var(--mono);font-size:11.5px}
+  .tally div{flex:1;text-align:center;padding:6px 4px;border-radius:8px;border:1px solid var(--line)}
+  .tally b{font-size:17px;display:block;font-family:Georgia,serif}
+  .tk{background:var(--keep-bg);color:var(--keep)} .tx{background:var(--excl-bg);color:var(--excl)}
+  .tn{background:var(--neg-bg);color:var(--neg)} .tu{color:var(--soft)}
+  .barbtns{display:flex;gap:9px}
+  .btn{flex:1;padding:14px;border:none;border-radius:10px;background:var(--ink);color:var(--paper);font-size:15px;font-weight:600;letter-spacing:.02em}
+  .btn:active{opacity:.85}
+  .btn.sec{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .savehint{font-family:var(--mono);font-size:10.5px;color:var(--soft);text-align:center;margin:0 0 8px}
+
+  /* ---- modal ---- */
+  .modal{position:fixed;inset:0;background:rgba(26,29,26,.55);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal.on{display:flex}
+  .mcard{background:var(--paper);border-radius:14px;max-width:560px;width:100%;max-height:84vh;overflow:auto;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .mcard h3{margin:0 0 4px;font-size:20px}
+  .mcard p{margin:0 0 14px;font-size:13.5px;color:#5d5a50}
+  textarea{width:100%;height:220px;border:1px solid var(--line);border-radius:9px;padding:12px;font-family:var(--mono);
+    font-size:12px;line-height:1.55;background:#fff;resize:vertical}
+  .mrow{display:flex;gap:9px;margin-top:13px}
+  .mrow button{flex:1;padding:12px;border-radius:9px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600}
+  .mrow button.primary{background:var(--ink);color:var(--paper);border:none}
+  .nameinput{width:100%;border:1px solid var(--line);border-radius:9px;padding:12px;font-size:15px;font-family:var(--serif);background:#fff}
+  .nameinput:focus{outline:none;border-color:var(--brand)}
+  .empty{text-align:center;padding:50px 20px;color:var(--soft)}
+  .empty svg{width:46px;height:46px;opacity:.4;margin-bottom:12px}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <div class="mark">
+      <svg class="key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--brand)">
+        <circle cx="8" cy="8" r="5"></circle><path d="M11.5 11.5 L21 21"></path><path d="M17 17 l2 -2"></path><path d="M19.5 19.5 l2 -2"></path>
+      </svg>
+      <span><b>Hom</b><span class="v">ventory</span></span>
+    </div>
+    <div class="spacer"></div>
+    <button class="ghost" id="homeBtn" onclick="go('home')">Home</button>
+  </div>
+</div>
+
+<!-- ============ HOME ============ -->
+<section id="view-home" class="wrap">
+  <div class="hero">
+    <div class="stamp">What conveys with the home</div>
+    <h1>Turn your listing photos into a <span class="em">tap-to-decide</span> inventory.</h1>
+    <p>Upload your rooms, drop a pin on each piece of furniture, and send it to your buyer. They tap what they want included, excluded, or left open — and send their picks back. No more messy email threads at closing.</p>
+    <div class="cards">
+      <div class="card">
+        <h3>Create an inventory</h3>
+        <p>Upload photos of your rooms and label the items. Takes a few minutes.</p>
+        <button class="go alt" onclick="startNew()">Start &rarr;</button>
+      </div>
+      <div class="card">
+        <h3>Review one you were sent</h3>
+        <p>Open a Homventory file from a seller and mark what you'd like in the offer.</p>
+        <button class="go" onclick="importProject()">Open a file &rarr;</button>
+      </div>
+    </div>
+    <div class="soonrow">
+      <span class="badge">Coming later</span>
+      <div>
+        <b>Import straight from a Zillow / Realtor.com listing</b>
+        <p>Pulling photos automatically from a listing link needs licensed MLS access — it's on the roadmap. For now, upload the photos directly (you already have them).</p>
+      </div>
+    </div>
+    <div class="legendrow">
+      <span class="lk">&#9679; Include</span>
+      <span class="lx">&#9679; Exclude</span>
+      <span class="ln">&#9679; Negotiable</span>
+    </div>
+    <p class="foot">Homventory records preferences only. What's actually binding is your purchase contract or addendum — this tool feeds that conversation, it doesn't replace the paperwork.</p>
+    <!-- EDIT THIS LINE to change the credit / link -->
+    <p class="foot" style="margin-top:12px"><a href="https://micahprentice.com" style="color:var(--brand);text-decoration:none;font-style:normal">A free resource from Micah Prentice</a></p>
+  </div>
+</section>
+
+<!-- ============ CREATE ============ -->
+<section id="view-create" class="wrap hidden">
+  <div class="pageintro">
+    <h2>Build your inventory</h2>
+    <p>Add a photo for each room, then tap anywhere on the photo to drop a labeled item.</p>
+    <input class="projname" id="projName" placeholder="Property name or address" oninput="onName(this.value)">
+  </div>
+  <div id="createRooms"></div>
+  <div class="addroom">
+    <label><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Take a photo<input type="file" accept="image/*" capture="environment" style="display:none" onchange="addRoomPhoto(event)"></label>
+    <label class="lib"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Add from library<input type="file" accept="image/*" multiple style="display:none" onchange="addRoomPhoto(event)"></label>
+    <button class="sec" onclick="previewBuyer()">Preview buyer view</button>
+  </div>
+</section>
+
+<!-- ============ PREVIEW / BUYER ============ -->
+<section id="view-preview" class="wrap hidden">
+  <div class="pageintro">
+    <h2 id="pvTitle">Tap an item. Tell us what you'd like.</h2>
+    <p>Tap once = Include &middot; twice = Exclude &middot; three times = Negotiable &middot; four = clear. Then hit <b>Build my list</b>.</p>
+  </div>
+  <div id="previewRooms"></div>
+</section>
+
+<!-- ============ BOTTOM BAR ============ -->
+<div class="bar hidden" id="barCreate">
+  <div class="wrap">
+    <p class="savehint" id="saveHint">Saves automatically in your browser</p>
+    <div class="barbtns">
+      <button class="btn sec" onclick="shareOrSaveProject()">Save / share file</button>
+      <button class="btn" onclick="previewBuyer()">Preview &amp; share &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<div class="bar hidden" id="barPreview">
+  <div class="wrap">
+    <div class="tally">
+      <div class="tk"><b id="t-keep">0</b>Include</div>
+      <div class="tx"><b id="t-excl">0</b>Exclude</div>
+      <div class="tn"><b id="t-neg">0</b>Negotiable</div>
+      <div class="tu"><b id="t-uns">0</b>Untouched</div>
+    </div>
+    <div class="barbtns">
+      <button class="btn sec" onclick="go('create')">&larr; Back to edit</button>
+      <button class="btn" onclick="buildList()">Build my list &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODALS ============ -->
+<div class="modal" id="labelModal">
+  <div class="mcard">
+    <h3>Name this item</h3>
+    <p>What's at this spot? e.g. "White couch", "Wall-mounted TV", "Brown chair Jack liked".</p>
+    <input class="nameinput" id="labelInput" placeholder="Item name" autocomplete="off">
+    <div class="mrow">
+      <button onclick="closeLabel()">Cancel</button>
+      <button class="primary" onclick="confirmLabel()">Add item</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="exportModal">
+  <div class="mcard">
+    <h3>Your selections</h3>
+    <p>Send these to your realtor or the seller. <b>Share</b> opens your phone's share menu — Messages, Mail, WhatsApp, AirDrop.</p>
+    <textarea id="out" readonly></textarea>
+    <div class="mrow">
+      <button class="primary" onclick="shareSelections()">Share with realtor</button>
+      <button onclick="emailSelections()">Email</button>
+    </div>
+    <div class="mrow">
+      <button onclick="copyOut()" id="copybtn">Copy</button>
+      <button onclick="downloadOut()">Download .txt</button>
+    </div>
+    <div class="mrow"><button onclick="closeModal('exportModal')">Keep editing</button></div>
+  </div>
+</div>
+
+<input type="file" id="importInput" accept=".json,application/json" style="display:none" onchange="onImportFile(event)">
+
+<script>
+/* ---------------- state ---------------- */
+let project = { name:'', rooms:[] };  // rooms: {id, name, img, spots:[{id,x,y,label,state}]}
+let view = 'home';
+let mode = 'create';                  // 'create' | 'preview'
+let pendingSpot = null;               // {roomId, x, y}
+const STATES=['','keep','excl','neg'];
+const LBL={keep:'Include',excl:'Exclude',neg:'Negotiable'};
+const ICON={keep:'<polyline points="3,8 7,12 13,4"/>',excl:'<line x1="4" y1="4" x2="12" y2="12"/><line x1="12" y1="4" x2="4" y2="12"/>',neg:'<line x1="4" y1="8" x2="12" y2="8"/>'};
+let uid=0; const nid=()=> 'x'+(Date.now().toString(36))+(uid++);
+
+/* ---------------- persistence (graceful if storage absent) ---------------- */
+function save(){
+  try{ localStorage.setItem('homventory:project', JSON.stringify(project)); flagSaved('Saved in this browser'); }
+  catch(e){ flagSaved('Storage full — use “Save / send file” to keep your work'); }
+}
+function loadSaved(){
+  try{ const v=localStorage.getItem('homventory:project'); if(v){ const p=JSON.parse(v); if(p&&p.rooms&&p.rooms.length){ project=p; } } }
+  catch(e){ /* nothing saved yet */ }
+}
+function flagSaved(t){ const h=document.getElementById('saveHint'); if(h) h.textContent=t; }
+
+/* ---------------- view routing ---------------- */
+function go(v){
+  view=v;
+  document.getElementById('view-home').classList.toggle('hidden', v!=='home');
+  document.getElementById('view-create').classList.toggle('hidden', v!=='create');
+  document.getElementById('view-preview').classList.toggle('hidden', v!=='preview');
+  document.getElementById('barCreate').classList.toggle('hidden', v!=='create');
+  document.getElementById('barPreview').classList.toggle('hidden', v!=='preview');
+  window.scrollTo(0,0);
+}
+
+function startNew(){
+  loadSaved();
+  if(!project.rooms.length){ project={name:'',rooms:[]}; }
+  document.getElementById('projName').value = project.name||'';
+  mode='create'; renderCreate(); go('create');
+}
+
+/* ---------------- create flow ---------------- */
+function onName(v){ project.name=v; save(); }
+
+function downscale(file,maxW=1200,q=0.72){
+  return new Promise(res=>{
+    const img=new Image();
+    img.onload=()=>{
+      const s=Math.min(1,maxW/img.width);
+      const c=document.createElement('canvas');
+      c.width=Math.round(img.width*s); c.height=Math.round(img.height*s);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      res(c.toDataURL('image/jpeg',q));
+    };
+    img.onerror=()=>res(null);
+    img.src=URL.createObjectURL(file);
+  });
+}
+
+async function addRoomPhoto(e){
+  const files=[...e.target.files]; e.target.value='';
+  if(!files.length) return;
+  let added=0;
+  for(const file of files){
+    const data= await downscale(file);
+    if(data){ project.rooms.push({ id:nid(), name:'New room', img:data, spots:[] }); added++; }
+  }
+  if(!added){ alert('Could not read that image.'); return; }
+  save(); renderCreate();
+  const last=document.querySelector('#createRooms .room:last-of-type');
+  if(last) last.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function renderCreate(){
+  const host=document.getElementById('createRooms'); host.innerHTML='';
+  if(!project.rooms.length){
+    host.innerHTML='<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><div>No rooms yet. Add your first room photo below.</div></div>';
+    return;
+  }
+  project.rooms.forEach(room=>{
+    const r=document.createElement('div'); r.className='room';
+    const head=document.createElement('div'); head.className='rhead';
+    const nm=document.createElement('input'); nm.className='roomname'; nm.value=room.name;
+    nm.oninput=()=>{ room.name=nm.value; save(); };
+    const del=document.createElement('button'); del.className='del'; del.textContent='Remove room';
+    del.onclick=()=>{ if(confirm('Remove this room and its items?')){ project.rooms=project.rooms.filter(x=>x.id!==room.id); save(); renderCreate(); } };
+    head.appendChild(nm); head.appendChild(del); r.appendChild(head);
+
+    const frame=document.createElement('div'); frame.className='frame';
+    const img=document.createElement('img'); img.src=room.img; img.alt=room.name; frame.appendChild(img);
+    frame.onclick=(ev)=>{
+      if(ev.target!==frame && ev.target!==img) return;
+      const rect=frame.getBoundingClientRect();
+      const x=((ev.clientX-rect.left)/rect.width)*100;
+      const y=((ev.clientY-rect.top)/rect.height)*100;
+      pendingSpot={ roomId:room.id, x, y };
+      openLabel();
+    };
+    room.spots.forEach(sp=> frame.appendChild(makeEditDot(room,sp,frame)));
+    r.appendChild(frame);
+    const bn=document.createElement('div'); bn.className='editbanner'; bn.textContent='Tap the photo to drop an item · tap a pin to rename or delete';
+    r.appendChild(bn);
+
+    // list
+    const list=document.createElement('div'); list.className='list';
+    room.spots.forEach((sp,i)=>{
+      const li=document.createElement('div'); li.className='li';
+      const num=document.createElement('span'); num.className='num'; num.textContent=String(i+1).padStart(2,'0');
+      const name=document.createElement('span'); name.className='name'; name.textContent=sp.label;
+      const rm=document.createElement('button'); rm.className='rm'; rm.textContent='delete';
+      rm.onclick=()=>{ room.spots=room.spots.filter(x=>x.id!==sp.id); save(); renderCreate(); };
+      li.appendChild(num); li.appendChild(name); li.appendChild(rm);
+      list.appendChild(li);
+    });
+    r.appendChild(list);
+    host.appendChild(r);
+  });
+}
+
+function makeEditDot(room,sp,frame){
+  const dot=document.createElement('div'); dot.className='dot editdot';
+  dot.style.left=sp.x+'%'; dot.style.top=sp.y+'%';
+  dot.innerHTML='<svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.4" fill="#fff" stroke="none"/></svg>';
+  const tag=document.createElement('div'); tag.className='tag'; tag.style.left=sp.x+'%'; tag.style.top=sp.y+'%'; tag.textContent=sp.label;
+  dot.onclick=(ev)=>{ ev.stopPropagation();
+    const nv=prompt('Rename item (clear the box and OK to delete):', sp.label);
+    if(nv===null) return;
+    if(nv.trim()===''){ room.spots=room.spots.filter(x=>x.id!==sp.id); } else { sp.label=nv.trim(); }
+    save(); renderCreate();
+  };
+  // append tag right after dot via fragment
+  const wrap=document.createDocumentFragment(); wrap.appendChild(dot); wrap.appendChild(tag);
+  // need both in frame; return a fragment-like: append dot then tag
+  frame.appendChild(dot); return tag;
+}
+
+/* label modal */
+function openLabel(){ document.getElementById('labelInput').value=''; document.getElementById('labelModal').classList.add('on'); setTimeout(()=>document.getElementById('labelInput').focus(),50); }
+function closeLabel(){ document.getElementById('labelModal').classList.remove('on'); pendingSpot=null; }
+function confirmLabel(){
+  const v=document.getElementById('labelInput').value.trim();
+  if(!v){ document.getElementById('labelInput').focus(); return; }
+  const room=project.rooms.find(r=>r.id===pendingSpot.roomId);
+  room.spots.push({ id:nid(), x:pendingSpot.x, y:pendingSpot.y, label:v, state:'' });
+  save(); closeLabel(); renderCreate();
+}
+document.getElementById('labelInput').addEventListener('keydown',e=>{ if(e.key==='Enter') confirmLabel(); });
+
+/* ---------------- buyer / preview flow ---------------- */
+function previewBuyer(){
+  if(!project.rooms.length || !project.rooms.some(r=>r.spots.length)){ alert('Add at least one room with one item first.'); return; }
+  mode='preview'; renderPreview(); go('preview');
+  document.getElementById('pvTitle').textContent = project.name ? ('“'+project.name+'” — tell us what you\u2019d like') : 'Tap an item. Tell us what you\u2019d like.';
+}
+
+function renderPreview(){
+  const host=document.getElementById('previewRooms'); host.innerHTML='';
+  project.rooms.forEach(room=>{
+    if(!room.spots.length) return;
+    const r=document.createElement('div'); r.className='room';
+    const head=document.createElement('div'); head.className='rhead';
+    const nm=document.createElement('span'); nm.className='roomname'; nm.textContent=room.name; head.appendChild(nm); r.appendChild(head);
+    const frame=document.createElement('div'); frame.className='frame';
+    const img=document.createElement('img'); img.src=room.img; img.alt=room.name; frame.appendChild(img);
+    room.spots.forEach(sp=>{
+      const dot=document.createElement('div'); dot.className='dot'+(sp.state?(' set '+sp.state):' pulse');
+      dot.style.left=sp.x+'%'; dot.style.top=sp.y+'%';
+      dot.innerHTML='<svg viewBox="0 0 16 16">'+(sp.state?ICON[sp.state]:'')+'</svg>';
+      const tag=document.createElement('div'); tag.className='tag'; tag.style.left=sp.x+'%'; tag.style.top=sp.y+'%'; tag.textContent=sp.label;
+      dot.onclick=()=>cyclePreview(sp,dot,tag,room);
+      frame.appendChild(dot); frame.appendChild(tag);
+    });
+    r.appendChild(frame);
+    const list=document.createElement('div'); list.className='list';
+    room.spots.forEach((sp,i)=>{
+      const li=document.createElement('div'); li.className='li'+(sp.state?' '+sp.state:''); li.dataset.id=sp.id;
+      const num=document.createElement('span'); num.className='num'; num.textContent=String(i+1).padStart(2,'0');
+      const name=document.createElement('span'); name.className='name'; name.textContent=sp.label;
+      const st=document.createElement('span'); st.className='state'; st.textContent=sp.state?LBL[sp.state]:'\u2014';
+      li.appendChild(num); li.appendChild(name); li.appendChild(st);
+      li.onclick=()=>{ const dot=[...frame.querySelectorAll('.dot')].find((d,idx)=>room.spots[idx].id===sp.id); cyclePreview(sp,dot,dot.nextSibling,room); };
+      list.appendChild(li);
+    });
+    r.appendChild(list);
+    host.appendChild(r);
+  });
+  tally();
+}
+
+function cyclePreview(sp,dot,tag,room){
+  sp.state=STATES[(STATES.indexOf(sp.state)+1)%4];
+  dot.classList.remove('keep','excl','neg','pulse','set');
+  const svg=dot.querySelector('svg');
+  if(sp.state){ dot.classList.add('set',sp.state); svg.innerHTML=ICON[sp.state]; } else { svg.innerHTML=''; }
+  const li=document.querySelector('.li[data-id="'+sp.id+'"]');
+  if(li){ li.classList.remove('keep','excl','neg'); const stt=li.querySelector('.state');
+    if(sp.state){ li.classList.add(sp.state); stt.textContent=LBL[sp.state]; } else { stt.textContent='\u2014'; } }
+  save(); tally();
+}
+
+function tally(){
+  let k=0,x=0,n=0,u=0;
+  project.rooms.forEach(r=>r.spots.forEach(s=>{ if(s.state==='keep')k++;else if(s.state==='excl')x++;else if(s.state==='neg')n++;else u++; }));
+  document.getElementById('t-keep').textContent=k; document.getElementById('t-excl').textContent=x;
+  document.getElementById('t-neg').textContent=n; document.getElementById('t-uns').textContent=u;
+}
+
+function buildList(){
+  let out='HOMVENTORY — BUYER SELECTIONS\n';
+  if(project.name) out+='Property: '+project.name+'\n';
+  out+='Date: '+new Date().toLocaleDateString()+'\n'+'='.repeat(42)+'\n\n';
+  const order={keep:0,neg:1,excl:2,'':3};
+  project.rooms.forEach(room=>{
+    if(!room.spots.length) return;
+    out+=(room.name||'Room').toUpperCase()+'\n'+'-'.repeat((room.name||'Room').length)+'\n';
+    const sorted=[...room.spots].sort((a,b)=>order[a.state]-order[b.state]);
+    sorted.forEach(s=>{ const m={keep:'[INCLUDE]',excl:'[EXCLUDE]',neg:'[NEGOTIABLE]','':'[ no choice ]'}[s.state]; out+='  '+m.padEnd(15)+s.label+'\n'; });
+    out+='\n';
+  });
+  let k=0,x=0,n=0; project.rooms.forEach(r=>r.spots.forEach(s=>{ if(s.state==='keep')k++;else if(s.state==='excl')x++;else if(s.state==='neg')n++; }));
+  out+='='.repeat(42)+'\nSUMMARY: '+k+' include · '+x+' exclude · '+n+' negotiable\n';
+  document.getElementById('out').value=out;
+  document.getElementById('exportModal').classList.add('on');
+}
+function closeModal(id){ document.getElementById(id).classList.remove('on'); }
+async function shareSelections(){
+  const text=document.getElementById('out').value;
+  const title='Homventory — '+(project.name||'home')+' selections';
+  if(navigator.share){
+    try{ await navigator.share({title, text}); return; }
+    catch(e){ if(e&&e.name==='AbortError') return; }
+  }
+  copyOut();
+}
+function emailSelections(){
+  const subject=encodeURIComponent('Homventory — '+(project.name||'home')+' selections');
+  const body=encodeURIComponent(document.getElementById('out').value);
+  window.location.href='mailto:?subject='+subject+'&body='+body;
+}
+function copyOut(){ const t=document.getElementById('out'); t.select();
+  navigator.clipboard.writeText(t.value).then(()=>{ const b=document.getElementById('copybtn'); b.textContent='Copied \u2713'; setTimeout(()=>b.textContent='Copy to clipboard',1600); }).catch(()=>{document.execCommand('copy');}); }
+function downloadOut(){ const blob=new Blob([document.getElementById('out').value],{type:'text/plain'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='homventory-selections.txt'; a.click(); }
+
+/* ---------------- project import / export / share (backend-free) ---------------- */
+function projFileName(){ return (project.name? project.name.replace(/[^a-z0-9]+/gi,'-').toLowerCase().replace(/^-+|-+$/g,'') : 'homventory')+'.json'; }
+
+async function shareFileObj(file,title){
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+    try{ await navigator.share({files:[file], title}); return true; }
+    catch(e){ if(e&&e.name==='AbortError') return true; }
+  }
+  return false;
+}
+
+async function shareOrSaveProject(){
+  const fname=projFileName();
+  const blob=new Blob([JSON.stringify(project)],{type:'application/json'});
+  const file=new File([blob],fname,{type:'application/json'});
+  if(await shareFileObj(file,'Homventory inventory')){ flagSaved('Shared — open it in Homventory to review'); return; }
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fname; a.click();
+  flagSaved('File saved — send it to your realtor or buyer');
+}
+function importProject(){ document.getElementById('importInput').click(); }
+async function onImportFile(e){
+  const file=e.target.files[0]; e.target.value=''; if(!file) return;
+  try{
+    const txt= await file.text(); const p=JSON.parse(txt);
+    if(!p || !Array.isArray(p.rooms)) throw new Error('bad');
+    project=p; uid+=1;
+    document.getElementById('projName').value=project.name||'';
+    save();
+    // buyer who opens a file goes straight to review
+    if(project.rooms.some(r=>r.spots.length)){ previewBuyer(); }
+    else { renderCreate(); go('create'); }
+  }catch(err){ alert('That doesn’t look like a Homventory file.'); }
+}
+
+/* close modals on backdrop tap */
+['labelModal','exportModal'].forEach(id=>{ document.getElementById(id).addEventListener('click',e=>{ if(e.target.id===id) closeModal(id); }); });
+
+/* boot */
+go('home');
+</script>
+</body>
+</html>

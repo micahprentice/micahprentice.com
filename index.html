@@ -445,33 +445,45 @@ section:nth-child(even) { background: var(--bg-alt); }
 
 /* ─── VENTURES ─── */
 .ventures-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px; margin-top: 48px;
+  display: flex; flex-wrap: wrap;
+  gap: 16px; margin-top: 48px;
 }
 .venture-card {
+  position: relative;
   background: #fff; border: 1px solid var(--border-light);
-  border-radius: var(--radius); padding: 28px;
+  border-radius: 16px; padding: 20px;
+  width: 90px; height: 90px;
   box-shadow: var(--shadow); transition: all 0.2s;
-  text-decoration: none; color: inherit; display: block;
+  text-decoration: none; color: inherit;
+  display: flex; align-items: center; justify-content: center;
 }
 .venture-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--primary-light); }
 .venture-icon {
-  width: 48px; height: 48px; border-radius: 12px;
+  width: 52px; height: 52px; border-radius: 12px;
   background: var(--primary-xlight); border: 1px solid var(--primary-light);
   display: flex; align-items: center; justify-content: center;
-  font-size: 22px; margin-bottom: 16px;
+  font-size: 26px;
 }
-.venture-badge {
-  display: inline-block; font-size: 11px; font-weight: 600;
-  padding: 3px 10px; border-radius: 99px; margin-bottom: 10px;
-  text-transform: uppercase; letter-spacing: 0.05em;
+.venture-tooltip {
+  position: absolute; bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%);
+  background: var(--text); color: #fff;
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+  padding: 5px 10px; border-radius: 6px;
+  opacity: 0; pointer-events: none; transition: opacity 0.15s;
 }
+.venture-tooltip::after {
+  content: ''; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent; border-top-color: var(--text);
+}
+.venture-card:hover .venture-tooltip { opacity: 1; }
+.venture-badge { display: none; }
 .badge-active { background: #DCFCE7; color: #15803D; }
 .badge-building { background: #FEF9C3; color: #854D0E; }
-.venture-name { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
-.venture-desc { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 16px; }
-.venture-link { font-size: 13px; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 4px; }
-.venture-link svg { width: 14px; height: 14px; }
+.venture-name { display: none; }
+.venture-desc { display: none; }
+.venture-link { display: none; }
 
 /* ─── MEDIA TABS ─── */
 .media-tabs { display: flex; gap: 4px; margin: 36px 0 28px; border-bottom: 2px solid var(--border-light); }
@@ -1026,50 +1038,32 @@ footer {
 
     <a href="https://speeedbiz.com" target="_blank" rel="noopener" class="venture-card">
       <div class="venture-icon">⚡</div>
-      <span class="venture-badge badge-active">Active</span>
-      <div class="venture-name">Speeedbiz</div>
-      <div class="venture-desc">The fastest way to search, research, and start a business. Built for people who think fast and move faster.</div>
-      <div class="venture-link">Visit Speeedbiz <i data-lucide="arrow-up-right"></i></div>
+      <span class="venture-tooltip">Speeedbiz</span>
     </a>
 
     <a href="https://instantplumbingky.com" target="_blank" rel="noopener" class="venture-card">
       <div class="venture-icon">🔧</div>
-      <span class="venture-badge badge-active">Active</span>
-      <div class="venture-name">Instant Plumbing</div>
-      <div class="venture-desc">On-demand plumbing in Louisville, KY. 10 service calls a day, dispatched fast, fixed right. Built to run like a machine.</div>
-      <div class="venture-link">Visit Instant Plumbing <i data-lucide="arrow-up-right"></i></div>
+      <span class="venture-tooltip">Instant Plumbing</span>
     </a>
-
 
     <a href="https://christmaslightingky.com" target="_blank" rel="noopener" class="venture-card">
       <div class="venture-icon">🎄</div>
-      <span class="venture-badge badge-active">Active</span>
-      <div class="venture-name">Christmas Lighting KY</div>
-      <div class="venture-desc">Professional holiday light installation across Louisville, KY and Southern Indiana. Residential, commercial, and permanent LED systems.</div>
-      <div class="venture-link">Visit Christmas Lighting KY <i data-lucide="arrow-up-right"></i></div>
+      <span class="venture-tooltip">Christmas Lighting KY</span>
     </a>
 
     <a href="https://prism-investor.com" target="_blank" rel="noopener" class="venture-card">
       <div class="venture-icon">◈</div>
-      <span class="venture-badge badge-active">Pre-Seed</span>
-      <div class="venture-name">Prism Intelligence OS</div>
-      <div class="venture-desc">The first AI-native operating system for trade businesses. One platform replacing 6 tools — built by an operator who lived the problem.</div>
-      <div class="venture-link">View Prism <i data-lucide="arrow-up-right"></i></div>
+      <span class="venture-tooltip">Prism Intelligence OS</span>
     </a>
+
     <a href="https://quantecpower.com" target="_blank" rel="noopener" class="venture-card">
       <div class="venture-icon">⚙️</div>
-      <span class="venture-badge badge-active">Active</span>
-      <div class="venture-name">Quantec Power</div>
-      <div class="venture-desc">Supplies world-class talent into mission-critical builds. Staffing for the projects that can't afford to slow down.</div>
-      <div class="venture-link">Visit Quantec Power <i data-lucide="arrow-up-right"></i></div>
+      <span class="venture-tooltip">Quantec Power</span>
     </a>
 
     <a href="#" class="venture-card" onclick="return false;">
       <div class="venture-icon">🎙️</div>
-      <span class="venture-badge badge-active">Active</span>
-      <div class="venture-name">The Build Podcast</div>
-      <div class="venture-desc">Conversations with founders, operators, and thinkers on what it actually takes to build something from nothing.</div>
-      <div class="venture-link">Listen now <i data-lucide="arrow-up-right"></i></div>
+      <span class="venture-tooltip">The Build Podcast</span>
     </a>
 
   </div>

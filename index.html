@@ -247,6 +247,17 @@ section:nth-child(even) { background: var(--bg-alt); }
   gap: 72px; align-items: center;
   max-width: 1000px; margin: 0 auto;
 }
+/* Combined About + Ventures layout */
+.about-ventures-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.about-ventures-left { display: flex; flex-direction: column; }
+.about-ventures-right { display: flex; flex-direction: column; }
 .about-photo-wrap {
   position: relative;
 }
@@ -928,7 +939,7 @@ footer {
 
 /* ─── MOBILE ─── */
 @media (max-width: 768px) {
-  .hero-inner, .speedbiz-inner, .about-inner { grid-template-columns: 1fr; gap: 40px; }
+  .hero-inner, .speedbiz-inner, .about-inner, .about-ventures-inner { grid-template-columns: 1fr; gap: 40px; }
   .booking-inner { grid-template-columns: 1fr; gap: 32px; }
   .booking-photo { max-width: 320px; margin: 0 auto; aspect-ratio: 4/3; }
   .booking-photo img { object-position: center 20%; }
@@ -1007,80 +1018,81 @@ footer {
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-inner">
-    <div class="about-photo-wrap fade-up">
-      <div class="about-photo-frame">
-        <!-- Save your photo as micah.jpg in the same folder as this file -->
-        <img src="micah.jpg" alt="Micah Prentice" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-        <div class="photo-placeholder" style="display:none;">
-          <i data-lucide="user"></i>
-          <span>Save photo as micah.jpg</span>
+<!-- ABOUT + VENTURES COMBINED -->
+<section id="about" style="padding: 80px 5vw;">
+  <div class="about-ventures-inner">
+
+    <!-- LEFT: About -->
+    <div class="about-ventures-left fade-up">
+      <div class="about-photo-wrap">
+        <div class="about-photo-frame">
+          <img src="micah.jpg" alt="Micah Prentice" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="photo-placeholder" style="display:none;">
+            <i data-lucide="user"></i>
+            <span>Save photo as micah.jpg</span>
+          </div>
+        </div>
+        <div class="about-badge">
+          <div class="badge-num">10+</div>
+          <div class="badge-lbl">Years building</div>
         </div>
       </div>
-      <div class="about-badge">
-        <div class="badge-num">10+</div>
-        <div class="badge-lbl">Years building</div>
+      <div class="about-text" style="margin-top: 32px;">
+        <div class="section-label">About Micah</div>
+        <div class="section-title" style="font-size: clamp(22px, 3vw, 32px);">Builder by nature.<br/>Entrepreneur by choice.</div>
+        <p class="about-bio">I've spent over a decade starting businesses, studying what makes them work, and helping others do the same. Whether I'm building a venture from scratch, advising founders, or creating tools that speed up the process — the mission is the same: make it easier for good people to build good things.</p>
+        <div class="about-pills">
+          <span class="about-pill">🚀 Serial Entrepreneur</span>
+          <span class="about-pill">🎙️ Podcaster</span>
+          <span class="about-pill">📚 Avid Reader</span>
+          <span class="about-pill">⚡ Founder of Speeedbiz</span>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="#booking" class="btn-primary"><i data-lucide="calendar"></i> Book a Call</a>
+          <a href="#ventures" class="btn-outline">See My Ventures</a>
+        </div>
       </div>
     </div>
-    <div class="about-text fade-up">
-      <div class="section-label">About Micah</div>
-      <div class="section-title">Builder by nature.<br/>Entrepreneur by choice.</div>
-      <p class="about-bio">I've spent over a decade starting businesses, studying what makes them work, and helping others do the same. Whether I'm building a venture from scratch, advising founders, or creating tools that speed up the process — the mission is the same: make it easier for good people to build good things.</p>
-      <p class="about-bio">When I'm not deep in a build, I'm probably on a call with someone who's figuring out their next move. That's my favorite part.</p>
-      <div class="about-pills">
-        <span class="about-pill">🚀 Serial Entrepreneur</span>
-        <span class="about-pill">🎙️ Podcaster</span>
-        <span class="about-pill">📚 Avid Reader</span>
-        <span class="about-pill">⚡ Founder of Speeedbiz</span>
-      </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <a href="#booking" class="btn-primary"><i data-lucide="calendar"></i> Book a Call</a>
-        <a href="#ventures" class="btn-outline">See My Ventures</a>
+
+    <!-- RIGHT: Ventures -->
+    <div id="ventures" class="about-ventures-right fade-up">
+      <div class="section-label">Active Ventures</div>
+      <div class="section-title" style="font-size: clamp(22px, 3vw, 32px);">What I'm Building</div>
+      <div class="section-sub">A mix of businesses, projects, and experiments at various stages.</div>
+      <div class="ventures-grid" style="margin-top: 28px;">
+
+        <a href="https://speeedbiz.com" target="_blank" rel="noopener" class="venture-card">
+          <img src="logos/SpeeeBiz.png" alt="Speeedbiz" class="venture-logo">
+          <span class="venture-tooltip">Speeedbiz</span>
+        </a>
+
+        <a href="https://instantplumbingky.com" target="_blank" rel="noopener" class="venture-card">
+          <img src="logos/instant-plumbing.png" alt="Instant Plumbing" class="venture-logo">
+          <span class="venture-tooltip">Instant Plumbing</span>
+        </a>
+
+        <a href="https://christmaslightingky.com" target="_blank" rel="noopener" class="venture-card">
+          <img src="logos/holiday-lighting.png" alt="Christmas Lighting KY" class="venture-logo">
+          <span class="venture-tooltip">Christmas Lighting KY</span>
+        </a>
+
+        <a href="https://prism-investor.com" target="_blank" rel="noopener" class="venture-card">
+          <img src="logos/prism.png" alt="Prism Intelligence OS" class="venture-logo">
+          <span class="venture-tooltip">Prism Intelligence OS</span>
+        </a>
+
+        <a href="https://quantecpower.com" target="_blank" rel="noopener" class="venture-card">
+          <img src="logos/quantec-power.png" alt="Quantec Power" class="venture-logo">
+          <span class="venture-tooltip">Quantec Power</span>
+        </a>
+
+        <a href="#" class="venture-card" onclick="return false;">
+          <img src="logos/Podcast.png" alt="The Build Podcast" class="venture-logo">
+          <span class="venture-tooltip">The Build Podcast</span>
+        </a>
+
       </div>
     </div>
-  </div>
-</section>
-
-<!-- VENTURES -->
-<section id="ventures">
-  <div class="fade-up">
-    <div class="section-label">Active Ventures</div>
-    <div class="section-title">What I'm Building</div>
-    <div class="section-sub">A mix of businesses, projects, and experiments at various stages.</div>
-  </div>
-  <div class="ventures-grid fade-up">
-
-    <a href="https://speeedbiz.com" target="_blank" rel="noopener" class="venture-card">
-      <img src="logos/SpeeeBiz.png" alt="Speeedbiz" class="venture-logo">
-      <span class="venture-tooltip">Speeedbiz</span>
-    </a>
-
-    <a href="https://instantplumbingky.com" target="_blank" rel="noopener" class="venture-card">
-      <img src="logos/instant-plumbing.png" alt="Instant Plumbing" class="venture-logo">
-      <span class="venture-tooltip">Instant Plumbing</span>
-    </a>
-
-    <a href="https://christmaslightingky.com" target="_blank" rel="noopener" class="venture-card">
-      <img src="logos/holiday-lighting.png" alt="Christmas Lighting KY" class="venture-logo">
-      <span class="venture-tooltip">Christmas Lighting KY</span>
-    </a>
-
-    <a href="https://prism-investor.com" target="_blank" rel="noopener" class="venture-card">
-      <img src="logos/prism.png" alt="Prism Intelligence OS" class="venture-logo">
-      <span class="venture-tooltip">Prism Intelligence OS</span>
-    </a>
-
-    <a href="https://quantecpower.com" target="_blank" rel="noopener" class="venture-card">
-      <img src="logos/quantec-power.png" alt="Quantec Power" class="venture-logo">
-      <span class="venture-tooltip">Quantec Power</span>
-    </a>
-
-    <a href="#" class="venture-card" onclick="return false;">
-      <img src="logos/Podcast.png" alt="The Build Podcast" class="venture-logo">
-      <span class="venture-tooltip">The Build Podcast</span>
-    </a>
 
   </div>
 </section>

@@ -650,6 +650,19 @@ section:nth-child(even) { background: var(--bg-alt); }
 .book-overlay-review {
   font-size: 16px; color: var(--muted); line-height: 1.8;
 }
+.book-overlay-takeaway {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--primary-xlight); border: 1px solid var(--primary-light);
+  border-radius: 12px; padding: 16px 18px; margin-bottom: 12px;
+  font-size: 15px; color: var(--text); line-height: 1.65;
+}
+.book-overlay-takeaway-num {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--primary); color: #fff;
+  font-size: 12px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
 .book-overlay-nav {
   display: flex; gap: 12px; margin-top: 48px; padding-top: 28px;
   border-top: 1px solid var(--border-light);
@@ -1287,10 +1300,10 @@ footer {
     <div class="book-overlay-author" id="ov-author"></div>
     <div class="book-overlay-rating" id="ov-rating"></div>
     <hr class="book-overlay-divider" />
-    <div class="book-overlay-label">The One Idea</div>
+    <div class="book-overlay-label">Summary</div>
     <div class="book-overlay-summary" id="ov-summary"></div>
-    <div class="book-overlay-label">What It's About</div>
-    <div class="book-overlay-review" id="ov-review"></div>
+    <div class="book-overlay-label" style="margin-top:28px;">Key Takeaways</div>
+    <div id="ov-takeaways"></div>
     <div class="book-overlay-nav">
       <button class="book-nav-btn" id="btn-prev" onclick="navBook(-1)"><i data-lucide="chevron-left"></i> Previous</button>
       <button class="book-nav-btn" id="btn-next" onclick="navBook(1)">Next <i data-lucide="chevron-right"></i></button>
@@ -2147,7 +2160,11 @@ const BOOKS = [
     genre: "Negotiation",
     coverColor: "linear-gradient(135deg, #1E293B, #334155)",
     summary: '"How am I supposed to do that?" is the most powerful negotiation question you can ask.',
-    review: "A former FBI hostage negotiator argues that emotion, not logic, drives every deal. Tactical empathy — genuinely understanding the other side's perspective — gets you further than any rational argument. Calibrated questions and mirroring create space for the other person to reveal what they actually want."
+    review: "A former FBI hostage negotiator argues that emotion, not logic, drives every deal. Tactical empathy — genuinely understanding the other side's perspective — gets you further than any rational argument. Calibrated questions and mirroring create space for the other person to reveal what they actually want.",
+    takeaways: [
+      "Tactical empathy — naming the other person's emotions out loud — disarms tension and builds trust faster than any logical argument ever could.",
+      "Calibrated questions ('How am I supposed to do that?') give you control without confrontation by making the other side solve your problem."
+    ]
   },
   {
     id: 2,
@@ -2157,7 +2174,11 @@ const BOOKS = [
     genre: "Investing",
     coverColor: "linear-gradient(135deg, #B45309, #F59E0B)",
     summary: "Risk management matters more than picking winners.",
-    review: "Through conversations with the world's top investors, Rubenstein distills what separates great allocators from the rest: patience, discipline, deep research, and a willingness to be contrarian when everyone else is panicking. The best investors aren't smarter — they're more honest about what they don't know."
+    review: "Through conversations with the world's top investors, Rubenstein distills what separates great allocators from the rest: patience, discipline, deep research, and a willingness to be contrarian when everyone else is panicking. The best investors aren't smarter — they're more honest about what they don't know.",
+    takeaways: [
+      "The best investors aren't smarter — they're more disciplined and brutally honest about what they don't know.",
+      "Patience and willingness to be contrarian when everyone else panics is the real edge in investing."
+    ]
   },
   {
     id: 3,
@@ -2167,7 +2188,11 @@ const BOOKS = [
     genre: "Productivity",
     coverColor: "linear-gradient(135deg, #EA580C, #F97316)",
     summary: "If your business can't run without you, you don't own a business — you own a job.",
-    review: "Most business owners build a job for themselves, not a company. Clockwork shows how to design your business so it runs without you — by identifying your \"Queen Bee Role,\" delegating systematically, and protecting the four key activities that drive the whole operation. The goal: a four-week vacation that the business survives."
+    review: "Most business owners build a job for themselves, not a company. Clockwork shows how to design your business so it runs without you — by identifying your \"Queen Bee Role,\" delegating systematically, and protecting the four key activities that drive the whole operation. The goal: a four-week vacation that the business survives.",
+    takeaways: [
+      "Find your Queen Bee Role — the one thing only you can do — and fiercely protect it while delegating everything else.",
+      "If your business can't survive a 4-week vacation without you, it's a job. That's the benchmark to design toward."
+    ]
   },
   {
     id: 4,
@@ -2177,7 +2202,11 @@ const BOOKS = [
     genre: "Lifestyle Design",
     coverColor: "linear-gradient(135deg, #0891B2, #06B6D4)",
     summary: "Doing less is not laziness. Focus on the 20% of work that drives 80% of the results.",
-    review: "Ferriss dismantles the idea that you have to defer life until retirement. Using the DEAL framework — Define, Eliminate, Automate, Liberate — he shows how to outsource low-value tasks, create income that doesn't require your constant presence, and design a life of \"mini-retirements\" now rather than later."
+    review: "Ferriss dismantles the idea that you have to defer life until retirement. Using the DEAL framework — Define, Eliminate, Automate, Liberate — he shows how to outsource low-value tasks, create income that doesn't require your constant presence, and design a life of \"mini-retirements\" now rather than later.",
+    takeaways: [
+      "Apply 80/20 ruthlessly — 20% of your effort drives 80% of results. Eliminate everything else before you even think about optimizing.",
+      "Automate and outsource before you do yourself — most tasks don't need your involvement at all."
+    ]
   },
   {
     id: 5,
@@ -2187,7 +2216,11 @@ const BOOKS = [
     genre: "Habits",
     coverColor: "linear-gradient(135deg, #16A34A, #22C55E)",
     summary: "You don't rise to the level of your goals. You fall to the level of your systems.",
-    review: "Small changes compound into remarkable results — but only if the system is right. Clear explains how habits are built (cue → craving → response → reward) and how to redesign your environment so good behaviors are obvious, attractive, easy, and satisfying. Identity, not outcomes, is the real lever: become the person, and the results follow."
+    review: "Small changes compound into remarkable results — but only if the system is right. Clear explains how habits are built (cue → craving → response → reward) and how to redesign your environment so good behaviors are obvious, attractive, easy, and satisfying. Identity, not outcomes, is the real lever: become the person, and the results follow.",
+    takeaways: [
+      "Design your environment so good habits are obvious, attractive, easy, and satisfying — friction kills behavior before willpower ever gets a chance.",
+      "Shift from outcome-based goals ('I want to run a marathon') to identity-based habits ('I am a runner'). The identity drives everything."
+    ]
   },
   {
     id: 6,
@@ -2197,7 +2230,11 @@ const BOOKS = [
     genre: "Influence",
     coverColor: "linear-gradient(135deg, #9A3412, #EA580C)",
     summary: "You can make more friends in two months by being interested in others than in two years trying to get people interested in you.",
-    review: "Published in 1936 and still devastatingly relevant. Carnegie's insight: people are not creatures of logic but of emotion. Genuine interest in others, remembering names, letting people feel heard, and avoiding criticism outperforms any clever argument. The principles sound obvious until you catch yourself doing the opposite."
+    review: "Published in 1936 and still devastatingly relevant. Carnegie's insight: people are not creatures of logic but of emotion. Genuine interest in others, remembering names, letting people feel heard, and avoiding criticism outperforms any clever argument. The principles sound obvious until you catch yourself doing the opposite.",
+    takeaways: [
+      "Never criticize, condemn, or complain — it creates resentment and changes nothing. People want to feel important, not corrected.",
+      "Remember names and show genuine interest in what others care about. It costs nothing and is more powerful than any persuasion tactic."
+    ]
   },
   {
     id: 7,
@@ -2339,7 +2376,12 @@ function openBook(id) {
   document.getElementById('ov-author').textContent = 'by ' + book.author;
   document.getElementById('ov-rating').textContent = starsHTML(book.rating);
   document.getElementById('ov-summary').textContent = book.summary;
-  document.getElementById('ov-review').textContent = book.review;
+  const takEl = document.getElementById('ov-takeaways');
+  if (takEl && book.takeaways) {
+    takEl.innerHTML = book.takeaways.map((t, i) =>
+      `<div class="book-overlay-takeaway"><div class="book-overlay-takeaway-num">${i + 1}</div><div>${t}</div></div>`
+    ).join('');
+  }
 
   const idx = BOOKS.findIndex(b => b.id === id);
   document.getElementById('btn-prev').disabled = idx === 0;

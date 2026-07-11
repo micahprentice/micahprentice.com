@@ -504,6 +504,21 @@ section:nth-child(even) { background: var(--bg-alt); }
 }
 .venture-card:hover .venture-tooltip { opacity: 1; }
 .venture-badge { display: none; }
+
+/* Shake + pop animation for venture cards */
+@keyframes ventureShake {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); }
+  15%  { transform: translateY(-8px) rotate(-4deg) scale(1.08); }
+  30%  { transform: translateY(-4px) rotate(3deg) scale(1.05); }
+  45%  { transform: translateY(-7px) rotate(-3deg) scale(1.07); }
+  60%  { transform: translateY(-2px) rotate(2deg) scale(1.03); }
+  75%  { transform: translateY(-5px) rotate(-1deg) scale(1.05); }
+  90%  { transform: translateY(-1px) rotate(1deg) scale(1.01); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+.venture-card.shaking {
+  animation: ventureShake 0.55s ease forwards;
+}
 .badge-active { background: #DCFCE7; color: #15803D; }
 .badge-building { background: #FEF9C3; color: #854D0E; }
 .venture-name { display: none; }
@@ -1056,7 +1071,7 @@ footer {
       <p class="about-bio">I've spent over a decade starting businesses, studying what makes them work, and helping others do the same. Whether I'm building a venture from scratch, advising founders, or creating tools that speed up the process — the mission is the same: make it easier for good people to build good things.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
         <a href="#booking" class="btn-primary"><i data-lucide="calendar"></i> Book a Call</a>
-        <a href="#ventures" class="btn-outline">See My Ventures</a>
+        <a href="#ventures" class="btn-outline" onclick="shakeVentures(event)">See My Ventures</a>
       </div>
     </div>
 
@@ -2162,6 +2177,21 @@ function renderBooks() {
       </div>
     </div>
   `).join('');
+}
+
+function shakeVentures(e) {
+  e.preventDefault();
+  const cards = document.querySelectorAll('.venture-card');
+  cards.forEach((card, i) => {
+    card.classList.remove('shaking');
+    // stagger each card by 60ms
+    setTimeout(() => {
+      card.classList.add('shaking');
+      card.addEventListener('animationend', () => card.classList.remove('shaking'), { once: true });
+    }, i * 60);
+  });
+  // also scroll to section
+  document.getElementById('ventures').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function openBook(id) {

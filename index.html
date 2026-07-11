@@ -1137,8 +1137,113 @@ footer {
       <div style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:var(--text);letter-spacing:-0.3px;margin-bottom:8px;">Books that shaped how I think</div>
       <div style="font-size:15px;color:var(--muted);">A running shelf of reads — what they're about, and the one idea I keep coming back to.</div>
     </div>
-    <div class="books-grid" id="books-grid"></div>
-    <div id="books-count" style="margin-top:28px;font-size:13px;color:var(--muted2);"></div>
+    <div class="books-grid" id="books-grid">
+      <div class="book-card" onclick="openBook(1)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#1E293B,#334155);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">Never Split the Difference</span><span class="author">— Chris Voss</span><span class="rating">★★★★★</span></div>
+          <div class="book-genre-tag">Negotiation</div>
+          <div class="book-summary">"How am I supposed to do that?" is the most powerful negotiation question you can ask.</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="openBook(2)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#B45309,#F59E0B);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">How to Invest</span><span class="author">— David Rubenstein</span><span class="rating">★★★★★</span></div>
+          <div class="book-genre-tag">Investing</div>
+          <div class="book-summary">"Risk management matters more than picking winners."</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="openBook(3)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#EA580C,#F97316);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">Clockwork</span><span class="author">— Mike Michalowicz</span><span class="rating">★★★★★</span></div>
+          <div class="book-genre-tag">Productivity</div>
+          <div class="book-summary">"If your business can't run without you, you don't own a business — you own a job."</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="openBook(4)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#0891B2,#06B6D4);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">The 4-Hour Work Week</span><span class="author">— Tim Ferriss</span><span class="rating">★★★★★</span></div>
+          <div class="book-genre-tag">Lifestyle Design</div>
+          <div class="book-summary">"Doing less is not laziness. Focus on the 20% of work that drives 80% of the results."</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="openBook(5)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#16A34A,#22C55E);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">Atomic Habits</span><span class="author">— James Clear</span><span class="rating">★★★★★</span></div>
+          <div class="book-genre-tag">Habits</div>
+          <div class="book-summary">"You don't rise to the level of your goals. You fall to the level of your systems."</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="openBook(6)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#9A3412,#EA580C);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">How to Win Friends and Influence People</span><span class="author">— Dale Carnegie</span><span class="rating">★★★★★</span></div>
+          <div class="book-genre-tag">Influence</div>
+          <div class="book-summary">"You can make more friends in two months by being interested in others than in two years trying to get people interested in you."</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="openBook(7)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#1D4ED8,#3B82F6);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">Buy Then Build</span><span class="author">— Walker Deibel</span><span class="rating">★★★★★</span></div>
+          <div class="book-genre-tag">Wealth Building</div>
+          <div class="book-summary">"Starting up is optional. Entrepreneurship through acquisition skips years of proof-of-concept pain."</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="openBook(8)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#DC2626,#F87171);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">The E-Myth Revisited</span><span class="author">— Michael Gerber</span><span class="rating">★★★★★</span></div>
+          <div class="book-genre-tag">Entrepreneurship</div>
+          <div class="book-summary">"Work on your business, not just in it."</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="openBook(9)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#1E3A5F,#2E6DA4);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">The 7 Habits of Highly Effective People</span><span class="author">— Stephen R. Covey</span><span class="rating">★★★★★</span></div>
+          <div class="book-genre-tag">Personal Development</div>
+          <div class="book-summary">"Private victory always comes before public victory."</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="openBook(10)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#065F46,#10B981);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">Built to Sell</span><span class="author">— John Warrillow</span><span class="rating">★★★★★</span></div>
+          <div class="book-genre-tag">Entrepreneurship</div>
+          <div class="book-summary">"Build a business that doesn't need you — then decide whether to sell it."</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="openBook(11)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#92400E,#D97706);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">Rich Dad Poor Dad</span><span class="author">— Robert Kiyosaki</span><span class="rating">★★★★★</span></div>
+          <div class="book-genre-tag">Wealth Building</div>
+          <div class="book-summary">"The poor and middle class work for money. The rich have money work for them."</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="openBook(12)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#78350F,#F59E0B);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">Midas Touch</span><span class="author">— Kiyosaki & Trump</span><span class="rating">★★★★☆</span></div>
+          <div class="book-genre-tag">Entrepreneurship</div>
+          <div class="book-summary">"Winning in business is not about luck — it's about the five points of the Midas Touch."</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="openBook(13)" style="cursor:pointer;">
+        <div class="book-cover" style="background:linear-gradient(135deg,#1E3A5F,#0EA5E9);">📖</div>
+        <div class="book-body">
+          <div class="book-meta"><span class="title">The Psychology of Money</span><span class="author">— Morgan Housel</span><span class="rating">★★★★★</span></div>
+          <div class="book-genre-tag">Investing</div>
+          <div class="book-summary">"Doing well with money has little to do with how smart you are and a lot to do with how you behave."</div>
+        </div>
+      </div>
+    </div>
+    <div id="books-count" style="margin-top:28px;font-size:13px;color:var(--muted2);">13 books</div>
   </div>
 
 <!-- BOOK DETAIL OVERLAY -->

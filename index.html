@@ -959,8 +959,35 @@ footer {
 .footer-copy { font-size: 13px; }
 
 /* ─── FADE IN ─── */
-.fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.fade-up.visible { opacity: 1; transform: none; }
+.fade-up { opacity: 0; transform: translateY(30px) scale(0.97); transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+.fade-up.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+/* ─── SCROLL PROGRESS BAR ─── */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+  background: linear-gradient(90deg, #0284C7 0%, #38BDF8 60%, #7DD3FC 100%);
+  z-index: 9999; pointer-events: none; border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 10px rgba(56,189,248,0.55);
+  transition: width 0.08s linear;
+}
+
+/* ─── APPLE-STYLE CARD REVEAL ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(44px) scale(0.94);
+  transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1);
+  will-change: opacity, transform;
+}
+.reveal.in { opacity: 1; transform: translateY(0) scale(1); }
+
+/* ─── WORD SPLIT ─── */
+.split-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.split-word.in { opacity: 1; transform: none; }
 
 /* ─── MOBILE ─── */
 @media (max-width: 768px) {
@@ -981,6 +1008,7 @@ footer {
 </style>
 </head>
 <body>
+<div id="scroll-progress"></div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -1652,6 +1680,111 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ═══════════════════════════════════════════
+// APPLE-STYLE SCROLL ANIMATIONS
+// ═══════════════════════════════════════════
+
+// ── Scroll Progress Bar ──
+(function() {
+  const bar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    bar.style.width = Math.min(100, pct * 100) + '%';
+  }, { passive: true });
+})();
+
+// ── Hero Parallax + Exit Fade ──
+(function() {
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    const h = hero.offsetHeight;
+    if (y < h * 1.2) {
+      hero.style.transform = 'translateY(' + (y * 0.28) + 'px)';
+      hero.style.opacity = Math.max(0, 1 - (y / h) * 0.65);
+    }
+  }, { passive: true });
+})();
+
+// ── Word-Split Section Titles ──
+(function() {
+  document.querySelectorAll('.section-title').forEach(el => {
+    // Skip if contains HTML tags (spans, etc.)
+    if (el.children.length > 0) return;
+    const parts = el.innerHTML.split(/(<br\s*\/?>)/gi);
+    el.innerHTML = parts.map(part => {
+      if (/<br/i.test(part)) return part;
+      return part.trim().split(/\s+/).filter(Boolean).map(word =>
+        '<span class="split-word">' + word + '</span>'
+      ).join(' ');
+    }).join('');
+    const wordObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.querySelectorAll('.split-word').forEach((w, i) => {
+          setTimeout(() => w.classList.add('in'), 80 + i * 65);
+        });
+        wordObs.unobserve(e.target);
+      });
+    }, { threshold: 0.35 });
+    wordObs.observe(el);
+  });
+})();
+
+// ── Stagger Venture Cards ──
+(function() {
+  const grid = document.querySelector('.ventures-grid');
+  if (!grid) return;
+  const cards = [...grid.querySelectorAll('.venture-card')];
+  cards.forEach(c => c.classList.add('reveal'));
+  const vObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      cards.forEach((c, i) => setTimeout(() => c.classList.add('in'), i * 100));
+      vObs.unobserve(e.target);
+    });
+  }, { threshold: 0.15 });
+  vObs.observe(grid);
+})();
+
+// ── Stagger Book Cards ──
+(function() {
+  const grid = document.querySelector('.books-grid');
+  if (!grid) return;
+  const cards = [...grid.querySelectorAll('.book-card')];
+  cards.forEach(c => c.classList.add('reveal'));
+  const bObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      cards.forEach((c, i) => setTimeout(() => c.classList.add('in'), i * 60));
+      bObs.unobserve(e.target);
+    });
+  }, { threshold: 0.05 });
+  bObs.observe(grid);
+})();
+
+// ── Badge Counter (10+) ──
+(function() {
+  const badge = document.querySelector('.badge-num');
+  if (!badge) return;
+  const target = 10;
+  badge.textContent = '0+';
+  const cObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      let n = 0;
+      const tick = setInterval(() => {
+        n++;
+        badge.textContent = n + '+';
+        if (n >= target) clearInterval(tick);
+      }, 75);
+      cObs.unobserve(e.target);
+    });
+  }, { threshold: 0.9 });
+  cObs.observe(badge);
+})();
 
 // ═══════════════════════════════════════════
 // TYPEWRITER ANIMATION (big hero search input)

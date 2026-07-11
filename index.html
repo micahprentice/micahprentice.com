@@ -1090,15 +1090,15 @@ footer {
 <section id="media">
   <div class="fade-up">
     <div class="section-label">Media</div>
-    <div class="section-title">Podcasts & Books</div>
-    <div class="section-sub">Conversations I've had, shows I've been on, and books I've actually finished — with honest summaries.</div>
+    <div class="section-title">Books & Podcasts</div>
+    <div class="section-sub">Books I've actually finished — with honest summaries — plus conversations and shows I've been on.</div>
   </div>
   <div class="media-tabs fade-up">
-    <button class="media-tab active" onclick="switchMediaTab('podcasts', this)">Podcasts</button>
-    <button class="media-tab" onclick="switchMediaTab('books', this)">Books I've Read</button>
+    <button class="media-tab active" onclick="switchMediaTab('books', this)">Books I've Read</button>
+    <button class="media-tab" onclick="switchMediaTab('podcasts', this)">Podcasts</button>
   </div>
 
-  <div class="media-panel active" id="panel-podcasts">
+  <div class="media-panel" id="panel-podcasts">
     <div class="podcast-grid">
       <a href="#" class="podcast-card">
         <div class="podcast-thumb">🎙️</div>
@@ -1135,7 +1135,7 @@ footer {
     </div>
   </div>
 
-  <div class="media-panel" id="panel-books">
+  <div class="media-panel active" id="panel-books">
     <div style="margin-bottom:36px;">
       <div style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:var(--text);letter-spacing:-0.3px;margin-bottom:8px;">Books that shaped how I think</div>
       <div style="font-size:15px;color:var(--muted);">A running shelf of reads — what they're about, and the one idea I keep coming back to.</div>

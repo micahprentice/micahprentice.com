@@ -527,36 +527,39 @@ section:nth-child(even) { background: var(--bg-alt); }
 .podcast-info .meta { font-size: 12px; color: var(--muted); }
 
 .books-grid {
-  display: flex; flex-direction: column; gap: 0;
-  border: 1px solid var(--border-light); border-radius: var(--radius);
-  overflow: hidden; box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 20px;
+  padding: 8px 0;
 }
 .book-card {
-  background: #fff; padding: 24px 28px;
-  display: flex; gap: 20px; align-items: flex-start;
-  border-bottom: 1px solid var(--border-light);
-  transition: background 0.15s;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 10px; cursor: pointer; text-align: center;
+  background: none; border: none; padding: 0;
+  transition: transform 0.2s;
 }
-.book-card:last-child { border-bottom: none; }
-.book-card:hover { background: var(--bg-alt); }
+.book-card:hover { transform: translateY(-4px); }
 .book-cover {
-  width: 44px; height: 60px; border-radius: 5px;
-  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-  font-size: 18px; color: #fff;
-  box-shadow: 2px 3px 8px rgba(0,0,0,0.18);
+  width: 100%; aspect-ratio: 2/3;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 3px 4px 14px rgba(0,0,0,0.22);
+  display: block;
 }
-.book-body { flex: 1; min-width: 0; }
-.book-meta { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
-.book-meta .title { font-size: 15px; font-weight: 700; color: var(--text); }
-.book-meta .author { font-size: 13px; color: var(--muted); }
-.book-meta .rating { font-size: 12px; color: #F59E0B; margin-left: auto; }
-.book-genre-tag {
-  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--primary); background: var(--primary-xlight);
-  border: 1px solid var(--primary-light); border-radius: 99px;
-  padding: 2px 8px; margin-bottom: 8px; display: inline-block;
+.book-cover-fallback {
+  width: 100%; aspect-ratio: 2/3;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; color: #fff;
+  box-shadow: 3px 4px 14px rgba(0,0,0,0.22);
 }
-.book-summary { font-size: 13.5px; color: var(--muted); line-height: 1.6; font-style: italic; }
+.book-body { width: 100%; }
+.book-meta { display: flex; flex-direction: column; gap: 2px; }
+.book-meta .title { font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.book-meta .author { font-size: 11px; color: var(--muted); }
+.book-meta .rating { font-size: 11px; color: #F59E0B; }
+.book-genre-tag { display: none; }
+.book-summary { display: none; }
 .book-expand { display: none; }
 
 /* ─── BOOK DETAIL OVERLAY ─── */
@@ -1138,112 +1141,73 @@ footer {
       <div style="font-size:15px;color:var(--muted);">A running shelf of reads — what they're about, and the one idea I keep coming back to.</div>
     </div>
     <div class="books-grid" id="books-grid">
-      <div class="book-card" onclick="openBook(1)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#1E293B,#334155);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">Never Split the Difference</span><span class="author">— Chris Voss</span><span class="rating">★★★★★</span></div>
-          <div class="book-genre-tag">Negotiation</div>
-          <div class="book-summary">"How am I supposed to do that?" is the most powerful negotiation question you can ask.</div>
-        </div>
+      <div class="book-card" onclick="openBook(1)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780062407801-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Never Split the Difference">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#1E293B,#334155);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">Never Split the Difference</span><span class="author">Chris Voss</span><span class="rating">★★★★★</span></div></div>
       </div>
-      <div class="book-card" onclick="openBook(2)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#B45309,#F59E0B);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">How to Invest</span><span class="author">— David Rubenstein</span><span class="rating">★★★★★</span></div>
-          <div class="book-genre-tag">Investing</div>
-          <div class="book-summary">"Risk management matters more than picking winners."</div>
-        </div>
+      <div class="book-card" onclick="openBook(2)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781982190231-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="How to Invest">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#B45309,#F59E0B);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">How to Invest</span><span class="author">David Rubenstein</span><span class="rating">★★★★★</span></div></div>
       </div>
-      <div class="book-card" onclick="openBook(3)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#EA580C,#F97316);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">Clockwork</span><span class="author">— Mike Michalowicz</span><span class="rating">★★★★★</span></div>
-          <div class="book-genre-tag">Productivity</div>
-          <div class="book-summary">"If your business can't run without you, you don't own a business — you own a job."</div>
-        </div>
+      <div class="book-card" onclick="openBook(3)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780525534242-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Clockwork">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#EA580C,#F97316);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">Clockwork</span><span class="author">Mike Michalowicz</span><span class="rating">★★★★★</span></div></div>
       </div>
-      <div class="book-card" onclick="openBook(4)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#0891B2,#06B6D4);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">The 4-Hour Work Week</span><span class="author">— Tim Ferriss</span><span class="rating">★★★★★</span></div>
-          <div class="book-genre-tag">Lifestyle Design</div>
-          <div class="book-summary">"Doing less is not laziness. Focus on the 20% of work that drives 80% of the results."</div>
-        </div>
+      <div class="book-card" onclick="openBook(4)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780307465351-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="The 4-Hour Work Week">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#0891B2,#06B6D4);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">The 4-Hour Work Week</span><span class="author">Tim Ferriss</span><span class="rating">★★★★★</span></div></div>
       </div>
-      <div class="book-card" onclick="openBook(5)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#16A34A,#22C55E);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">Atomic Habits</span><span class="author">— James Clear</span><span class="rating">★★★★★</span></div>
-          <div class="book-genre-tag">Habits</div>
-          <div class="book-summary">"You don't rise to the level of your goals. You fall to the level of your systems."</div>
-        </div>
+      <div class="book-card" onclick="openBook(5)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Atomic Habits">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#16A34A,#22C55E);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">Atomic Habits</span><span class="author">James Clear</span><span class="rating">★★★★★</span></div></div>
       </div>
-      <div class="book-card" onclick="openBook(6)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#9A3412,#EA580C);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">How to Win Friends and Influence People</span><span class="author">— Dale Carnegie</span><span class="rating">★★★★★</span></div>
-          <div class="book-genre-tag">Influence</div>
-          <div class="book-summary">"You can make more friends in two months by being interested in others than in two years trying to get people interested in you."</div>
-        </div>
+      <div class="book-card" onclick="openBook(6)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780671027032-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="How to Win Friends">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#9A3412,#EA580C);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">How to Win Friends & Influence People</span><span class="author">Dale Carnegie</span><span class="rating">★★★★★</span></div></div>
       </div>
-      <div class="book-card" onclick="openBook(7)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#1D4ED8,#3B82F6);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">Buy Then Build</span><span class="author">— Walker Deibel</span><span class="rating">★★★★★</span></div>
-          <div class="book-genre-tag">Wealth Building</div>
-          <div class="book-summary">"Starting up is optional. Entrepreneurship through acquisition skips years of proof-of-concept pain."</div>
-        </div>
+      <div class="book-card" onclick="openBook(7)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781544501918-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Buy Then Build">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#1D4ED8,#3B82F6);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">Buy Then Build</span><span class="author">Walker Deibel</span><span class="rating">★★★★★</span></div></div>
       </div>
-      <div class="book-card" onclick="openBook(8)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#DC2626,#F87171);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">The E-Myth Revisited</span><span class="author">— Michael Gerber</span><span class="rating">★★★★★</span></div>
-          <div class="book-genre-tag">Entrepreneurship</div>
-          <div class="book-summary">"Work on your business, not just in it."</div>
-        </div>
+      <div class="book-card" onclick="openBook(8)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780887307287-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="The E-Myth Revisited">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#DC2626,#F87171);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">The E-Myth Revisited</span><span class="author">Michael Gerber</span><span class="rating">★★★★★</span></div></div>
       </div>
-      <div class="book-card" onclick="openBook(9)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#1E3A5F,#2E6DA4);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">The 7 Habits of Highly Effective People</span><span class="author">— Stephen R. Covey</span><span class="rating">★★★★★</span></div>
-          <div class="book-genre-tag">Personal Development</div>
-          <div class="book-summary">"Private victory always comes before public victory."</div>
-        </div>
+      <div class="book-card" onclick="openBook(9)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780743269513-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="The 7 Habits">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#1E3A5F,#2E6DA4);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">The 7 Habits of Highly Effective People</span><span class="author">Stephen Covey</span><span class="rating">★★★★★</span></div></div>
       </div>
-      <div class="book-card" onclick="openBook(10)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#065F46,#10B981);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">Built to Sell</span><span class="author">— John Warrillow</span><span class="rating">★★★★★</span></div>
-          <div class="book-genre-tag">Entrepreneurship</div>
-          <div class="book-summary">"Build a business that doesn't need you — then decide whether to sell it."</div>
-        </div>
+      <div class="book-card" onclick="openBook(10)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781591845010-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Built to Sell">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#065F46,#10B981);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">Built to Sell</span><span class="author">John Warrillow</span><span class="rating">★★★★★</span></div></div>
       </div>
-      <div class="book-card" onclick="openBook(11)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#92400E,#D97706);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">Rich Dad Poor Dad</span><span class="author">— Robert Kiyosaki</span><span class="rating">★★★★★</span></div>
-          <div class="book-genre-tag">Wealth Building</div>
-          <div class="book-summary">"The poor and middle class work for money. The rich have money work for them."</div>
-        </div>
+      <div class="book-card" onclick="openBook(11)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781612680194-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Rich Dad Poor Dad">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#92400E,#D97706);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">Rich Dad Poor Dad</span><span class="author">Robert Kiyosaki</span><span class="rating">★★★★★</span></div></div>
       </div>
-      <div class="book-card" onclick="openBook(12)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#78350F,#F59E0B);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">Midas Touch</span><span class="author">— Kiyosaki & Trump</span><span class="rating">★★★★☆</span></div>
-          <div class="book-genre-tag">Entrepreneurship</div>
-          <div class="book-summary">"Winning in business is not about luck — it's about the five points of the Midas Touch."</div>
-        </div>
+      <div class="book-card" onclick="openBook(12)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781612680064-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Midas Touch">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#78350F,#F59E0B);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">Midas Touch</span><span class="author">Kiyosaki & Trump</span><span class="rating">★★★★☆</span></div></div>
       </div>
-      <div class="book-card" onclick="openBook(13)" style="cursor:pointer;">
-        <div class="book-cover" style="background:linear-gradient(135deg,#1E3A5F,#0EA5E9);">📖</div>
-        <div class="book-body">
-          <div class="book-meta"><span class="title">The Psychology of Money</span><span class="author">— Morgan Housel</span><span class="rating">★★★★★</span></div>
-          <div class="book-genre-tag">Investing</div>
-          <div class="book-summary">"Doing well with money has little to do with how smart you are and a lot to do with how you behave."</div>
-        </div>
+      <div class="book-card" onclick="openBook(13)">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780857197689-L.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="The Psychology of Money">
+        <div class="book-cover-fallback" style="background:linear-gradient(135deg,#1E3A5F,#0EA5E9);display:none;">📖</div>
+        <div class="book-body"><div class="book-meta"><span class="title">The Psychology of Money</span><span class="author">Morgan Housel</span><span class="rating">★★★★★</span></div></div>
       </div>
     </div>
-    <div id="books-count" style="margin-top:28px;font-size:13px;color:var(--muted2);">13 books</div>
+    <div id="books-count" style="margin-top:20px;font-size:13px;color:var(--muted2);">13 books</div>
   </div>
 
 <!-- BOOK DETAIL OVERLAY -->
@@ -1312,16 +1276,6 @@ footer {
       </div>
     </div>
 
-    <div class="resource-card" id="res-3">
-      <div class="copy-toast" id="toast-res-3">Link copied!</div>
-      <div class="resource-type">Tool</div>
-      <div class="resource-title">The Weekly Entrepreneur Review</div>
-      <div class="resource-desc">A 15-minute weekly ritual to stay focused on what matters. Includes the exact questions I ask myself every Sunday.</div>
-      <div class="resource-actions">
-        <a href="#" class="res-btn res-btn-primary"><i data-lucide="download"></i> Get it free</a>
-        <button class="res-btn res-btn-outline" onclick="copyResourceLink('res-3')"><i data-lucide="link"></i> Share</button>
-      </div>
-    </div>
 
     <div class="resource-card" id="res-4">
       <div class="copy-toast" id="toast-res-4">Link copied!</div>

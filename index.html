@@ -2418,7 +2418,8 @@ function renderBooks() {
   }
   grid.innerHTML = BOOKS.map(b => `
     <div class="book-card" onclick="openBook(${b.id})" role="button" tabindex="0" aria-label="Open ${b.title}" style="cursor:pointer;">
-      <div class="book-cover" style="background:${b.coverColor};">📖</div>
+      ${b.cover ? `<img class="book-cover" src="${b.cover}" alt="${b.title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">` : ''}
+      <div class="book-cover-fallback" style="background:${b.coverColor};${b.cover ? 'display:none;' : ''}">📖</div>
       <div class="book-body">
         <div class="book-meta">
           <span class="title">${b.title}</span>

@@ -1238,7 +1238,7 @@ footer {
       <div class="section-title">Ikigai — the reason behind everything I build</div>
       <p class="section-sub">A Japanese framework for finding purpose: the overlap of what you love, what you're good at, what the world needs, and what you can be paid for. Here's mine.</p>
     </div>
-    <div class="ikigai-grid fade-up">
+    <div class="ikigai-grid">
       <div class="ikigai-card ikigai-love">
         <div class="ikigai-card-label">What I Love</div>
         <div class="ikigai-card-text">Building, solving problems, competing, creating impact</div>
@@ -1818,6 +1818,33 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
     if (y < h * 1.2) {
       hero.style.transform = 'translateY(' + (y * 0.28) + 'px)';
       hero.style.opacity = Math.max(0, 1 - (y / h) * 0.65);
+    }
+  }, { passive: true });
+})();
+
+// ── Ikigai Wheel: boxes spin in like spokes as you scroll, settle into place ──
+(function() {
+  const section = document.getElementById('why');
+  if (!section) return;
+  const cards = section.querySelectorAll('.ikigai-card');
+  const center = section.querySelector('.ikigai-center');
+  window.addEventListener('scroll', () => {
+    const rect = section.getBoundingClientRect();
+    const vh = window.innerHeight;
+    // 0 = section just entering from bottom of screen, 1 = settled in place
+    let progress = (vh - rect.top) / (vh * 0.55);
+    progress = Math.max(0, Math.min(1, progress));
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out — fast spin, gentle stop
+    const angle = (1 - eased) * 360;
+    const scale = 0.6 + eased * 0.4;
+    const opacity = 0.15 + eased * 0.85;
+    cards.forEach(card => {
+      card.style.transform = 'rotate(' + angle + 'deg) scale(' + scale + ')';
+      card.style.opacity = opacity;
+    });
+    if (center) {
+      center.style.transform = 'scale(' + scale + ')';
+      center.style.opacity = opacity;
     }
   }, { passive: true });
 })();

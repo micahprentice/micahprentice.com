@@ -1828,11 +1828,14 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   if (!section) return;
   const cards = section.querySelectorAll('.ikigai-card');
   const center = section.querySelector('.ikigai-center');
-  window.addEventListener('scroll', () => {
-    const rect = section.getBoundingClientRect();
+
+  function updateIkigaiSpin() {
+    const ref = center || section;
+    const rect = ref.getBoundingClientRect();
     const vh = window.innerHeight;
-    // 0 = section just entering from bottom of screen, 1 = settled in place
-    let progress = (vh - rect.top) / (vh * 0.55);
+    const refCenterY = rect.top + rect.height / 2;
+    // 0 = wheel's center is at the bottom edge of the screen, 1 = wheel is exactly centered in the viewport
+    let progress = (vh - refCenterY) / (vh / 2);
     progress = Math.max(0, Math.min(1, progress));
     const eased = 1 - Math.pow(1 - progress, 3); // ease-out — fast spin, gentle stop
     const angle = (1 - eased) * 360;
@@ -1846,7 +1849,11 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
       center.style.transform = 'scale(' + scale + ')';
       center.style.opacity = opacity;
     }
-  }, { passive: true });
+  }
+
+  window.addEventListener('scroll', updateIkigaiSpin, { passive: true });
+  window.addEventListener('resize', updateIkigaiSpin);
+  updateIkigaiSpin(); // set the correct starting state immediately — don't wait for the first scroll event
 })();
 
 // ── Word-Split Section Titles ──

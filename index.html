@@ -997,47 +997,43 @@ footer {
 .why-header { text-align: center; margin-bottom: 52px; }
 .why-header .section-title { max-width: 620px; margin: 0 auto 14px; }
 .why-header .section-sub { max-width: 560px; margin: 0 auto; }
-.ikigai-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas:
-    ".    love    ."
-    "good center needs"
-    ".    paid    .";
-  gap: 16px;
-  align-items: center;
-}
-.ikigai-card {
-  border-radius: var(--radius);
-  padding: 22px 18px;
-  color: #fff;
-  box-shadow: var(--shadow);
-  display: flex; flex-direction: column; justify-content: center; gap: 8px;
-  min-height: 140px;
-}
-.ikigai-love   { grid-area: love;   background: linear-gradient(135deg, #BE185D, #EC4899); }
-.ikigai-good   { grid-area: good;   background: linear-gradient(135deg, #B45309, #F59E0B); }
-.ikigai-needs  { grid-area: needs;  background: linear-gradient(135deg, #0369A1, #0284C7); }
-.ikigai-paid   { grid-area: paid;   background: linear-gradient(135deg, #047857, #10B981); }
-.ikigai-card-label { font-family: 'Playfair Display', Georgia, serif; font-size: 15px; font-weight: 700; }
-.ikigai-card-text { font-size: 12.5px; line-height: 1.5; opacity: 0.94; }
-.ikigai-center {
-  grid-area: center;
-  background: var(--text);
-  border-radius: 50%;
+.ikigai-wheel {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
   aspect-ratio: 1/1;
-  width: 100%; max-width: 210px; margin: 0 auto;
-  color: #fff;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center;
-  padding: 22px;
-  box-shadow: var(--shadow-lg);
+  margin: 0 auto;
 }
-.ikigai-center-label { font-family: 'Playfair Display', Georgia, serif; font-size: 19px; font-weight: 800; letter-spacing: 0.04em; margin-bottom: 8px; }
-.ikigai-center-text { font-size: 12px; line-height: 1.4; color: rgba(255,255,255,0.85); }
+.ikigai-circle {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 44%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  box-shadow: var(--shadow-lg);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 8%;
+  box-sizing: border-box;
+  color: #fff;
+  will-change: transform, opacity;
+}
+.ikigai-circle-label { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(12px, 1.7vw, 15px); font-weight: 700; margin-bottom: 6px; }
+.ikigai-circle-text { font-size: clamp(9.5px, 1.15vw, 11px); line-height: 1.4; opacity: 0.95; }
+.ikigai-love   { background: linear-gradient(135deg, #BE185D, #EC4899); opacity: 0.88; z-index: 2; }
+.ikigai-good   { background: linear-gradient(135deg, #B45309, #F59E0B); opacity: 0.88; z-index: 2; }
+.ikigai-needs  { background: linear-gradient(135deg, #0369A1, #0284C7); opacity: 0.88; z-index: 2; }
+.ikigai-paid   { background: linear-gradient(135deg, #047857, #10B981); opacity: 0.88; z-index: 2; }
+.ikigai-center-circle {
+  width: 48%;
+  background: var(--text);
+  z-index: 5;
+}
+.ikigai-center-circle .ikigai-circle-label { font-size: clamp(15px, 2vw, 19px); letter-spacing: 0.04em; }
+.ikigai-center-circle .ikigai-circle-text { font-size: clamp(10.5px, 1.2vw, 12px); color: rgba(255,255,255,0.85); }
 @media (max-width: 680px) {
-  .ikigai-grid { grid-template-columns: 1fr; grid-template-areas: "center" "love" "good" "needs" "paid"; }
-  .ikigai-center { max-width: 100%; aspect-ratio: unset; border-radius: var(--radius); padding: 26px 20px; }
+  .ikigai-circle { width: 46%; padding: 6%; }
+  .ikigai-center-circle { width: 50%; }
 }
 
 /* ─── SCROLL PROGRESS BAR ─── */
@@ -1238,26 +1234,26 @@ footer {
       <div class="section-title">Ikigai — the reason behind everything I build</div>
       <p class="section-sub">A Japanese framework for finding purpose: the overlap of what you love, what you're good at, what the world needs, and what you can be paid for. Here's mine.</p>
     </div>
-    <div class="ikigai-grid">
-      <div class="ikigai-card ikigai-love">
-        <div class="ikigai-card-label">What I Love</div>
-        <div class="ikigai-card-text">Building, solving problems, competing, creating impact</div>
+    <div class="ikigai-wheel">
+      <div class="ikigai-circle ikigai-love" data-quad="love">
+        <div><div class="ikigai-circle-label">What I Love</div>
+        <div class="ikigai-circle-text">Building, solving problems, competing, creating impact</div></div>
       </div>
-      <div class="ikigai-card ikigai-good">
-        <div class="ikigai-card-label">What I'm Good At</div>
-        <div class="ikigai-card-text">Seeing opportunities, strategy, sales, operations, negotiating, turning ideas into reality</div>
+      <div class="ikigai-circle ikigai-good" data-quad="good">
+        <div><div class="ikigai-circle-label">What I'm Good At</div>
+        <div class="ikigai-circle-text">Seeing opportunities, strategy, sales, operations, negotiating, turning ideas into reality</div></div>
       </div>
-      <div class="ikigai-center">
-        <div class="ikigai-center-label">IKIGAI</div>
-        <div class="ikigai-center-text">Create freedom by building what matters</div>
+      <div class="ikigai-circle ikigai-needs" data-quad="needs">
+        <div><div class="ikigai-circle-label">What The World Needs</div>
+        <div class="ikigai-circle-text">Smarter decisions, more transparency, financial freedom, better systems</div></div>
       </div>
-      <div class="ikigai-card ikigai-needs">
-        <div class="ikigai-card-label">What The World Needs</div>
-        <div class="ikigai-card-text">Smarter decisions, more transparency, financial freedom, better systems</div>
+      <div class="ikigai-circle ikigai-paid" data-quad="paid">
+        <div><div class="ikigai-circle-label">What I Can Be Paid For</div>
+        <div class="ikigai-circle-text">Tech products, data, software, consulting, business ownership</div></div>
       </div>
-      <div class="ikigai-card ikigai-paid">
-        <div class="ikigai-card-label">What I Can Be Paid For</div>
-        <div class="ikigai-card-text">Tech products, data, software, consulting, business ownership</div>
+      <div class="ikigai-circle ikigai-center-circle">
+        <div><div class="ikigai-circle-label">IKIGAI</div>
+        <div class="ikigai-circle-text">Create freedom by building what matters</div></div>
       </div>
     </div>
   </div>
@@ -1822,32 +1818,46 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   }, { passive: true });
 })();
 
-// ── Ikigai Wheel: boxes spin in like spokes as you scroll, settle into place ──
+// ── Ikigai Wheel: circles converge from outside into an overlapping Venn diagram as you scroll ──
 (function() {
   const section = document.getElementById('why');
   if (!section) return;
-  const cards = section.querySelectorAll('.ikigai-card');
-  const center = section.querySelector('.ikigai-center');
+  const wheel = section.querySelector('.ikigai-wheel');
+  if (!wheel) return;
+  const center = section.querySelector('.ikigai-center-circle');
+  const outer = section.querySelectorAll('.ikigai-circle:not(.ikigai-center-circle)');
+  const ANGLES = { love: 270, good: 180, needs: 0, paid: 90 }; // degrees: 0=right, 90=down, 180=left, 270=up
 
   function updateIkigaiSpin() {
-    const ref = center || section;
+    const wheelRect = wheel.getBoundingClientRect();
+    const ref = center || wheel;
     const rect = ref.getBoundingClientRect();
     const vh = window.innerHeight;
     const refCenterY = rect.top + rect.height / 2;
     // 0 = wheel's center is at the bottom edge of the screen, 1 = wheel is exactly centered in the viewport
     let progress = (vh - refCenterY) / (vh / 2);
     progress = Math.max(0, Math.min(1, progress));
-    const eased = 1 - Math.pow(1 - progress, 3); // ease-out — fast spin, gentle stop
-    const angle = (1 - eased) * 360;
-    const scale = 0.6 + eased * 0.4;
-    const opacity = 0.15 + eased * 0.85;
-    cards.forEach(card => {
-      card.style.transform = 'rotate(' + angle + 'deg) scale(' + scale + ')';
-      card.style.opacity = opacity;
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out — fast approach, gentle stop
+
+    const size = Math.min(wheelRect.width, wheelRect.height);
+    const startRadius = size * 0.62; // scattered, outside
+    const endRadius   = size * 0.15; // pulled in — circles overlap here, like the real diagram
+    const radius = startRadius - (startRadius - endRadius) * eased;
+    const rotate = (1 - eased) * 60;
+    const scale = 0.55 + eased * 0.45;
+    const outerOpacity = 0.12 + eased * 0.76;
+    const centerOpacity = 0.2 + eased * 0.8;
+
+    outer.forEach(el => {
+      const rad = ANGLES[el.dataset.quad] * Math.PI / 180;
+      const x = Math.cos(rad) * radius;
+      const y = Math.sin(rad) * radius;
+      el.style.transform = 'translate(-50%, -50%) translate(' + x + 'px, ' + y + 'px) rotate(' + rotate + 'deg) scale(' + scale + ')';
+      el.style.opacity = outerOpacity;
     });
     if (center) {
-      center.style.transform = 'scale(' + scale + ')';
-      center.style.opacity = opacity;
+      center.style.transform = 'translate(-50%, -50%) scale(' + (0.65 + eased * 0.35) + ')';
+      center.style.opacity = centerOpacity;
     }
   }
 

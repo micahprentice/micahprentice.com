@@ -366,7 +366,7 @@ section { padding: 88px 0; }
 .tree-children { margin-top: 14px; display: grid; gap: 10px; position: relative; padding-left: 22px; }
 .tree-children::before { content: ''; position: absolute; left: 0; top: 0; bottom: 30px; width: 2px; background: var(--border); border-radius: 2px; }
 .leaf {
-  position: relative; display: grid; grid-template-columns: 56px 1fr auto; gap: 14px; align-items: center;
+  position: relative; display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;
   background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; text-decoration: none;
   transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s;
   opacity: 0; transform: translateX(-10px);
@@ -376,6 +376,8 @@ section { padding: 88px 0; }
 .leaf:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--text); }
 .leaf-logo { width: 56px; height: 56px; border-radius: 12px; background: #fff; border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; padding: 6px; }
 .leaf-logo img { width: 100%; height: 100%; object-fit: contain; }
+.leaf-logo.wide { width: 82px; padding: 0; overflow: hidden; border-color: var(--border); }
+.leaf-logo.wide img { object-fit: cover; }
 .leaf b { display: block; font-size: 15px; letter-spacing: -0.2px; }
 .leaf span { font-size: 12.5px; color: var(--muted); display: block; }
 .leaf .go { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); transition: .2s; }
@@ -644,8 +646,9 @@ section { padding: 88px 0; }
   .bm-cover { width: 120px; height: 178px; }
   .stat-row { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; }
   .stat { padding: 12px; } .stat b { font-size: 19px; } .stat span { font-size: 11px; }
-  .leaf { grid-template-columns: 44px 1fr auto; }
+  .leaf { grid-template-columns: auto 1fr auto; gap: 10px; }
   .leaf-logo { width: 44px; height: 44px; }
+  .leaf-logo.wide { width: 64px; }
   #chat-drawer { right: 16px; bottom: 84px; height: 70vh; }
   .spotlight { padding: 18px 16px 16px; border-radius: 20px; }
   .hero-h1 { font-size: 40px; }
@@ -697,12 +700,11 @@ section { padding: 88px 0; }
         <span class="line">Build the <span class="grad-text">software.</span></span>
       </h1>
       <p class="hero-thesis reveal" data-delay="2">
-        <strong>My thesis:</strong> the best software for the trades will be built by people who've actually run the crews. I operate home-service businesses in Florida, and I'm building <a href="https://getprismpro.com" target="_blank" rel="noopener">Prism</a>, an operating system for trade service businesses, out of what the work has taught me.
+        <strong>My thesis:</strong> the best software for the trades gets built by people who've run the crews. I run home-service businesses in Florida and I'm building <a href="https://getprismpro.com" target="_blank" rel="noopener">Prism</a>, the OS for trade service businesses.
       </p>
       <div class="hero-ctas reveal" data-delay="3">
         <button class="btn btn-primary" onclick="openChat()"><i data-lucide="message-circle"></i> Chat with me</button>
         <button class="btn btn-outline" onclick="bookCall()"><i data-lucide="calendar"></i> Book a call</button>
-        <a class="btn btn-ghost" href="#now">See what I'm working on <i data-lucide="arrow-down"></i></a>
       </div>
 
       <!-- CONTACT CARD -->
@@ -710,7 +712,7 @@ section { padding: 88px 0; }
         <div class="contact-avatar"><img src="micah.jpg" alt="Micah Prentice" /></div>
         <div>
           <div class="contact-name">Micah Prentice</div>
-          <div class="contact-role">Founder, Prism · Operator, holiday-lighting businesses · Investor</div>
+          <div class="contact-role">Founder, Prism · Operator · Investor</div>
           <div class="contact-links">
             <button class="chip" onclick="copyEmail(this)" title="Copy email"><i data-lucide="mail"></i> hq@micahprentice.com</button>
             <a class="chip" data-linkedin href="#" target="_blank" rel="noopener"><i data-lucide="linkedin"></i> LinkedIn</a>
@@ -777,10 +779,10 @@ section { padding: 88px 0; }
       <div class="stage-tabs" id="stage-tabs">
         <button class="on" data-view="0">Quote</button><button data-view="1">Schedule</button><button data-view="2">Dispatch</button><button data-view="3">Get paid</button>
       </div>
-      <div class="spot-disclaimer"><i data-lucide="info"></i> Disclaimer: this is a concept mock-up, not the real UI. The real thing is going to be kick ass.</div>
+      <div class="spot-disclaimer"><i data-lucide="info"></i> Concept mock-up, not the real UI. The real thing's better.</div>
 
       <div class="spot-foot">
-        <p><strong>Quoting, scheduling, dispatch, and invoicing</strong> in one system, built around how a crew actually works. Private beta, onboarding select shops now.</p>
+        <p><strong>Quote, schedule, dispatch, invoice</strong> — one system. Private beta, onboarding shops now.</p>
         <div class="spot-ctas">
           <a class="btn btn-light" href="https://getprismpro.com" target="_blank" rel="noopener">getprismpro.com <i data-lucide="arrow-up-right"></i></a>
           <a class="btn btn-invest" data-invest href="#" target="_blank" rel="noopener"><i data-lucide="trending-up"></i> Invest</a>
@@ -796,9 +798,9 @@ section { padding: 88px 0; }
     <div class="now-side">
       <div class="eyebrow reveal">Right now</div>
       <h2 class="h2 reveal" data-delay="1">One platform. Two bread-and-butter channels.</h2>
-      <p class="sub reveal" data-delay="2">Prism is the software. The holiday-lighting businesses are the cash flow, the customer base, and the live test bed. Everything Prism ships gets used on our own trucks first.</p>
+      <p class="sub reveal" data-delay="2">Prism is the software. Holiday lighting is the cash flow and the live test bed. Everything Prism ships runs on our own trucks first.</p>
       <div class="quote-card reveal" data-delay="3">
-        Every feature in Prism started as a problem I had on a Tuesday in December with six crews out and a phone that wouldn't stop ringing.
+        Every feature in Prism started as a problem I had on a Tuesday in December, six crews out and a phone that wouldn't stop ringing.
         <footer>— Micah</footer>
       </div>
       <div class="stat-row reveal" data-delay="4">
@@ -812,27 +814,26 @@ section { padding: 88px 0; }
       <div class="tree-node prism reveal" id="node-prism">
         <div class="tree-dot"><i></i></div>
         <div class="tree-head"><h3>Prism</h3><span class="tree-tag pink">Software platform</span></div>
-        <p>The operating system for trade service businesses. Quote, schedule, dispatch, and get paid from one place, on the desktop in the office and on the phone in the truck.</p>
+        <p>Quote, schedule, dispatch, and get paid from one place. Desktop in the office, phone in the truck.</p>
         <div class="tree-actions">
           <a class="btn btn-primary" href="https://getprismpro.com" target="_blank" rel="noopener">Visit getprismpro.com <i data-lucide="arrow-up-right"></i></a>
           <a class="btn btn-invest" data-invest href="#" target="_blank" rel="noopener"><i data-lucide="trending-up"></i> Invest in Prism</a>
-          <button class="btn btn-ghost" onclick="openChat('Tell me about Prism')">Ask about it <i data-lucide="message-circle"></i></button>
         </div>
       </div>
 
       <div class="tree-node reveal" id="node-hsb">
         <div class="tree-dot"><i></i></div>
         <div class="tree-head"><h3>Home Service Business</h3><span class="tree-tag">Bread and butter</span></div>
-        <p>Two holiday-lighting brands, run out of Florida. Real crews, real seasons, real revenue. This is where Prism gets battle-tested.</p>
+        <p>Two holiday-lighting brands out of Florida. Real crews, real seasons, real revenue.</p>
         <div class="tree-children">
           <a class="leaf" href="https://uglysweaterlights.com" target="_blank" rel="noopener">
-            <div class="leaf-logo"><img src="logos/ugly-sweater-lighting.png" alt="Ugly Christmas Sweater Lighting" /></div>
-            <div><b>Ugly Christmas Sweater Lighting</b><span>Professional holiday light installs · uglysweaterlights.com</span></div>
+            <div class="leaf-logo wide"><img src="logos/ugly-sweater-lighting.webp" alt="Ugly Sweater Holiday Lighting" /></div>
+            <div><b>Ugly Sweater Holiday Lighting</b><span>uglysweaterlights.com</span></div>
             <div class="go"><i data-lucide="arrow-right"></i></div>
           </a>
           <a class="leaf" href="https://christmaslightingky.com" target="_blank" rel="noopener">
             <div class="leaf-logo"><img src="logos/holiday-lighting.png" alt="Christmas Lighting KY" /></div>
-            <div><b>Christmas Lighting KY</b><span>Holiday Lighting of Kentuckiana · christmaslightingky.com</span></div>
+            <div><b>Christmas Lighting KY</b><span>christmaslightingky.com</span></div>
             <div class="go"><i data-lucide="arrow-right"></i></div>
           </a>
         </div>
@@ -848,7 +849,7 @@ section { padding: 88px 0; }
       <div>
         <div class="eyebrow reveal">Incubator</div>
         <h2 class="h2 reveal" data-delay="1">Things I've built, run, or shipped.</h2>
-        <p class="sub reveal" data-delay="2">Not a portfolio. A workshop. Some of these are live businesses, some are tools I gave away, some are still on the bench.</p>
+        <p class="sub reveal" data-delay="2">Not a portfolio. A workshop.</p>
       </div>
       <div class="filters reveal" data-delay="2" id="filters">
         <button class="on" data-f="all">All</button>
@@ -860,41 +861,38 @@ section { padding: 88px 0; }
     </div>
 
     <div class="inc-grid" id="inc-grid">
-      <a class="inc-card featured reveal" data-tag="live" href="https://speeedbiz.com" target="_blank" rel="noopener">
-        <div class="inc-visual"><img src="speedbiz-car.png" alt="Speeedbiz race car" loading="lazy" /></div>
-        <div class="inc-body">
-          <div class="inc-top"><div class="inc-logo"><img src="logos/SpeeeBiz.png" alt="Speeedbiz" /></div><span class="status live">Live</span></div>
-          <h4>Speeedbiz</h4>
-          <p>Search or start a business at the speed of thought. Research any industry, validate an idea, and find the path to first dollar.</p>
-          <div class="inc-foot"><span>speeedbiz.com</span><i data-lucide="arrow-up-right"></i></div>
-        </div>
-      </a>
-
       <a class="inc-card reveal" data-delay="1" data-tag="operating" href="https://instantplumbingky.com" target="_blank" rel="noopener">
         <div class="inc-top"><div class="inc-logo"><img src="logos/instant-plumbing.png" alt="Instant Plumbing" /></div><span class="status operating">Operating</span></div>
         <h4>Instant Plumbing</h4>
-        <p>Residential plumbing. A second trade under the same operating playbook the lighting businesses run on.</p>
+        <p>Residential plumbing, on the same playbook as the lighting brands.</p>
         <div class="inc-foot"><span>instantplumbingky.com</span><i data-lucide="arrow-up-right"></i></div>
       </a>
 
       <a class="inc-card reveal" data-delay="1" data-tag="tool" href="/homventory.html">
         <div class="inc-top"><div class="inc-logo emoji">🏠</div><span class="status tool">Free tool</span></div>
         <h4>Homventory</h4>
-        <p>Turn listing photos into a tap-to-decide inventory of what conveys with a home. Sellers pin, buyers mark, realtor gets the list. No email required.</p>
+        <p>Turn listing photos into a tap-to-decide list of what conveys with a home.</p>
         <div class="inc-foot"><span>Open the tool</span><i data-lucide="arrow-up-right"></i></div>
       </a>
 
       <a class="inc-card reveal" data-delay="2" data-tag="live" href="https://quantecpower.com" target="_blank" rel="noopener">
         <div class="inc-top"><div class="inc-logo"><img src="logos/quantec-power.png" alt="Quantec Power" /></div><span class="status live">Live</span></div>
         <h4>Quantec Power</h4>
-        <p>Power and energy venture. One of the earlier bets, still running.</p>
+        <p>Power and energy venture. An early bet, still running.</p>
         <div class="inc-foot"><span>quantecpower.com</span><i data-lucide="arrow-up-right"></i></div>
+      </a>
+
+      <a class="inc-card reveal" data-delay="3" data-tag="soon" href="https://speeedbiz.com" target="_blank" rel="noopener">
+        <div class="inc-top"><div class="inc-logo"><img src="logos/SpeeeBiz.png" alt="Speeedbiz" /></div><span class="status soon">On the bench</span></div>
+        <h4>Speeedbiz</h4>
+        <p>Research an industry, validate an idea, find the path to first dollar. A long-term bet, not active yet.</p>
+        <div class="inc-foot"><span>speeedbiz.com</span><i data-lucide="arrow-up-right"></i></div>
       </a>
 
       <a class="inc-card reveal" data-delay="3" data-tag="soon" href="#" onclick="openChat('Tell me about The Build Podcast'); return false;">
         <div class="inc-top"><div class="inc-logo"><img src="logos/Podcast.png" alt="The Build Podcast" /></div><span class="status soon">On the bench</span></div>
         <h4>The Build Podcast</h4>
-        <p>Conversations about building real businesses in real places. Recording when the season slows down.</p>
+        <p>Building real businesses in real places. Recording when the season slows.</p>
         <div class="inc-foot"><span>Ask me about it</span><i data-lucide="message-circle"></i></div>
       </a>
     </div>
@@ -907,13 +905,7 @@ section { padding: 88px 0; }
     <div>
       <div class="eyebrow reveal">Why</div>
       <h2 class="h2 reveal" data-delay="1">Ikigai, the reason behind everything I build.</h2>
-      <p class="sub reveal" data-delay="2">The overlap of what you love, what you're good at, what the world needs, and what you can be paid for. Here's where mine lands.</p>
-      <div class="why-points reveal" data-delay="3">
-        <div class="why-point"><i style="background:#EC4899"></i><div><b>What I love</b><span>Building, solving problems, competing, creating impact</span></div></div>
-        <div class="why-point"><i style="background:#F59E0B"></i><div><b>What I'm good at</b><span>Seeing opportunities, strategy, sales, operations, negotiating</span></div></div>
-        <div class="why-point"><i style="background:#0284C7"></i><div><b>What the world needs</b><span>Smarter decisions, transparency, better systems for real work</span></div></div>
-        <div class="why-point"><i style="background:#10B981"></i><div><b>What I can be paid for</b><span>Software, service businesses, consulting, ownership</span></div></div>
-      </div>
+      <p class="sub reveal" data-delay="2">What you love, what you're good at, what the world needs, what pays. Here's where mine lands.</p>
     </div>
     <div class="ikigai-wheel" id="ikigai">
       <div class="ikigai-circle ikigai-love" data-quad="love"><div><div class="ikigai-circle-label">What I Love</div><div class="ikigai-circle-text">Building, solving problems, competing</div></div></div>
@@ -974,7 +966,7 @@ section { padding: 88px 0; }
       <div>
         <div class="eyebrow" style="color:#B45309">In your corner</div>
         <h3>Having a hard time? Tell me where you're at.</h3>
-        <p>I've been in dark places, financially tight and mentally drained. No fee, no judgment. Three minutes of honest answers and a free 30-minute call, and we start moving again.</p>
+        <p>I've been in dark places, financially tight and mentally drained. No fee, no judgment. Three honest minutes and a free call.</p>
       </div>
       <button class="btn btn-amber" onclick="openIntake()"><i data-lucide="heart"></i> Start the 3-minute intake</button>
     </div>
@@ -1039,24 +1031,24 @@ section { padding: 88px 0; }
   <div class="wrap">
     <div class="eyebrow pink reveal">Contact</div>
     <h2 class="h2 reveal" data-delay="1">Let's talk.</h2>
-    <p class="sub reveal" data-delay="2">Founder, operator, or investor, pick the door that fits. Every one of them ends with a real conversation.</p>
+    <p class="sub reveal" data-delay="2">Founder, operator, or investor — pick the door that fits.</p>
     <div class="contact-grid">
       <button class="cta-card reveal" data-delay="1" onclick="openChat()">
         <div class="ic"><i data-lucide="message-circle"></i></div>
         <h4>Chat with me</h4>
-        <p>Ask about Prism, the lighting businesses, or your own idea. Usually instant, and I follow up personally on anything real.</p>
+        <p>Ask about Prism, the lighting businesses, or your own idea.</p>
         <div class="go">Start chatting <i data-lucide="arrow-right"></i></div>
       </button>
       <button class="cta-card reveal" data-delay="2" onclick="bookCall()">
         <div class="ic"><i data-lucide="calendar"></i></div>
         <h4>Book a call</h4>
-        <p>30 minutes, no prep, no pitch. Show up with what's on your mind and leave with a next step.</p>
+        <p>30 minutes, no prep, no pitch. Leave with a next step.</p>
         <div class="go">Pick a time <i data-lucide="arrow-right"></i></div>
       </button>
       <a class="cta-card invest reveal" data-delay="3" data-invest href="#" target="_blank" rel="noopener">
         <div class="ic"><i data-lucide="trending-up"></i></div>
         <h4>Invest in Prism</h4>
-        <p>Prism is in private beta and onboarding shops now. If you back operator-led software for the trades, let's talk terms.</p>
+        <p>Private beta, onboarding shops now. If you back operator-led software, let's talk terms.</p>
         <div class="go">Request the deck <i data-lucide="arrow-up-right"></i></div>
       </a>
     </div>
@@ -1071,7 +1063,7 @@ section { padding: 88px 0; }
 
 <footer class="site-footer">
   <div class="wrap foot-in">
-    <div>© <span id="year"></span> Micah Prentice. Built with intention.</div>
+    <div>© <span id="year"></span> Micah Prentice</div>
     <div><a href="#now">Right now</a><a href="#incubator">Incubator</a><a href="#books">Bookshelf</a><a href="/homventory.html">Homventory</a><a href="#contact">Contact</a></div>
   </div>
 </footer>
@@ -1128,7 +1120,7 @@ const CONFIG = {
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001', max_tokens: 400,
           system: `You are the assistant on micahprentice.com. Micah Prentice operates home-service businesses in Florida
-            (Ugly Christmas Sweater Lighting at uglysweaterlights.com and Christmas Lighting KY at christmaslightingky.com)
+            (Ugly Sweater Holiday Lighting at uglysweaterlights.com and Christmas Lighting KY at christmaslightingky.com)
             and is building Prism (getprismpro.com), an operating system for trade service businesses: quoting, scheduling,
             dispatch, invoicing. Prism is in private beta. Investors can request the deck at prism-investor.com.
             Warm, direct, not salesy. 2-4 sentences. If someone wants to invest, work together, or has a real need,
@@ -1420,7 +1412,7 @@ function smartFallback(history) {
   } else if (is(/prism|software|os|operating system|dispatch|schedul|quot|invoice|app/)) {
     text = `Prism is the operating system for trade service businesses: quoting, scheduling, dispatch, and invoicing in one place, built by operators who actually run crews. It's in private beta right now. You can request early access at ${prism}. Are you running a shop yourself, or looking at it from the investor side?`;
   } else if (is(/light|christmas|holiday|sweater|install|roofline|decor/)) {
-    text = `Nice, that's the bread and butter. We run two brands: <a href="${CONFIG.LIGHTING_URLS.ugly}" target="_blank">Ugly Christmas Sweater Lighting</a> and <a href="${CONFIG.LIGHTING_URLS.ky}" target="_blank">Christmas Lighting KY</a>, run out of Florida. Head to either site for a quote, or tell me roughly where you're located and what you're picturing.`;
+    text = `Nice, that's the bread and butter. We run two brands: <a href="${CONFIG.LIGHTING_URLS.ugly}" target="_blank">Ugly Sweater Holiday Lighting</a> and <a href="${CONFIG.LIGHTING_URLS.ky}" target="_blank">Christmas Lighting KY</a>, run out of Florida. Head to either site for a quote, or tell me roughly where you're located and what you're picturing.`;
   } else if (is(/call|meet|talk|zoom|hire|consult|work together|advice|mentor/)) {
     text = `Easy. You can ${cal} with Micah, no prep needed. What's on your mind, so I can make sure it's the right fit for the call?`;
   } else if (is(/struggl|hard time|broke|debt|depress|stuck|lost|help me|scared|anxious/)) {
@@ -1429,7 +1421,7 @@ function smartFallback(history) {
     text = `The Build Podcast is on the bench until the lighting season slows down. If you'd like to be a guest or want a heads-up when it launches, leave your name and email and Micah will loop you in.`;
     showLeadForm = true;
   } else if (is(/business|startup|idea|income|side hustle|venture|revenue|customers|grow/)) {
-    text = `Love it. What stage are you at, still an idea or already moving? For fast research and validation, <a href="https://speeedbiz.com" target="_blank">Speeedbiz.com</a> is built for exactly that. And if you want Micah's eyes on it, you can ${cal}.`;
+    text = `Love it. What stage are you at, still an idea or already moving? Tell me a bit more about it, or if you want Micah's eyes on it you can ${cal}.`;
   } else if (n === 1) {
     text = `Got it. Tell me a bit more so I can point you the right way. Most people here are asking about <b>Prism</b>, <b>investing</b>, <b>holiday lighting</b>, or want to <b>talk to Micah</b>. Which is closest?`;
   } else if (n === 2) {

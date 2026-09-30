@@ -419,7 +419,6 @@ section { padding: 88px 0; }
 .status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 .status.live { background: #ECFDF5; color: #047857; }
 .status.building { background: #EEF2FF; color: #4338CA; }
-.status.operating { background: #FFF7ED; color: #C2410C; }
 .status.tool { background: #F0F9FF; color: #0369A1; }
 .status.soon { background: #F1F5F9; color: #475569; }
 .inc-card h4 { font-size: 16.5px; font-weight: 800; letter-spacing: -0.2px; }
@@ -854,20 +853,12 @@ section { padding: 88px 0; }
       <div class="filters reveal" data-delay="2" id="filters">
         <button class="on" data-f="all">All</button>
         <button data-f="live">Live</button>
-        <button data-f="operating">Operating</button>
         <button data-f="tool">Free tools</button>
         <button data-f="soon">On the bench</button>
       </div>
     </div>
 
     <div class="inc-grid" id="inc-grid">
-      <a class="inc-card reveal" data-delay="1" data-tag="operating" href="https://instantplumbingky.com" target="_blank" rel="noopener">
-        <div class="inc-top"><div class="inc-logo"><img src="logos/instant-plumbing.png" alt="Instant Plumbing" /></div><span class="status operating">Operating</span></div>
-        <h4>Instant Plumbing</h4>
-        <p>Residential plumbing, on the same playbook as the lighting brands.</p>
-        <div class="inc-foot"><span>instantplumbingky.com</span><i data-lucide="arrow-up-right"></i></div>
-      </a>
-
       <a class="inc-card reveal" data-delay="1" data-tag="tool" href="/homventory.html">
         <div class="inc-top"><div class="inc-logo emoji">🏠</div><span class="status tool">Free tool</span></div>
         <h4>Homventory</h4>

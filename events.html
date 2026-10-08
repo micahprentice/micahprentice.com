@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Custom event software for corporate events | Micah Prentice</title>
+<meta name="description" content="Branded registration, RSVP, check-in, attendee portals, and follow-up for corporate events. Built to your brand in days, owned by you, no per-registrant licensing." />
+<link rel="canonical" href="https://micahprentice.com/events" />
+<meta property="og:title" content="Custom event tech. Without the lock-in. | Micah Prentice" />
+<meta property="og:description" content="Registration, RSVPs, check-in, attendee portals, and follow-up for corporate events. Built to your brand in days, owned by you, no per-registrant licensing." />
+<meta property="og:image" content="https://micahprentice.com/micah.jpg" />
+<meta property="og:url" content="https://micahprentice.com/events" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Micah Prentice" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Custom event tech. Without the lock-in. | Micah Prentice" />
+<meta name="twitter:description" content="Registration, RSVPs, check-in, attendee portals, and follow-up for corporate events. Built to your brand in days, owned by you, no per-registrant licensing." />
+<meta name="twitter:image" content="https://micahprentice.com/micah.jpg" />
+<link rel="icon" href="logos/prism.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #FFFFFF;
+  --bg-alt: #F4F9FF;
+  --bg-deep: #E6F1FE;
+  --primary: #0284C7;
+  --primary-hover: #0369A1;
+  --primary-light: #BAE6FD;
+  --primary-xlight: #F0F9FF;
+  --pink: #E8307A;
+  --pink-deep: #C2185B;
+  --blue: #1E8BFF;
+  --navy: #0B4A8B;
+  --sky: #8FCBFF;
+  --prism-grad: linear-gradient(135deg, #E8307A 0%, #7B5CF5 48%, #1E8BFF 100%);
+  --text: #0C1A2E;
+  --muted: #5B6B80;
+  --muted2: #94A3B8;
+  --border: #D8E8F7;
+  --border-light: #E8F1FA;
+  --white: #FFFFFF;
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow: 0 4px 24px rgba(12,26,46,0.06);
+  --shadow-lg: 0 20px 60px rgba(12,26,46,0.12);
+  --nav-h: 64px;
+  --ease: cubic-bezier(.22,.8,.26,.99);
+}
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg); color: var(--text);
+  font-size: 15px; line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: rgba(232,48,122,0.18); }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-alt); }
+::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 3px; }
+a { color: inherit; }
+button { font-family: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ─── UTILITIES ─── */
+.wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 5vw; min-width: 0; }
+.hero-left, .spotlight { min-width: 0; }
+.eyebrow {
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--primary); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px;
+}
+.eyebrow::before { content: ''; width: 18px; height: 2px; background: var(--primary); border-radius: 2px; }
+.eyebrow.pink { color: var(--pink); } .eyebrow.pink::before { background: var(--pink); }
+.h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(28px, 3.6vw, 40px); font-weight: 700; letter-spacing: -0.6px; line-height: 1.15;
+  margin-bottom: 12px; max-width: 760px; text-wrap: balance;
+}
+.sub { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.7; text-wrap: pretty; }
+.grad-text { background: var(--prism-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px; border-radius: 99px; border: 1.5px solid transparent;
+  font-size: 14px; font-weight: 600; text-decoration: none; cursor: pointer;
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease), background .18s, border-color .18s, color .18s;
+  white-space: nowrap; line-height: 1; position: relative; overflow: hidden;
+}
+.btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--text); color: #fff; box-shadow: 0 6px 18px rgba(12,26,46,0.18); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(12,26,46,0.24); }
+.btn-outline { background: #fff; color: var(--text); border-color: var(--border); }
+.btn-outline:hover { border-color: var(--text); transform: translateY(-2px); }
+.btn-light { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.18); }
+.btn-light:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+.btn-white { background: #fff; color: var(--text); box-shadow: 0 8px 22px rgba(0,0,0,0.25); }
+.btn-white:hover { transform: translateY(-2px); }
+
+/* ─── REVEAL / MOTION ─── */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal[data-delay="1"] { transition-delay: .08s; }
+.reveal[data-delay="2"] { transition-delay: .16s; }
+.reveal[data-delay="3"] { transition-delay: .24s; }
+.reveal[data-delay="4"] { transition-delay: .32s; }
+.split-word { display: inline-block; opacity: 0; transform: translateY(14px) rotate(1deg); transition: opacity .55s var(--ease), transform .55s var(--ease); }
+.split-word.in { opacity: 1; transform: none; }
+
+#scroll-progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; background: var(--prism-grad); z-index: 999; transition: width .1s linear; }
+
+/* ─── NAV ─── */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500; height: var(--nav-h);
+  display: flex; align-items: center; gap: 24px; padding: 0 5vw;
+  background: rgba(255,255,255,0.72); backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-bottom: 1px solid transparent; transition: border-color .25s, box-shadow .25s, background .25s;
+}
+#nav.scrolled { border-color: var(--border-light); box-shadow: 0 6px 24px rgba(12,26,46,0.06); background: rgba(255,255,255,0.86); }
+.nav-logo { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 800; text-decoration: none; letter-spacing: -0.4px; flex-shrink: 0; display: flex; align-items: center; gap: 2px; }
+.nav-logo span { color: var(--pink); }
+.nav-crumb { font-family: 'Inter', system-ui, sans-serif; font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0; margin-left: 10px; padding-left: 12px; border-left: 1px solid var(--border); }
+.nav-links { display: flex; gap: 2px; align-items: center; flex: 1; justify-content: center; }
+.nav-link {
+  padding: 7px 13px; border-radius: 8px; font-size: 13.5px; font-weight: 500; color: var(--muted);
+  text-decoration: none; transition: all .15s; white-space: nowrap; position: relative;
+}
+.nav-link:hover { color: var(--text); background: var(--primary-xlight); }
+.nav-link.active { color: var(--text); }
+.nav-link.active::after { content: ''; position: absolute; left: 13px; right: 13px; bottom: 3px; height: 2px; border-radius: 2px; background: var(--prism-grad); }
+.nav-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; margin-left: auto; }
+.nav-actions .btn { padding: 9px 16px; font-size: 13px; }
+.nav-hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--text); padding: 6px; }
+.nav-hamburger svg { width: 22px; height: 22px; }
+#mobile-menu {
+  position: fixed; inset: var(--nav-h) 0 auto 0; z-index: 499; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-light); padding: 12px 5vw 20px; display: none; flex-direction: column; gap: 4px;
+  transform: translateY(-8px); opacity: 0; transition: opacity .2s, transform .2s;
+}
+#mobile-menu.open { display: flex; opacity: 1; transform: none; }
+#mobile-menu a { padding: 12px 8px; font-weight: 600; text-decoration: none; border-radius: 8px; }
+#mobile-menu a:hover { background: var(--primary-xlight); }
+#mobile-menu .mm-sep { height: 1px; background: var(--border-light); margin: 6px 0; }
+#mobile-menu .mm-muted { color: var(--muted); font-weight: 500; }
+
+/* ─── HERO ─── */
+#hero {
+  position: relative; overflow: hidden;
+  padding: calc(var(--nav-h) + 64px) 0 80px;
+  background:
+    radial-gradient(900px 500px at 80% -10%, rgba(30,139,255,0.10), transparent 60%),
+    radial-gradient(700px 500px at 10% 110%, rgba(232,48,122,0.08), transparent 60%),
+    linear-gradient(180deg, #FFFFFF 0%, #F4F9FF 100%);
+}
+.hero-grid { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,1fr); gap: 48px; align-items: center; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 8px; border-radius: 99px;
+  background: #fff; border: 1px solid var(--border); font-size: 12.5px; font-weight: 600; color: var(--muted);
+  box-shadow: var(--shadow); margin-bottom: 22px;
+}
+.hero-tag .dot { width: 8px; height: 8px; border-radius: 50%; background: #22C55E; box-shadow: 0 0 0 0 rgba(34,197,94,.5); animation: pulse 2s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34,197,94,.5); } 70% { box-shadow: 0 0 0 8px rgba(34,197,94,0); } 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); } }
+.hero-h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(38px, 3.7vw, 54px); font-weight: 800; line-height: 1.06; letter-spacing: -1.4px;
+  margin-bottom: 22px;
+}
+.hero-h1 .line { display: block; }
+.nowrap { white-space: nowrap; }
+.hero-thesis { font-size: 17.5px; color: var(--muted); line-height: 1.7; max-width: 560px; margin-bottom: 28px; }
+.hero-thesis strong { color: var(--text); font-weight: 600; }
+.hero-ctas { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
+.hero-note { display: flex; align-items: center; gap: 12px; font-size: 13.5px; color: var(--muted); max-width: 520px; line-height: 1.5; }
+.hero-note .av { width: 48px; height: 48px; border-radius: 14px; overflow: hidden; background: var(--bg-deep); flex-shrink: 0; position: relative; }
+/* full-body source photo: zoom the square crop in on the face */
+.hero-note .av img { width: 100%; height: 100%; object-fit: cover; object-position: 44% 30%; transform: translate(6%, 18%) scale(3.1); transform-origin: 44% 30%; }
+.hero-note .av::after { content: ''; position: absolute; inset: 0; border-radius: 14px; box-shadow: inset 0 0 0 1px rgba(12,26,46,0.06); }
+.hero-note b { color: var(--text); font-weight: 700; }
+
+/* ─── SPOTLIGHT: concept mock-up ─── */
+.spotlight {
+  position: relative; border-radius: 26px; padding: 24px;
+  background: linear-gradient(160deg, #0B1B33 0%, #0E2A52 60%, #12305F 100%);
+  color: #fff; box-shadow: 0 30px 80px rgba(12,26,46,0.28), inset 0 1px 0 rgba(255,255,255,0.08);
+  overflow: hidden; isolation: isolate;
+}
+.spotlight::before {
+  content: ''; position: absolute; inset: -40%; z-index: -1;
+  background: conic-gradient(from 180deg at 50% 50%, rgba(232,48,122,0.25), rgba(30,139,255,0.22), rgba(123,92,245,0.22), rgba(232,48,122,0.25));
+  filter: blur(60px); opacity: .7; animation: spin 24s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.spot-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.spot-brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.spot-brand .mark { width: 34px; height: 34px; border-radius: 10px; background: var(--prism-grad); display: grid; place-items: center; flex-shrink: 0; box-shadow: 0 6px 16px rgba(123,92,245,0.4); }
+.spot-brand .mark svg { width: 17px; height: 17px; color: #fff; }
+.spot-brand .nm { font-weight: 800; letter-spacing: -0.2px; font-size: 15.5px; }
+.spot-brand .sm { font-size: 11.5px; color: rgba(255,255,255,0.6); }
+.spot-badge {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 6px 11px; border-radius: 99px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.14);
+  display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+}
+.spot-badge i { width: 6px; height: 6px; border-radius: 50%; background: #F472B6; box-shadow: 0 0 10px #F472B6; }
+
+.mock-grid { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); gap: 10px; }
+.mock { background: #F6F9FE; color: var(--text); border-radius: 14px; padding: 13px 14px; font-size: 12px; min-width: 0; }
+.mock h5 { font-size: 12px; font-weight: 800; margin-bottom: 9px; display: flex; justify-content: space-between; align-items: center; gap: 8px; letter-spacing: -0.1px; }
+.mock h5 span { font-size: 9.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.mock .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 8px; }
+.mock .kpi { background: #fff; border: 1px solid #E6EEF7; border-radius: 8px; padding: 6px 8px; }
+.mock .kpi small { display: block; color: #7B8AA0; font-size: 8.5px; font-weight: 600; letter-spacing: .02em; }
+.mock .kpi b { font-size: 13px; letter-spacing: -0.3px; }
+.mock .kpi b.g { color: #059669; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #fff; border: 1px solid #E6EEF7; border-radius: 8px; padding: 6px 9px; margin-bottom: 5px; opacity: 0; transform: translateX(-8px); animation: rowIn .5s var(--ease) forwards; }
+.row:nth-child(3) { animation-delay: .08s; } .row:nth-child(4) { animation-delay: .16s; } .row:nth-child(5) { animation-delay: .24s; } .row:nth-child(6) { animation-delay: .32s; }
+@keyframes rowIn { to { opacity: 1; transform: none; } }
+.row .who { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.row .avx { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; font-size: 8px; font-weight: 800; color: #fff; display: grid; place-items: center; }
+.row .n { font-weight: 700; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row .s { color: var(--muted); font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pill { font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: 99px; white-space: nowrap; flex-shrink: 0; }
+.pill.ok { background: #ECFDF5; color: #047857; } .pill.wait { background: #FFF7ED; color: #C2410C; } .pill.vip { background: #FFF1F7; color: #C2185B; } .pill.new { background: #EEF4FF; color: #1D4ED8; }
+.mock.center { text-align: center; display: flex; flex-direction: column; }
+.qr-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2px 0 4px; }
+.qr { width: 84px; height: 84px; border-radius: 10px; background: #fff; border: 1px solid #E6EEF7; padding: 7px; }
+.qr svg { width: 100%; height: 100%; display: block; }
+.qr-ok { display: inline-flex; align-items: center; gap: 5px; margin-top: 9px; font-weight: 800; font-size: 12px; color: #047857; }
+.qr-ok svg { width: 13px; height: 13px; }
+.qr-sub { color: var(--muted); font-size: 10px; margin-top: 2px; }
+.badge-line { margin-top: 8px; background: #fff; border: 1px dashed #CBD5E1; border-radius: 7px; padding: 5px 8px; font-size: 9.5px; color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 5px; }
+.badge-line svg { width: 11px; height: 11px; }
+.chat { display: flex; flex-direction: column; gap: 5px; }
+.chatb { border-radius: 10px; padding: 7px 10px; font-size: 10.5px; line-height: 1.45; max-width: 86%; }
+.chatb.q { background: #fff; border: 1px solid #E6EEF7; border-bottom-left-radius: 3px; }
+.chatb.a { background: var(--text); color: #fff; margin-left: auto; border-bottom-right-radius: 3px; }
+.chatb.a b { color: #BAE6FD; font-weight: 700; }
+.spot-disclaimer { margin-top: 14px; font-size: 11.5px; color: rgba(255,255,255,0.55); font-style: italic; display: flex; align-items: center; gap: 6px; }
+.spot-disclaimer svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* ─── SECTIONS ─── */
+section { padding: 88px 0; }
+.sec-head { max-width: 760px; }
+
+/* who */
+#who { background: #fff; }
+.who-grid { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 14px; margin-top: 40px; }
+.who-card { border: 1px solid var(--border-light); border-radius: var(--radius); padding: 22px 20px; background: var(--bg-alt); transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s; }
+.who-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--border); background: #fff; }
+.who-card .ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: #fff; border: 1px solid var(--border); margin-bottom: 14px; }
+.who-card .ic svg { width: 18px; height: 18px; color: var(--pink); }
+.who-card h4 { font-size: 15px; margin-bottom: 6px; letter-spacing: -0.2px; font-weight: 800; }
+.who-card p { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+
+/* build */
+#build { background: var(--bg-alt); }
+.build-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-top: 40px; }
+.build-item { display: flex; gap: 14px; align-items: flex-start; background: #fff; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 18px; box-shadow: var(--shadow); transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s; }
+.build-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--border); }
+.build-item .ic { flex-shrink: 0; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--primary-xlight); }
+.build-item .ic svg { width: 19px; height: 19px; color: var(--primary); }
+.build-item h4 { font-size: 15px; letter-spacing: -0.2px; margin-bottom: 3px; font-weight: 800; }
+.build-item p { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+
+/* why */
+#why { background: #fff; }
+.why-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.4fr); gap: 56px; align-items: start; }
+.why-side { position: sticky; top: calc(var(--nav-h) + 24px); }
+.why-list { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+.why-card { border-radius: var(--radius); padding: 22px; border: 1px solid var(--border-light); background: linear-gradient(180deg, #fff, var(--bg-alt)); transition: transform .25s var(--ease), box-shadow .25s var(--ease); }
+.why-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.why-card .num { font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: 22px; margin-bottom: 6px; display: inline-block; }
+.why-card h4 { font-size: 15px; margin-bottom: 5px; font-weight: 800; letter-spacing: -0.2px; }
+.why-card p { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+.callout {
+  margin-top: 26px; display: flex; gap: 14px; align-items: flex-start;
+  background: var(--bg-alt); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 18px 20px;
+}
+.callout .ic { width: 38px; height: 38px; border-radius: 11px; background: #fff; border: 1px solid var(--border); display: grid; place-items: center; flex-shrink: 0; }
+.callout .ic svg { width: 18px; height: 18px; color: var(--pink); }
+.callout b { display: block; font-size: 15px; letter-spacing: -0.2px; margin-bottom: 3px; }
+.callout p { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+
+/* how */
+#how { background: var(--bg-alt); }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-top: 40px; position: relative; }
+.steps::before { content: ''; position: absolute; left: 6%; right: 6%; top: 39px; height: 2px; background: linear-gradient(90deg, transparent, var(--border) 15%, var(--border) 85%, transparent); z-index: 0; }
+.step { position: relative; z-index: 1; background: #fff; border: 1px solid var(--border-light); border-radius: var(--radius); padding: 22px 20px; box-shadow: var(--shadow); }
+.step .n { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--prism-grad); color: #fff; font-weight: 800; font-size: 14px; margin-bottom: 16px; box-shadow: 0 6px 16px rgba(123,92,245,0.3); }
+.step .tm { position: absolute; top: 24px; right: 20px; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted2); }
+.step h4 { font-size: 16px; margin-bottom: 6px; font-weight: 800; letter-spacing: -0.2px; }
+.step p { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+
+/* proof */
+#proof { background: #fff; }
+.proof-card {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 44px; align-items: center;
+  border-radius: 26px; padding: 44px; background: linear-gradient(160deg, #0B1B33 0%, #0E2A52 60%, #12305F 100%);
+  color: #fff; position: relative; overflow: hidden; isolation: isolate;
+  box-shadow: 0 30px 80px rgba(12,26,46,0.22), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.proof-card::before { content: ''; position: absolute; inset: -40%; z-index: -1; background: conic-gradient(from 0deg, rgba(232,48,122,0.22), rgba(30,139,255,0.2), rgba(123,92,245,0.22), rgba(232,48,122,0.22)); filter: blur(70px); opacity: .6; }
+.proof-card .eyebrow { color: #F9A8D4; } .proof-card .eyebrow::before { background: #F9A8D4; }
+.proof-card .h2 { color: #fff; }
+.proof-card p { color: rgba(255,255,255,0.78); font-size: 15.5px; line-height: 1.7; margin-bottom: 14px; max-width: 560px; }
+.proof-card p strong { color: #fff; font-weight: 600; }
+.proof-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 22px; }
+.proof-tags span { font-size: 12px; font-weight: 600; padding: 6px 11px; border-radius: 99px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); }
+.proof-ctas { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.highlights { display: grid; gap: 10px; }
+.hl { display: flex; gap: 14px; align-items: flex-start; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 16px 18px; backdrop-filter: blur(6px); }
+.hl .ic { width: 38px; height: 38px; border-radius: 11px; background: rgba(255,255,255,0.1); display: grid; place-items: center; flex-shrink: 0; }
+.hl .ic svg { width: 18px; height: 18px; color: #F9A8D4; }
+.hl b { display: block; font-family: 'Playfair Display', Georgia, serif; font-size: 19px; letter-spacing: -0.3px; line-height: 1.2; margin-bottom: 3px; }
+.hl span { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5; display: block; }
+
+/* pricing */
+#work { background: var(--bg-alt); }
+.price-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 40px; }
+.price { background: #fff; border: 1px solid var(--border-light); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); display: flex; flex-direction: column; position: relative; transition: transform .25s var(--ease), box-shadow .25s var(--ease); }
+.price:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.price.feat { border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, var(--prism-grad) border-box; }
+.price .tag { position: absolute; top: -11px; left: 22px; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; border-radius: 99px; background: var(--prism-grad); color: #fff; box-shadow: 0 4px 12px rgba(123,92,245,0.3); }
+.price .ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--primary-xlight); margin-bottom: 16px; }
+.price .ic svg { width: 20px; height: 20px; color: var(--primary); }
+.price.feat .ic { background: #FFF1F7; } .price.feat .ic svg { color: var(--pink); }
+.price h4 { font-size: 18px; margin-bottom: 6px; font-weight: 800; letter-spacing: -0.3px; }
+.price > p { font-size: 13.5px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+.price ul { list-style: none; display: grid; gap: 8px; margin-bottom: 22px; flex: 1; }
+.price li { display: flex; gap: 9px; align-items: flex-start; font-size: 13.5px; line-height: 1.45; }
+.price li svg { width: 16px; height: 16px; color: #059669; flex-shrink: 0; margin-top: 2px; }
+.price .quote { border-top: 1px solid var(--border-light); padding-top: 16px; display: flex; align-items: center; gap: 10px; }
+.price .quote .lbl { font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted2); display: block; }
+.price .quote b { font-size: 15px; letter-spacing: -0.2px; display: block; }
+.price .quote .qi { width: 34px; height: 34px; border-radius: 10px; background: var(--bg-alt); border: 1px solid var(--border-light); display: grid; place-items: center; flex-shrink: 0; }
+.price .quote .qi svg { width: 16px; height: 16px; color: var(--text); }
+.price-foot { margin-top: 18px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+.pf { display: flex; gap: 12px; align-items: flex-start; background: #fff; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 14px 16px; }
+.pf .ic { width: 34px; height: 34px; border-radius: 10px; background: var(--bg-alt); display: grid; place-items: center; flex-shrink: 0; }
+.pf .ic svg { width: 16px; height: 16px; color: var(--text); }
+.pf b { display: block; font-size: 14px; letter-spacing: -0.2px; margin-bottom: 2px; }
+.pf span { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* faq */
+#faq { background: #fff; }
+.faq-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; margin-top: 34px; }
+.faq { border: 1px solid var(--border-light); border-radius: var(--radius); padding: 22px; background: linear-gradient(180deg, #fff, var(--bg-alt)); }
+.faq h4 { font-size: 15.5px; margin-bottom: 8px; font-weight: 800; letter-spacing: -0.2px; display: flex; gap: 10px; align-items: flex-start; }
+.faq h4 svg { width: 18px; height: 18px; color: var(--pink); flex-shrink: 0; margin-top: 2px; }
+.faq p { font-size: 14px; color: var(--muted); line-height: 1.65; padding-left: 28px; }
+
+/* cta */
+#contact { padding: 0 0 96px; background: #fff; }
+.cta-box {
+  border-radius: 28px; padding: 64px 40px; text-align: center; position: relative; overflow: hidden;
+  background: radial-gradient(600px 300px at 20% 0%, rgba(232,48,122,0.14), transparent 60%), radial-gradient(600px 300px at 80% 100%, rgba(30,139,255,0.16), transparent 60%), var(--bg-alt);
+  border: 1px solid var(--border-light);
+}
+.cta-box .eyebrow { justify-content: center; }
+.cta-box .h2 { font-size: clamp(32px, 4.2vw, 48px); margin-left: auto; margin-right: auto; }
+.cta-box .sub { margin: 0 auto 28px; }
+.cta-box .hero-ctas { justify-content: center; margin-bottom: 0; }
+.cta-box .note { margin-top: 18px; font-size: 13px; color: var(--muted); }
+
+/* footer */
+.site-footer { background: #08132A; color: rgba(255,255,255,0.55); padding: 26px 0; font-size: 13px; }
+.foot-in { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.foot-in a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 16px; }
+.foot-in a:hover { color: #fff; }
+.foot-in a.on { color: #fff; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .nav-crumb { display: none; }
+}
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .spotlight { max-width: 640px; justify-self: center; width: 100%; }
+  .who-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .why-grid { grid-template-columns: 1fr; gap: 36px; }
+  .why-side { position: static; }
+  .steps { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .steps::before { display: none; }
+  .proof-card { grid-template-columns: 1fr; gap: 32px; }
+  .price-foot { grid-template-columns: 1fr; }
+}
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+}
+@media (max-width: 820px) {
+  .nav-actions .btn-outline { display: none; }
+  section { padding: 64px 0; }
+  #hero { padding: calc(var(--nav-h) + 40px) 0 64px; }
+  .who-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .build-grid { grid-template-columns: 1fr; }
+  .price-grid { grid-template-columns: 1fr; }
+  .faq-grid { grid-template-columns: 1fr; }
+  .proof-card { padding: 32px 26px; }
+}
+@media (max-width: 600px) {
+  .hero-h1 { font-size: 38px; letter-spacing: -1.2px; }
+  .hero-thesis { font-size: 16px; }
+  .hero-ctas .btn { width: 100%; justify-content: center; }
+  .hero-note { font-size: 13px; }
+  .spotlight { padding: 18px 16px 16px; border-radius: 20px; }
+  .mock-grid { grid-template-columns: 1fr; }
+  .mock.center { text-align: left; }
+  .qr-wrap { flex-direction: row; align-items: center; gap: 14px; padding: 0; }
+  .qr { width: 76px; height: 76px; flex-shrink: 0; }
+  .qr-meta { flex: 1; min-width: 0; }
+  .qr-ok { margin-top: 0; }
+  .badge-line { margin-top: 7px; justify-content: flex-start; display: inline-flex; }
+  .who-grid { grid-template-columns: 1fr; gap: 10px; }
+  .who-card { display: flex; gap: 14px; align-items: flex-start; padding: 16px; }
+  .who-card .ic { margin-bottom: 0; flex-shrink: 0; }
+  .who-card h4 { margin-bottom: 3px; }
+  .why-list { grid-template-columns: 1fr; gap: 10px; }
+  .why-card { display: grid; grid-template-columns: 30px 1fr; column-gap: 12px; padding: 16px; }
+  .why-card .num { grid-row: 1 / span 2; font-size: 18px; margin: 0; line-height: 1.25; }
+  .why-card h4, .why-card p { grid-column: 2; }
+  .steps { grid-template-columns: 1fr; }
+  .proof-card { padding: 28px 20px; border-radius: 22px; }
+  .proof-card .h2 { font-size: 26px; }
+  .proof-ctas .btn { width: 100%; justify-content: center; }
+  .hl b { font-size: 17px; }
+  .cta-box { padding: 44px 22px; border-radius: 22px; }
+  .cta-box .hero-ctas .btn { width: 100%; }
+  .foot-in { flex-direction: column; align-items: flex-start; }
+  .foot-in a { margin-left: 0; margin-right: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .reveal, .split-word, .row { opacity: 1 !important; transform: none !important; }
+}
+</style>
+</head>
+
+<body>
+<div id="scroll-progress"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="/" class="nav-logo">Micah<span>.</span><span class="nav-crumb">Events</span></a>
+  <div class="nav-links">
+    <a href="#who" class="nav-link">Who it's for</a>
+    <a href="#build" class="nav-link">What I build</a>
+    <a href="#why" class="nav-link">Why me</a>
+    <a href="#how" class="nav-link">How it works</a>
+    <a href="#proof" class="nav-link">Proof</a>
+    <a href="#work" class="nav-link">Pricing</a>
+  </div>
+  <div class="nav-actions">
+    <a class="btn btn-outline" href="mailto:m@micahprentice.com?subject=Event%20software"><i data-lucide="mail"></i> Email me</a>
+    <a class="btn btn-primary" data-book href="https://calendly.com/hq-micahprentice/30min" target="_blank" rel="noopener"><i data-lucide="calendar"></i> Book a call</a>
+    <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><i data-lucide="menu"></i></button>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <a href="#who" onclick="toggleMobileMenu()">Who it's for</a>
+  <a href="#build" onclick="toggleMobileMenu()">What I build</a>
+  <a href="#why" onclick="toggleMobileMenu()">Why me</a>
+  <a href="#how" onclick="toggleMobileMenu()">How it works</a>
+  <a href="#proof" onclick="toggleMobileMenu()">Proof</a>
+  <a href="#work" onclick="toggleMobileMenu()">Pricing</a>
+  <a href="#faq" onclick="toggleMobileMenu()">FAQ</a>
+  <div class="mm-sep"></div>
+  <a href="mailto:m@micahprentice.com?subject=Event%20software" onclick="toggleMobileMenu()">Email m@micahprentice.com</a>
+  <a href="/" class="mm-muted">← Back to micahprentice.com</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-left">
+      <div class="hero-tag reveal"><span class="dot"></span> Now taking corporate event projects</div>
+      <h1 class="hero-h1 reveal" data-delay="1">
+        <span class="line">Custom <span class="nowrap">event tech.</span></span>
+        <span class="line"><span class="grad-text">Without the <span class="nowrap">lock-in.</span></span></span>
+      </h1>
+      <p class="hero-thesis reveal" data-delay="2">I build the software behind corporate events: <strong>registration, invitation-only RSVPs, check-in, attendee portals, and <span class="nowrap">follow-up.</span></strong> Built to your brand in days, owned by you, with no <span class="nowrap">per-registrant</span> licensing. Think of me as a vendor alternative to Cvent.</p>
+      <div class="hero-ctas reveal" data-delay="3">
+        <a class="btn btn-primary" data-book href="https://calendly.com/hq-micahprentice/30min" target="_blank" rel="noopener"><i data-lucide="calendar"></i> Book a call</a>
+        <a class="btn btn-outline" href="mailto:m@micahprentice.com?subject=Event%20software"><i data-lucide="mail"></i> m@micahprentice.com</a>
+      </div>
+      <div class="hero-note reveal" data-delay="4">
+        <div class="av"><img src="micah.jpg" alt="Micah Prentice" /></div>
+        <div><b>Micah Prentice</b>, founder of Prism. I build fast with AI agents and ship real software for real operations.</div>
+      </div>
+    </div>
+
+    <!-- SPOTLIGHT: concept mock-up -->
+    <div class="spotlight reveal" data-delay="2" aria-label="Concept mock-up of an event registration, check-in, and concierge system">
+      <div class="spot-head">
+        <div class="spot-brand">
+          <div class="mark"><i data-lucide="ticket"></i></div>
+          <div><div class="nm">Your Event 2027</div><div class="sm">Branded RSVP, check-in, and concierge</div></div>
+        </div>
+        <div class="spot-badge"><i></i> Built for you</div>
+      </div>
+
+      <div class="mock-grid">
+        <div class="mock">
+          <h5>Guest list <span>Sample data</span></h5>
+          <div class="kpis">
+            <div class="kpi"><small>Invited</small><b>240</b></div>
+            <div class="kpi"><small>RSVP'd</small><b>186</b></div>
+            <div class="kpi"><small>Arrived</small><b class="g">142</b></div>
+          </div>
+          <div class="row"><div class="who"><span class="avx" style="background:#7B5CF5">AR</span><div><div class="n">Avery Reyes</div><div class="s">Imported from CRM</div></div></div><span class="pill ok">Approved</span></div>
+          <div class="row"><div class="who"><span class="avx" style="background:#E8307A">JL</span><div><div class="n">Jordan Lee</div><div class="s">+1 attending</div></div></div><span class="pill vip">VIP</span></div>
+          <div class="row"><div class="who"><span class="avx" style="background:#1E8BFF">SK</span><div><div class="n">Sam Kim</div><div class="s">Requested invite</div></div></div><span class="pill wait">Review</span></div>
+          <div class="row"><div class="who"><span class="avx" style="background:#0284C7">PO</span><div><div class="n">Priya Okafor</div><div class="s">Sponsor guest</div></div></div><span class="pill new">Invited</span></div>
+        </div>
+        <div class="mock center">
+          <h5>Check-in <span>Door</span></h5>
+          <div class="qr-wrap">
+            <div class="qr" aria-hidden="true">
+              <svg viewBox="0 0 21 21" shape-rendering="crispEdges" fill="#0C1A2E">
+                <path d="M0 0h7v7H0zM1 1v5h5V1zM2 2h3v3H2z"/><path d="M14 0h7v7h-7zM15 1v5h5V1zM16 2h3v3h-3z"/><path d="M0 14h7v7H0zM1 15v5h5v-5zM2 16h3v3H2z"/>
+                <path d="M8 0h1v1H8zM10 0h1v2h-1zM12 0h1v1h-1zM8 2h2v1H8zM11 2h2v1h-2zM9 4h1v1H9zM11 4h1v2h-1zM8 6h1v1H8zM10 6h1v1h-1zM12 6h1v1h-1z"/>
+                <path d="M0 8h1v1H0zM2 8h2v1H2zM5 8h1v1H5zM8 8h1v1H8zM10 8h2v1h-2zM13 8h1v1h-1zM15 8h2v1h-2zM18 8h1v1h-1zM20 8h1v1h-1z"/>
+                <path d="M1 10h1v1H1zM3 10h1v1H3zM6 10h2v1H6zM9 10h1v1H9zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h2v1h-2zM19 10h2v1h-2z"/>
+                <path d="M0 12h2v1H0zM4 12h1v1H4zM7 12h1v1H7zM9 12h2v1H9zM12 12h2v1h-2zM15 12h1v1h-1zM18 12h1v1h-1zM20 12h1v1h-1z"/>
+                <path d="M8 14h1v1H8zM10 14h2v1h-2zM13 14h1v1h-1zM15 14h1v1h-1zM17 14h3v1h-3z"/>
+                <path d="M9 16h1v1H9zM12 16h1v1h-1zM14 16h2v1h-2zM17 16h1v1h-1zM20 16h1v1h-1z"/>
+                <path d="M8 18h2v1H8zM11 18h1v1h-1zM13 18h1v1h-1zM15 18h3v1h-3zM19 18h1v1h-1z"/>
+                <path d="M9 20h1v1H9zM11 20h2v1h-2zM14 20h1v1h-1zM16 20h1v1h-1zM18 20h3v1h-3z"/>
+              </svg>
+            </div>
+            <div class="qr-meta">
+              <div class="qr-ok"><i data-lucide="badge-check"></i> Welcome in</div>
+              <div class="qr-sub">Scanned at the door</div>
+              <div class="badge-line"><i data-lucide="printer"></i> Badge printing…</div>
+            </div>
+          </div>
+        </div>
+        <div class="mock" style="grid-column: 1 / -1">
+          <h5>AI concierge <span>Text or chat</span></h5>
+          <div class="chat">
+            <div class="chatb q">Where do I park, and when does the keynote start?</div>
+            <div class="chatb a">Parking is in the venue garage, validated at check-in. The keynote is at <b>9:00 in the main hall</b>. Want it added to your calendar?</div>
+          </div>
+        </div>
+      </div>
+      <div class="spot-disclaimer"><i data-lucide="info"></i> Concept mock-up with sample data. Every build is custom.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section id="who">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">Who it's for</div>
+      <h2 class="h2 reveal" data-delay="1">You run events. You don't want another platform to babysit.</h2>
+    </div>
+    <div class="who-grid">
+      <div class="who-card reveal"><div class="ic"><i data-lucide="clipboard-list"></i></div><div><h4>Corporate event planners</h4><p>A polished experience for your client and a tool that does exactly what the brief says.</p></div></div>
+      <div class="who-card reveal" data-delay="1"><div class="ic"><i data-lucide="presentation"></i></div><div><h4>Conferences and summits</h4><p>Registration, agendas, sponsors, and a portal that looks like your brand, not a vendor's.</p></div></div>
+      <div class="who-card reveal" data-delay="2"><div class="ic"><i data-lucide="tent-tree"></i></div><div><h4>Offsites and retreats</h4><p>Invite lists, approvals, travel details, and day-of logistics in one place.</p></div></div>
+      <div class="who-card reveal" data-delay="3"><div class="ic"><i data-lucide="handshake"></i></div><div><h4>Customer and partner events</h4><p>Dinners, roadshows, and VIP experiences where the invite itself sets the tone.</p></div></div>
+      <div class="who-card reveal" data-delay="4"><div class="ic"><i data-lucide="party-popper"></i></div><div><h4>Mixers and side events</h4><p>Tech-week happy hours and launch parties that need an RSVP list, a door list, and a follow-up.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BUILD -->
+<section id="build">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">What I can build</div>
+      <h2 class="h2 reveal" data-delay="1">Everything between the invite and the follow-up.</h2>
+      <p class="sub reveal" data-delay="2">Pick one piece or the whole stack.</p>
+    </div>
+    <div class="build-grid">
+      <div class="build-item reveal"><div class="ic"><i data-lucide="mail-open"></i></div><div><h4>Branded registration and RSVP sites</h4><p>Public or invitation-only, on your domain, in your colors.</p></div></div>
+      <div class="build-item reveal" data-delay="1"><div class="ic"><i data-lucide="list-checks"></i></div><div><h4>Guest list import and approvals</h4><p>Bring a spreadsheet or CRM export. Approve, waitlist, or decline in a click.</p></div></div>
+      <div class="build-item reveal"><div class="ic"><i data-lucide="qr-code"></i></div><div><h4>Check-in, badges, and QR</h4><p>Fast door check-in from a phone or tablet, printable badges, and live headcounts.</p></div></div>
+      <div class="build-item reveal" data-delay="1"><div class="ic"><i data-lucide="calendar-range"></i></div><div><h4>Agendas and attendee portals</h4><p>Sessions, speakers, maps, and personal schedules in one link.</p></div></div>
+      <div class="build-item reveal"><div class="ic"><i data-lucide="award"></i></div><div><h4>Sponsor and exhibitor pages</h4><p>Branded sponsor listings, booth info, and sponsor-facing lead views.</p></div></div>
+      <div class="build-item reveal" data-delay="1"><div class="ic"><i data-lucide="scan-line"></i></div><div><h4>Lead capture and follow-up</h4><p>Scan, tag, and route leads so sales gets them the same day.</p></div></div>
+      <div class="build-item reveal"><div class="ic"><i data-lucide="message-square-text"></i></div><div><h4>Text and email reminders</h4><p>Confirmations, reminders, and day-of updates that people actually read.</p></div></div>
+      <div class="build-item reveal" data-delay="1"><div class="ic"><i data-lucide="sparkles"></i></div><div><h4>AI concierge for attendees</h4><p>Answers "where do I park" and "when is the keynote" by text or chat, trained on your event details.</p></div></div>
+      <div class="build-item reveal"><div class="ic"><i data-lucide="bar-chart-3"></i></div><div><h4>Post-event surveys and dashboards</h4><p>Feedback, attendance, and engagement in one view you can share up the chain.</p></div></div>
+      <div class="build-item reveal" data-delay="1"><div class="ic"><i data-lucide="plug"></i></div><div><h4>CRM and Slack integrations</h4><p>Push registrations and leads into your CRM and ping the team in Slack when it matters.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="wrap why-grid">
+    <div class="why-side">
+      <div class="eyebrow pink reveal">Why a builder, not a platform</div>
+      <h2 class="h2 reveal" data-delay="1">Your event. Your brand. <span class="grad-text">Your software.</span></h2>
+      <p class="sub reveal" data-delay="2">Big event platforms are built to serve everyone. I build for one event at a time: yours.</p>
+      <div class="callout reveal" data-delay="3">
+        <div class="ic"><i data-lucide="puzzle"></i></div>
+        <div><b>Already on Cvent or another platform? Keep it.</b><p>I can build the custom piece around it: a branded front end, a sponsor portal, an attendee concierge.</p></div>
+      </div>
+    </div>
+    <div class="why-list">
+      <div class="why-card reveal"><div class="num grad-text">01</div><h4>Built for your brand</h4><p>Not a template with your logo dropped in. Designed around your event and your guests.</p></div>
+      <div class="why-card reveal" data-delay="1"><div class="num grad-text">02</div><h4>Days, not quarters</h4><p>I prototype fast with AI agents, so you see a working version early and change it while it's cheap.</p></div>
+      <div class="why-card reveal"><div class="num grad-text">03</div><h4>You own it</h4><p>Your domain, your data, your code. Keep it, reuse it next year, or hand it to your team.</p></div>
+      <div class="why-card reveal" data-delay="1"><div class="num grad-text">04</div><h4>Pay for the build, not per registrant</h4><p>Scoped project pricing. Growing your guest list doesn't grow the bill.</p></div>
+      <div class="why-card reveal"><div class="num grad-text">05</div><h4>One person accountable</h4><p>You talk to the builder. No ticket queue, no account-manager relay.</p></div>
+      <div class="why-card reveal" data-delay="1"><div class="num grad-text">06</div><h4>Operator mindset</h4><p>I run crews and seasons in my own businesses. I build for the night of, not the demo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">How it works</div>
+      <h2 class="h2 reveal" data-delay="1">From call to live in days.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="n">1</div><span class="tm">30 min</span><h4>Discovery call</h4><p>Tell me about the event, the guests, and what has to go right.</p></div>
+      <div class="step reveal" data-delay="1"><div class="n">2</div><span class="tm">Days</span><h4>Prototype</h4><p>You get a working link, not a slide deck. We tighten it together.</p></div>
+      <div class="step reveal" data-delay="2"><div class="n">3</div><span class="tm">Go live</span><h4>Launch</h4><p>Your domain, your branding, invites out, reminders scheduled.</p></div>
+      <div class="step reveal" data-delay="3"><div class="n">4</div><span class="tm">Night of</span><h4>Event-day support</h4><p>I'm on call for check-in and the live run of show, then I hand you the data and a wrap-up.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section id="proof">
+  <div class="wrap">
+    <div class="proof-card reveal">
+      <div>
+        <div class="eyebrow">Proof: rogersnye.com</div>
+        <h2 class="h2">An invitation-only event site, built and run end to end.</h2>
+        <p>A private New Year's Eve celebration needed more than a save-the-date. I built an invitation-only site with a <strong>tap-to-open invite, countdown, RSVP with guest counts, a DJ song-request link, add-to-calendar, and a welcome pop-up.</strong> Existing RSVPs were imported so nothing got lost.</p>
+        <div class="proof-tags"><span>Invitation-only</span><span>RSVP import</span><span>Guest counts</span><span>DJ song requests</span><span>Add to calendar</span><span>Welcome pop-up</span></div>
+        <p>Corporate events need the same things at a bigger scale: a great first impression, a clean guest list, and a smooth night.</p>
+        <div class="proof-ctas">
+          <a class="btn btn-white" href="https://rogersnye.com" target="_blank" rel="noopener">See rogersnye.com <i data-lucide="arrow-up-right"></i></a>
+        </div>
+      </div>
+      <div class="highlights">
+        <div class="hl"><div class="ic"><i data-lucide="link"></i></div><div><b>One link</b><span>for the invite, the RSVP, and song requests. Guests never hunt for anything.</span></div></div>
+        <div class="hl"><div class="ic"><i data-lucide="import"></i></div><div><b>Nothing lost</b><span>Existing RSVPs were imported before launch, so the guest list started complete.</span></div></div>
+        <div class="hl"><div class="ic"><i data-lucide="party-popper"></i></div><div><b>Invite to midnight</b><span>Designed, built, launched, and run through the night of the event.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK TOGETHER -->
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">Ways to work together</div>
+      <h2 class="h2 reveal" data-delay="1">Scoped per event. No per-head fees.</h2>
+      <p class="sub reveal" data-delay="2">Every engagement gets a fixed quote after a 30-minute call. Your guest list can grow without the bill growing with it.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price reveal">
+        <div class="ic"><i data-lucide="mail-open"></i></div>
+        <h4>Single event build</h4>
+        <p>The essentials for one event, live on your domain in days.</p>
+        <ul>
+          <li><i data-lucide="check-circle-2"></i> Registration or RSVP site</li>
+          <li><i data-lucide="check-circle-2"></i> Guest list and approvals</li>
+          <li><i data-lucide="check-circle-2"></i> Text and email reminders</li>
+          <li><i data-lucide="check-circle-2"></i> QR check-in</li>
+        </ul>
+        <div class="quote"><div class="qi"><i data-lucide="file-check"></i></div><div><span class="lbl">Pricing</span><b>Fixed quote after a 30-min call</b></div></div>
+      </div>
+      <div class="price feat reveal" data-delay="1">
+        <span class="tag">Most complete</span>
+        <div class="ic"><i data-lucide="layers"></i></div>
+        <h4>Full event stack</h4>
+        <p>Everything in a single build plus the pieces that make a bigger event feel effortless.</p>
+        <ul>
+          <li><i data-lucide="check-circle-2"></i> Attendee portal and agenda</li>
+          <li><i data-lucide="check-circle-2"></i> Sponsor and exhibitor pages</li>
+          <li><i data-lucide="check-circle-2"></i> AI concierge for attendees</li>
+          <li><i data-lucide="check-circle-2"></i> Surveys and dashboards</li>
+        </ul>
+        <div class="quote"><div class="qi"><i data-lucide="file-check"></i></div><div><span class="lbl">Pricing</span><b>Fixed quote after a 30-min call</b></div></div>
+      </div>
+      <div class="price reveal" data-delay="2">
+        <div class="ic"><i data-lucide="calendar-days"></i></div>
+        <h4>Event season retainer</h4>
+        <p>A standing builder for your team's event calendar. New events reuse what we've already built.</p>
+        <ul>
+          <li><i data-lucide="check-circle-2"></i> Priority on your calendar</li>
+          <li><i data-lucide="check-circle-2"></i> Shared components across events</li>
+          <li><i data-lucide="check-circle-2"></i> Ongoing hosting and upkeep</li>
+          <li><i data-lucide="check-circle-2"></i> One point of contact</li>
+        </ul>
+        <div class="quote"><div class="qi"><i data-lucide="file-check"></i></div><div><span class="lbl">Pricing</span><b>Fixed monthly quote after a 30-min call</b></div></div>
+      </div>
+    </div>
+    <div class="price-foot reveal" data-delay="2">
+      <div class="pf"><div class="ic"><i data-lucide="map-pin"></i></div><div><b>Event-day on-site support</b><span>Available as an add-on to any build. Scoped per event with a fixed quote.</span></div></div>
+      <div class="pf"><div class="ic"><i data-lucide="users"></i></div><div><b>No per-registrant fees</b><span>Pay for the build, not the headcount. 50 guests or 5,000, same quote.</span></div></div>
+      <div class="pf"><div class="ic"><i data-lucide="key-round"></i></div><div><b>You keep everything</b><span>Your domain, your data, your code. Reuse it next year or hand it to your team.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">FAQ</div>
+      <h2 class="h2 reveal" data-delay="1">Quick answers.</h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq reveal"><h4><i data-lucide="help-circle"></i> We already use Cvent. Can you still help?</h4><p>Yes. I can build the custom pieces around it, like a branded front end, a sponsor portal, or an attendee concierge.</p></div>
+      <div class="faq reveal" data-delay="1"><h4><i data-lucide="help-circle"></i> How fast can you go?</h4><p>A focused RSVP or registration site can be live in days. Bigger builds depend on scope. We'll set a date on the first call.</p></div>
+      <div class="faq reveal"><h4><i data-lucide="help-circle"></i> Who owns the site and the data?</h4><p>You do. Your domain, your guest data, and the code. I can keep running it for you or hand it off.</p></div>
+      <div class="faq reveal" data-delay="1"><h4><i data-lucide="help-circle"></i> Where is it hosted?</h4><p>On modern cloud infrastructure under your domain. If your IT team has requirements, we'll build to them.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <div class="eyebrow pink">Let's talk</div>
+      <h2 class="h2">Have an event coming up?</h2>
+      <p class="sub">Tell me the date and the headcount. I'll tell you what I can build and how fast.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" data-book href="https://calendly.com/hq-micahprentice/30min" target="_blank" rel="noopener"><i data-lucide="calendar"></i> Book a 30-min call</a>
+        <a class="btn btn-outline" href="mailto:m@micahprentice.com?subject=Event%20software"><i data-lucide="mail"></i> m@micahprentice.com</a>
+      </div>
+      <div class="note">No pitch deck, no pressure. Leave the call with a scope and a date.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap foot-in">
+    <div>© <span id="year"></span> Micah Prentice</div>
+    <div><a href="/">Home</a><a href="/events" class="on">Events</a><a href="/homventory.html">Homventory</a><a href="#contact">Contact</a></div>
+  </div>
+</footer>
+
+<script>
+const CONFIG = {
+  CALENDLY_URL: 'https://calendly.com/hq-micahprentice/30min',
+};
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+$('#year').textContent = new Date().getFullYear();
+
+// Calendly popup when the widget is available; the href is the fallback
+$$('[data-book]').forEach(a => a.addEventListener('click', e => {
+  if (!window.Calendly) return;
+  e.preventDefault();
+  Calendly.initPopupWidget({ url: CONFIG.CALENDLY_URL });
+}));
+
+// ─── NAV: scroll state, scrollspy, mobile menu ───
+const nav = $('#nav');
+const progress = $('#scroll-progress');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 12);
+  const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  progress.style.width = Math.min(100, pct * 100) + '%';
+}, { passive: true });
+
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    $$('.nav-link').forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+$$('section[id]').forEach(s => spy.observe(s));
+
+function toggleMobileMenu() {
+  const open = $('#mobile-menu').classList.toggle('open');
+  $('.nav-hamburger').setAttribute('aria-expanded', open);
+}
+
+// ─── REVEAL ON SCROLL + word split ───
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.12 });
+$$('.reveal').forEach(el => revealObs.observe(el));
+
+$$('.h2').forEach(el => {
+  if (el.children.length) return;
+  el.innerHTML = el.textContent.trim().split(/\s+/).map(w => `<span class="split-word">${w}</span>`).join(' ');
+  const o = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    $$('.split-word', e.target).forEach((w, i) => setTimeout(() => w.classList.add('in'), 60 + i * 55));
+    o.unobserve(e.target);
+  }), { threshold: 0.4 });
+  o.observe(el);
+});
+
+if (window.lucide) lucide.createIcons();
+</script>
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</body>
+</html>

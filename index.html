@@ -625,10 +625,13 @@ section { padding: 88px 0; }
   .why-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
 }
-@media (max-width: 820px) {
-  .nav-links, .nav-actions .btn-outline { display: none; }
+@media (max-width: 960px) {
+  .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .nav-actions { margin-left: auto; }
+}
+@media (max-width: 820px) {
+  .nav-actions .btn-outline { display: none; }
   section { padding: 64px 0; }
   #hero { padding-top: calc(var(--nav-h) + 36px); }
   .inc-card.featured { grid-column: span 2; flex-direction: column; align-items: stretch; }
@@ -672,6 +675,7 @@ section { padding: 88px 0; }
     <a href="#incubator" class="nav-link">Incubator</a>
     <a href="#why" class="nav-link">Why</a>
     <a href="#books" class="nav-link">Bookshelf</a>
+    <a href="/events" class="nav-link">Events</a>
     <a href="#contact" class="nav-link">Contact</a>
   </div>
   <div class="nav-actions">
@@ -685,6 +689,7 @@ section { padding: 88px 0; }
   <a href="#incubator" onclick="toggleMobileMenu()">Incubator</a>
   <a href="#why" onclick="toggleMobileMenu()">Why</a>
   <a href="#books" onclick="toggleMobileMenu()">Bookshelf</a>
+  <a href="/events">Events</a>
   <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
   <a href="#" onclick="toggleMobileMenu(); openChat(); return false;">💬 Chat with me</a>
 </div>
@@ -1055,7 +1060,7 @@ section { padding: 88px 0; }
 <footer class="site-footer">
   <div class="wrap foot-in">
     <div>© <span id="year"></span> Micah Prentice</div>
-    <div><a href="#now">Right now</a><a href="#incubator">Incubator</a><a href="#books">Bookshelf</a><a href="/homventory.html">Homventory</a><a href="#contact">Contact</a></div>
+    <div><a href="#now">Right now</a><a href="#incubator">Incubator</a><a href="#books">Bookshelf</a><a href="/events">Events</a><a href="/homventory.html">Homventory</a><a href="#contact">Contact</a></div>
   </div>
 </footer>
 

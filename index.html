@@ -625,7 +625,11 @@ section { padding: 88px 0; }
   .why-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
 }
-@media (max-width: 960px) {
+@media (max-width: 1200px) {
+  .nav-link { padding: 7px 10px; }
+  .nav-link.active::after { left: 10px; right: 10px; }
+}
+@media (max-width: 1020px) {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .nav-actions { margin-left: auto; }
@@ -676,6 +680,7 @@ section { padding: 88px 0; }
     <a href="#why" class="nav-link">Why</a>
     <a href="#books" class="nav-link">Bookshelf</a>
     <a href="/events" class="nav-link">Events</a>
+    <a href="/tecor" class="nav-link">Tecor</a>
     <a href="#contact" class="nav-link">Contact</a>
   </div>
   <div class="nav-actions">
@@ -690,6 +695,7 @@ section { padding: 88px 0; }
   <a href="#why" onclick="toggleMobileMenu()">Why</a>
   <a href="#books" onclick="toggleMobileMenu()">Bookshelf</a>
   <a href="/events">Events</a>
+  <a href="/tecor">Tecor Partners</a>
   <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
   <a href="#" onclick="toggleMobileMenu(); openChat(); return false;">💬 Chat with me</a>
 </div>
@@ -1060,7 +1066,7 @@ section { padding: 88px 0; }
 <footer class="site-footer">
   <div class="wrap foot-in">
     <div>© <span id="year"></span> Micah Prentice</div>
-    <div><a href="#now">Right now</a><a href="#incubator">Incubator</a><a href="#books">Bookshelf</a><a href="/events">Events</a><a href="/homventory.html">Homventory</a><a href="#contact">Contact</a></div>
+    <div><a href="#now">Right now</a><a href="#incubator">Incubator</a><a href="#books">Bookshelf</a><a href="/events">Events</a><a href="/tecor">Tecor</a><a href="/homventory.html">Homventory</a><a href="#contact">Contact</a></div>
   </div>
 </footer>
 

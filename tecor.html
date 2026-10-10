@@ -25,11 +25,11 @@
     --paper:#F6F5F1; --paper-2:#ECEAE3; --line:rgba(10,15,28,.10);
     --text:#0A0F1C; --muted:#5B6172; --muted-dark:#9AA3B8;
     --volt:#D8F84A; --volt-deep:#A9C62A; --teal:#5EE6D0;
-    --radius:18px; --max:1160px;
+    --radius:18px; --max:1160px; --nav-h:72px; --foot-h:56px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+  body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#fff;background:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
   h1,h2,h3{font-family:Manrope,Inter,sans-serif;letter-spacing:-.02em;line-height:1.1}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
@@ -37,31 +37,31 @@
   .btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px -8px rgba(216,248,74,.55)}
   .btn svg{width:16px;height:16px;transition:transform .2s ease}
   .btn:hover svg{transform:translateX(3px)}
-  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--volt)}
   .dot{width:8px;height:8px;border-radius:50%;background:var(--volt);box-shadow:0 0 0 0 rgba(216,248,74,.7);animation:ping 2.4s infinite}
   @keyframes ping{0%{box-shadow:0 0 0 0 rgba(216,248,74,.6)}70%{box-shadow:0 0 0 10px rgba(216,248,74,0)}100%{box-shadow:0 0 0 0 rgba(216,248,74,0)}}
 
   /* Nav */
   header.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s ease, border-color .3s ease;border-bottom:1px solid transparent}
   header.nav.scrolled{background:rgba(10,15,28,.82);backdrop-filter:saturate(140%) blur(12px);-webkit-backdrop-filter:saturate(140%) blur(12px);border-bottom-color:rgba(255,255,255,.06)}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:var(--nav-h)}
   .brand{display:flex;align-items:center;gap:10px;color:#fff;font-family:Manrope,sans-serif;font-weight:800;font-size:19px;letter-spacing:-.02em}
   .brand svg{width:28px;height:28px}
-  .nav-links{display:flex;align-items:center;gap:28px;color:var(--muted-dark);font-size:14.5px;font-weight:500}
-  .nav-links a:not(.btn):hover{color:#fff}
+  .nav-links{display:flex;align-items:center;gap:28px}
   .nav-links .btn{padding:10px 18px;font-size:14px}
 
-  /* Hero */
-  .hero{position:relative;background:radial-gradient(1200px 600px at 75% 40%, rgba(94,230,208,.10), transparent 60%),radial-gradient(900px 500px at 80% 60%, rgba(216,248,74,.08), transparent 60%),var(--ink);color:#fff;overflow:hidden;padding:128px 0 72px}
-  .hero .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
-  .hero .eyebrow{color:var(--volt)}
-  .hero h1{font-size:clamp(40px,5.6vw,68px);font-weight:800;margin:18px 0 16px}
+  /* Hero (the whole page) */
+  .hero{position:relative;min-height:calc(100vh - var(--foot-h));display:flex;align-items:center;background:radial-gradient(1200px 600px at 75% 40%, rgba(94,230,208,.10), transparent 60%),radial-gradient(900px 500px at 80% 60%, rgba(216,248,74,.08), transparent 60%),var(--ink);overflow:hidden;padding:calc(var(--nav-h) + 24px) 0 40px}
+  .hero .wrap{width:100%}
+  .hero .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+  .hero h1{font-size:clamp(38px,5.2vw,64px);font-weight:800;margin:16px 0 12px}
   .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--volt),var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero p.lead{font-size:clamp(17px,1.5vw,19px);color:#C7CDDB;max-width:560px}
-  .hero .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin-top:28px}
+  .hero p.lead{font-size:clamp(16px,1.4vw,18px);color:#C7CDDB;max-width:560px}
+  .hero .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:22px}
   .hero .note{font-size:14px;color:var(--muted-dark)}
   .hero .note a{color:#fff;border-bottom:1px solid rgba(255,255,255,.3)}
-  .orbit{position:relative;aspect-ratio:1/1;width:100%;max-width:360px;justify-self:center}
+
+  .orbit{position:relative;aspect-ratio:1/1;width:100%;max-width:320px;justify-self:center}
   .orbit .ring{position:absolute;inset:0;margin:auto;border-radius:50%;border:1px solid rgba(255,255,255,.10)}
   .orbit .r1{width:100%;height:100%}
   .orbit .r2{width:74%;height:74%;border-color:rgba(94,230,208,.22)}
@@ -75,40 +75,24 @@
   .orbit .sat{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 18px rgba(255,255,255,.6)}
   .orbit .s2 .sat{background:var(--teal);box-shadow:0 0 18px rgba(94,230,208,.7);width:10px;height:10px;top:-5px}
   .orbit .s3 .sat{background:var(--volt);box-shadow:0 0 18px rgba(216,248,74,.8);width:9px;height:9px;top:-4.5px}
-  .orbit .label{position:absolute;font-size:12px;font-weight:600;letter-spacing:.04em;color:#AEB6C8;background:rgba(17,24,41,.85);border:1px solid rgba(255,255,255,.08);padding:6px 10px;border-radius:999px;white-space:nowrap}
-  .orbit .l1{top:6%;left:-4%}.orbit .l2{top:44%;right:-8%}.orbit .l3{bottom:8%;left:2%}.orbit .l4{bottom:-2%;right:12%}
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  /* Lanes */
-  .work{padding:64px 0 72px}
-  .work .eyebrow{color:var(--volt-deep)}
-  .work h2{font-size:clamp(26px,3vw,34px);font-weight:800;margin:10px 0 28px}
-  .lanes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-  .lane{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px 22px;transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;overflow:hidden}
-  .lane::after{content:"";position:absolute;inset:auto -40% -60% auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle, rgba(216,248,74,.22), transparent 65%);opacity:0;transition:opacity .35s ease}
-  .lane:hover{transform:translateY(-3px);box-shadow:0 24px 48px -28px rgba(10,15,28,.35);border-color:rgba(10,15,28,.18)}
-  .lane:hover::after{opacity:1}
-  .lane .icon{width:42px;height:42px;border-radius:12px;background:var(--ink);display:grid;place-items:center;margin-bottom:16px}
-  .lane .icon svg{width:20px;height:20px;stroke:var(--volt)}
-  .lane h3{font-size:18px;font-weight:800;margin-bottom:6px}
-  .lane p{color:var(--muted);font-size:15px;line-height:1.5}
+  /* Lanes as chips */
+  .lanes{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:40px}
+  .lane{display:flex;align-items:center;gap:14px;background:rgba(17,24,41,.85);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 16px;transition:border-color .25s ease, transform .25s ease}
+  .lane:hover{border-color:rgba(216,248,74,.45);transform:translateY(-2px)}
+  .lane .icon{flex:0 0 36px;height:36px;border-radius:10px;background:var(--ink);border:1px solid rgba(255,255,255,.08);display:grid;place-items:center}
+  .lane .icon svg{width:18px;height:18px;stroke:var(--volt)}
+  .lane h3{font-size:15px;font-weight:800;line-height:1.2}
+  .lane p{color:var(--muted-dark);font-size:13px;line-height:1.35;margin-top:2px}
 
-  /* Terms strip */
-  .terms{background:var(--ink);color:#fff;padding:40px 0}
-  .terms .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-  .terms .line{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-  .terms .tag{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--volt);padding:5px 10px;border-radius:999px}
-  .terms .line p{font-family:Manrope,sans-serif;font-weight:700;font-size:clamp(17px,1.6vw,21px);letter-spacing:-.01em}
-  .terms .line p span{color:#AEB6C8;font-weight:600}
-  .terms .lead{font-size:14px;color:var(--muted-dark)}
-  .terms .lead a{color:#fff;border-bottom:1px solid rgba(255,255,255,.3)}
-  .terms .right{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .terms{display:flex;align-items:center;gap:12px;margin-top:22px;font-size:15px;color:#AEB6C8}
+  .terms .tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--volt);padding:4px 9px;border-radius:999px;white-space:nowrap}
+  .terms strong{color:#fff;font-weight:600}
 
-  footer{background:var(--ink);color:#7D869B;font-size:13.5px;border-top:1px solid rgba(255,255,255,.06);padding:22px 0}
-  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  footer .links{display:flex;gap:18px;flex-wrap:wrap}
-  footer .links a{transition:color .2s ease}
-  footer .links a:hover{color:#fff}
+  footer{height:var(--foot-h);display:flex;align-items:center;color:#7D869B;font-size:13px;border-top:1px solid rgba(255,255,255,.06)}
+  footer .wrap{width:100%;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a:hover{color:#fff}
 
   /* Reveal */
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1)}
@@ -116,22 +100,22 @@
   .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
 
   @media (max-width: 960px){
-    .hero{padding:112px 0 56px}
-    .hero .grid{grid-template-columns:1fr;gap:28px}
-    .orbit{max-width:260px;margin-top:8px}
-    .lanes{grid-template-columns:1fr 1fr}
-    .work{padding:56px 0 64px}
-    .nav-links a:not(.btn){display:none}
+    .hero{min-height:0;padding:calc(var(--nav-h) + 20px) 0 32px}
+    .hero .grid{grid-template-columns:1fr;gap:20px}
+    .orbit{display:none}
+    .lanes{grid-template-columns:1fr 1fr;margin-top:28px}
   }
   @media (max-width: 560px){
-    .lanes{grid-template-columns:1fr;gap:12px}
-    .lane{display:grid;grid-template-columns:42px 1fr;column-gap:16px;padding:18px 18px}
-    .lane .icon{margin:0;grid-row:1 / span 2}
-    .lane h3{font-size:17px;margin-bottom:3px}
-    .orbit .label{font-size:11px}
-    .orbit .l2{right:-2%}
+    .hero h1{font-size:40px;margin:12px 0 10px}
+    .hero p.lead{font-size:16px}
+    .hero .cta-row{margin-top:18px;gap:12px}
+    .lanes{grid-template-columns:1fr;gap:8px;margin-top:24px}
+    .lane{padding:10px 12px}
+    .terms{flex-direction:column;align-items:flex-start;gap:8px;margin-top:18px;font-size:14px}
     .nav-links .btn{padding:9px 14px;font-size:13px}
     .brand{font-size:17px}
+    footer{height:auto;padding:16px 0}
+    footer .wrap{gap:6px 16px}
   }
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important;transition:none !important}
@@ -148,7 +132,6 @@
       Tecor<span style="font-weight:600;color:#9AA3B8;margin-left:6px">Partners</span>
     </a>
     <nav class="nav-links">
-      <a href="#work">What we do</a>
       <a class="btn" href="mailto:m@micahprentice.com?subject=Intro%20call%3A%20Tecor%20Partners">Book an intro call</a>
     </nav>
   </div>
@@ -156,73 +139,47 @@
 
 <main id="top">
   <section class="hero">
-    <div class="wrap grid">
-      <div>
-        <span class="eyebrow reveal"><span class="dot"></span> Now booking January 2027</span>
-        <h1 class="reveal d1">We get the <em>hard initiatives</em> done.</h1>
-        <p class="lead reveal d2">A hands-on partner for corporate teams with a software rollout, flagship event, partner program, or key relationship that has to land. We plan it, build what's missing, run it, and get paid on results.</p>
-        <div class="cta-row reveal d3">
-          <a class="btn" href="mailto:m@micahprentice.com?subject=Intro%20call%3A%20Tecor%20Partners">Book an intro call
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <span class="note">20 minutes. Or email <a href="mailto:m@micahprentice.com?subject=Intro%20call%3A%20Tecor%20Partners">m@micahprentice.com</a></span>
+    <div class="wrap">
+      <div class="grid">
+        <div>
+          <span class="eyebrow reveal"><span class="dot"></span> Now booking January 2027</span>
+          <h1 class="reveal d1">We get the <em>hard initiatives</em> done.</h1>
+          <p class="lead reveal d2">A hands-on partner for corporate initiatives that have to land.</p>
+          <div class="cta-row reveal d3">
+            <a class="btn" href="mailto:m@micahprentice.com?subject=Intro%20call%3A%20Tecor%20Partners">Book an intro call
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <span class="note">20 minutes. Or email <a href="mailto:m@micahprentice.com?subject=Intro%20call%3A%20Tecor%20Partners">m@micahprentice.com</a></span>
+          </div>
+        </div>
+        <div class="orbit reveal d2" aria-hidden="true">
+          <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+          <div class="spin s1"><span class="sat"></span></div>
+          <div class="spin s2"><span class="sat"></span></div>
+          <div class="spin s3"><span class="sat"></span></div>
+          <div class="core"></div>
         </div>
       </div>
-      <div class="orbit reveal d2" aria-hidden="true">
-        <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
-        <div class="spin s1"><span class="sat"></span></div>
-        <div class="spin s2"><span class="sat"></span></div>
-        <div class="spin s3"><span class="sat"></span></div>
-        <div class="core"></div>
-        <span class="label l1">Software rollout</span>
-        <span class="label l2">Events</span>
-        <span class="label l3">Peer programs</span>
-        <span class="label l4">Partnerships</span>
-      </div>
-    </div>
-  </section>
 
-  <section class="work" id="work">
-    <div class="wrap">
-      <div class="reveal">
-        <span class="eyebrow">What we do</span>
-        <h2>Four lanes. One accountable lead.</h2>
-      </div>
-      <div class="lanes">
+      <div class="lanes" id="work">
         <article class="lane reveal">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M7 9l2 2-2 2M12 13h4"/></svg></div>
-          <h3>Software initiatives</h3>
-          <p>Rollout, field enablement, and adoption that sticks.</p>
+          <div><h3>Software initiatives</h3><p>Rollout, enablement, adoption that sticks</p></div>
         </article>
         <article class="lane reveal d1">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 15h2M14 15h2"/></svg></div>
-          <h3>Events</h3>
-          <p>Summits, launches, and roadshows, with the tech behind them.</p>
+          <div><h3>Events</h3><p>Summits, launches, roadshows, event tech</p></div>
         </article>
         <article class="lane reveal d2">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3"/><circle cx="5" cy="17" r="2.5"/><circle cx="19" cy="17" r="2.5"/><path d="M10 9.5 6.5 15M14 9.5l3.5 5.5M7.5 17h9"/></svg></div>
-          <h3>Peer and partner programs</h3>
-          <p>Councils, roundtables, and partner programs that carry the message.</p>
+          <div><h3>Peer and partner programs</h3><p>Councils, roundtables, partner networks</p></div>
         </article>
         <article class="lane reveal d3">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></div>
-          <h3>Partnerships and relations</h3>
-          <p>Channel, alliance, and executive relationships moved to signature.</p>
+          <div><h3>Partnerships and relations</h3><p>Channel, alliances, executive relations</p></div>
         </article>
       </div>
-    </div>
-  </section>
 
-  <section class="terms" id="how">
-    <div class="wrap reveal">
-      <div class="line">
-        <span class="tag">How we work</span>
-        <p>Paid for results: <span>base retainer + results bonus.</span></p>
-      </div>
-      <div class="right">
-        <span class="lead">Led by <a href="/" >Micah Prentice</a>, founder of Prism.</span>
-        <a class="btn" href="mailto:m@micahprentice.com?subject=Intro%20call%3A%20Tecor%20Partners">Book an intro call
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
+      <p class="terms reveal d3"><span class="tag">How we work</span><span><strong>Paid for results:</strong> base retainer + results bonus.</span></p>
     </div>
   </section>
 </main>
@@ -230,7 +187,7 @@
 <footer>
   <div class="wrap">
     <span>&copy; 2026 Tecor Partners</span>
-    <nav class="links" aria-label="Related pages"><a href="/">micahprentice.com</a><a href="/events">Event software</a></nav>
+    <span><a href="/">micahprentice.com</a></span>
     <span>Louisville, Kentucky</span>
   </div>
 </footer>

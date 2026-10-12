@@ -1,0 +1,11 @@
+# Cloudflare Pages / Workers static-asset headers.
+# robots.txt and sitemap.xml exist as real files at the site root, so they are
+# served directly instead of falling through to the SPA (index.html) fallback.
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=3600

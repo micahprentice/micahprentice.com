@@ -1,0 +1,29 @@
+# Cloudflare Pages / Workers static-asset headers.
+# robots.txt and sitemap.xml exist as real files at the site root, so they are
+# served directly instead of falling through to the SPA (index.html) fallback.
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+# Images are small and size-suffixed; a month of caching is safe even if a file is re-exported later.
+/books/*
+  Cache-Control: public, max-age=2592000
+
+/logos/*
+  Cache-Control: public, max-age=2592000
+
+/micah*.webp
+  Cache-Control: public, max-age=2592000
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600

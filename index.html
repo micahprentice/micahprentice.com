@@ -129,7 +129,7 @@
   --bg: #FFFFFF;
   --bg-alt: #F4F9FF;
   --bg-deep: #E6F1FE;
-  --primary: #0284C7;
+  --primary: #0369A1;
   --primary-hover: #0369A1;
   --primary-light: #BAE6FD;
   --primary-xlight: #F0F9FF;
@@ -141,7 +141,7 @@
   --prism-grad: linear-gradient(135deg, #E8307A 0%, #7B5CF5 48%, #1E8BFF 100%);
   --text: #0C1A2E;
   --muted: #5B6B80;
-  --muted2: #94A3B8;
+  --muted2: #4E5D73;
   --border: #D8E8F7;
   --border-light: #E8F1FA;
   --white: #FFFFFF;
@@ -193,7 +193,7 @@ picture { display: contents; }
   padding: 12px 22px; border-radius: 99px; border: 1.5px solid transparent;
   font-size: 14px; font-weight: 600; text-decoration: none; cursor: pointer;
   transition: transform .18s var(--ease), box-shadow .18s var(--ease), background .18s, border-color .18s, color .18s;
-  white-space: nowrap; line-height: 1; position: relative; overflow: hidden;
+  white-space: nowrap; line-height: 1; position: relative; min-height: 44px;
 }
 .btn svg { width: 16px; height: 16px; }
 .btn:active { transform: scale(.97); }
@@ -204,21 +204,16 @@ picture { display: contents; }
 .btn-ghost { background: transparent; color: var(--muted); padding-left: 10px; padding-right: 10px; }
 .btn-ghost:hover { color: var(--text); }
 .btn-invest {
-  color: #fff; background: var(--prism-grad); background-size: 200% 200%;
-  box-shadow: 0 8px 24px rgba(123,92,245,0.32);
-  animation: gradShift 6s ease infinite;
+  color: var(--text); background: #fff; border-color: var(--border);
+  box-shadow: none;
 }
-.btn-invest:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(232,48,122,0.36); }
-.btn-invest::after {
-  content: ''; position: absolute; top: 0; left: -80%; width: 50%; height: 100%;
-  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.35), transparent);
-  transform: skewX(-20deg); animation: shine 4.5s ease-in-out infinite;
-}
+.btn-invest:hover { border-color: var(--text); }
+.spotlight .btn-invest { color: #fff; background: transparent; border-color: rgba(255,255,255,.4); }
 @keyframes gradShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 @keyframes shine { 0%, 60% { left: -80%; } 100% { left: 140%; } }
 
 /* ─── REVEAL / MOTION ─── */
-.reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal { opacity: 1; transform: none; }
 .reveal.in { opacity: 1; transform: none; }
 .reveal[data-delay="1"] { transition-delay: .08s; }
 .reveal[data-delay="2"] { transition-delay: .16s; }
@@ -241,7 +236,7 @@ picture { display: contents; }
 .nav-logo span { color: var(--pink); }
 .nav-links { display: flex; gap: 2px; align-items: center; flex: 1; justify-content: center; }
 .nav-link {
-  padding: 7px 13px; border-radius: 8px; font-size: 13.5px; font-weight: 500; color: var(--muted);
+  display: inline-flex; align-items: center; min-height: 44px; padding: 8px 12px; border-radius: 8px; font-size: 13.5px; font-weight: 500; color: var(--muted);
   text-decoration: none; transition: all .15s; white-space: nowrap; position: relative;
 }
 .nav-link:hover { color: var(--text); background: var(--primary-xlight); }
@@ -249,7 +244,7 @@ picture { display: contents; }
 .nav-link.active::after { content: ''; position: absolute; left: 13px; right: 13px; bottom: 3px; height: 2px; border-radius: 2px; background: var(--prism-grad); }
 .nav-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
 .nav-actions .btn { padding: 9px 16px; font-size: 13px; }
-.nav-hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--text); padding: 6px; }
+.nav-hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--text); padding: 6px; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
 .nav-hamburger svg { width: 22px; height: 22px; }
 #mobile-menu {
   position: fixed; inset: var(--nav-h) 0 auto 0; z-index: 499; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
@@ -448,7 +443,7 @@ picture { display: contents; }
 .stage-tabs { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
 .stage-tabs button { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 99px; cursor: pointer; transition: .2s; }
 .stage-tabs button.on { background: #fff; color: #0C1A2E; border-color: #fff; }
-.spot-disclaimer { margin-top: 10px; font-size: 11.5px; color: rgba(255,255,255,0.5); font-style: italic; display: flex; align-items: center; gap: 6px; }
+.spot-disclaimer { margin-top: 10px; font-size: 13px; color: rgba(255,255,255,0.78); display: flex; align-items: center; gap: 6px; }
 .spot-disclaimer svg { width: 12px; height: 12px; flex-shrink: 0; }
 
 /* ─── NOW (indented tree) ─── */
@@ -477,7 +472,7 @@ section { padding: 88px 0; }
   position: relative; display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;
   background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; text-decoration: none;
   transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s;
-  opacity: 0; transform: translateX(-10px);
+  opacity: 1; transform: none;
 }
 .leaf::before { content: ''; position: absolute; left: -22px; top: 50%; width: 22px; height: 2px; background: var(--border); }
 .leaf.in { opacity: 1; transform: none; }
@@ -572,7 +567,7 @@ section { padding: 88px 0; }
 .shelf-nav svg { width: 16px; height: 16px; }
 .shelf { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 6px 5vw 22px; margin: 0 -5vw; scrollbar-width: none; }
 .shelf::-webkit-scrollbar { display: none; }
-.book { flex: 0 0 150px; scroll-snap-align: start; cursor: pointer; text-align: left; background: none; border: none; padding: 0; opacity: 0; transform: translateY(16px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
+.book { flex: 0 0 150px; scroll-snap-align: start; cursor: pointer; text-align: left; background: none; border: none; padding: 0; opacity: 1; transform: none; }
 .book.in { opacity: 1; transform: none; }
 .book-cover { width: 150px; height: 222px; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 28px rgba(12,26,46,0.16); position: relative; transition: transform .35s var(--ease), box-shadow .35s var(--ease); background: #E2E8F0; }
 .book-cover img { width: 100%; height: 100%; object-fit: cover; }
@@ -770,31 +765,41 @@ section { padding: 88px 0; }
   .int-row { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .reveal, .split-word, .leaf, .book, .tree-node::before { opacity: 1 !important; transform: none !important; }
+}
+.skip { position: absolute; left: 12px; top: -40px; z-index: 1000; background: #fff; color: var(--text); padding: 10px 14px; border-radius: 8px; font-weight: 700; }
+.skip:focus { top: 12px; }
+:focus-visible { outline: 2px solid #0369A1; outline-offset: 3px; }
+h1, h2, .h2 { text-wrap: balance; }
+.chip { min-height: 36px; }
+.filters button, .stage-tabs button, .shelf-nav button { min-height: 44px; }
+@media (max-width: 600px) {
+  #fab-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  #chat-fab { width: 54px; padding: 0; justify-content: center; }
 }
 </style>
 </head>
 
 <body>
+<a class="skip" href="#hero">Skip to content</a>
 <div id="scroll-progress"></div>
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo">Micah<span>.</span></a>
+  <a href="#hero" class="nav-logo">Micah<span>.</span></a>
   <div class="nav-links">
-    <a href="#now" class="nav-link">Right now</a>
-    <a href="#incubator" class="nav-link">Incubator</a>
+    <a href="#now" class="nav-link">Now</a>
+    <a href="#incubator" class="nav-link">Work</a>
     <a href="#why" class="nav-link">Why</a>
-    <a href="#books" class="nav-link">Bookshelf</a>
+    <a href="#books" class="nav-link">Books</a>
     <a href="/events" class="nav-link">Events</a>
     <a href="/tecor" class="nav-link">Tecor</a>
     <a href="#contact" class="nav-link">Contact</a>
   </div>
   <div class="nav-actions">
-    <button class="btn btn-outline" onclick="openChat()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg> Chat with me</button>
-    <a class="btn btn-invest" data-invest href="https://prism-investor.com" target="_blank" rel="noopener"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg> Invest in Prism</a>
-    <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button>
+    <button class="btn btn-primary" onclick="bookCall()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg> Book a call</button>
+    <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button>
   </div>
 </nav>
 <div id="mobile-menu">
@@ -805,25 +810,26 @@ section { padding: 88px 0; }
   <a href="/events">Events</a>
   <a href="/tecor">Tecor Partners</a>
   <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
-  <a href="#" onclick="toggleMobileMenu(); openChat(); return false;">💬 Chat with me</a>
+  <a href="https://prism-investor.com" target="_blank" rel="noopener">Invest in Prism</a>
+  <a href="#" onclick="toggleMobileMenu(); openChat(); return false;">Chat with me</a>
 </div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="wrap hero-grid">
     <div class="hero-left">
-      <div class="hero-tag reveal"><span class="dot"></span> Building Prism · Operating in Florida</div>
+      <div class="hero-tag reveal"><span class="dot"></span> Building Prism in Florida</div>
       <h1 class="hero-h1 reveal" data-delay="1">
         <span class="sr-only">Micah Prentice: </span>
         <span class="line">Run the trucks.</span>
         <span class="line">Build the <span class="grad-text">software.</span></span>
       </h1>
       <p class="hero-thesis reveal" data-delay="2">
-        <strong>My thesis:</strong> the best software for the trades gets built by people who've run the crews. So I'm building <a href="https://getprismpro.com" target="_blank" rel="noopener">Prism</a>.
+        The best trade software comes from people who've run the crews. I'm building <a href="https://getprismpro.com" target="_blank" rel="noopener">Prism</a>.
       </p>
       <div class="hero-ctas reveal" data-delay="3">
-        <button class="btn btn-primary" onclick="openChat()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg> Chat with me</button>
-        <button class="btn btn-outline" onclick="bookCall()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg> Book a call</button>
+        <button class="btn btn-outline" onclick="openChat()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg> Chat with me</button>
+        <button class="btn btn-primary" onclick="bookCall()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg> Book a call</button>
       </div>
 
       <!-- CONTACT CARD -->
@@ -836,7 +842,6 @@ section { padding: 88px 0; }
             <button class="chip" onclick="copyEmail(this)" title="Copy email"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg> hq@micahprentice.com</button>
             <a class="chip" data-linkedin href="https://www.linkedin.com/in/micah-prentice-63a001b0/" target="_blank" rel="noopener"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg> LinkedIn</a>
             <a class="chip" data-x href="https://x.com/micah_prentice" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X</a>
-            <button class="chip" onclick="bookCall()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg> 30 min</button>
           </div>
         </div>
       </div>
@@ -898,10 +903,10 @@ section { padding: 88px 0; }
       <div class="stage-tabs" id="stage-tabs">
         <button class="on" data-view="0">Quote</button><button data-view="1">Schedule</button><button data-view="2">Dispatch</button><button data-view="3">Get paid</button>
       </div>
-      <div class="spot-disclaimer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> Concept mock-up, not the real UI. The real thing's better.</div>
+      <div class="spot-disclaimer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> Concept mock-up. The live product is further along.</div>
 
       <div class="spot-foot">
-        <p><strong>Quote, schedule, dispatch, invoice</strong> — one system. Private beta, onboarding shops now.</p>
+        <p><strong>Quote, schedule, dispatch, invoice.</strong> Private beta.</p>
         <div class="spot-ctas">
           <a class="btn btn-light" href="https://getprismpro.com" target="_blank" rel="noopener">getprismpro.com <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           <a class="btn btn-invest" data-invest href="https://prism-investor.com" target="_blank" rel="noopener"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg> Invest</a>
@@ -918,15 +923,15 @@ section { padding: 88px 0; }
     <div class="now-side">
       <div class="eyebrow reveal">Right now</div>
       <h2 class="h2 reveal" data-delay="1">One platform. Two bread-and-butter channels.</h2>
-      <p class="sub reveal" data-delay="2">Prism is the software. Holiday lighting is the cash flow and the live test bed. Everything Prism ships runs on our own trucks first.</p>
+      <p class="sub reveal" data-delay="2">Prism is the software. Holiday lighting pays the bills and tests it. What ships runs on our trucks first.</p>
       <div class="quote-card reveal" data-delay="3">
         Every feature in Prism started as a problem I had on a Tuesday in December, six crews out and a phone that wouldn't stop ringing.
         <footer>— Micah</footer>
       </div>
       <div class="stat-row reveal" data-delay="4">
-        <div class="stat"><b data-count="10" data-suffix="+">0</b><span>years building</span></div>
-        <div class="stat"><b data-count="2">0</b><span>service brands</span></div>
-        <div class="stat"><b data-count="1">0</b><span>OS to run them</span></div>
+        <div class="stat"><b>10+</b><span>years building</span></div>
+        <div class="stat"><b>2</b><span>service brands</span></div>
+        <div class="stat"><b>1</b><span>OS to run them</span></div>
       </div>
     </div>
 
@@ -934,7 +939,7 @@ section { padding: 88px 0; }
       <div class="tree-node prism reveal" id="node-prism">
         <div class="tree-dot"><i></i></div>
         <div class="tree-head"><h3><a href="https://getprismpro.com" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">Prism</a></h3><span class="tree-tag pink">Software platform</span></div>
-        <p>Quote, schedule, dispatch, and get paid from one place. Desktop in the office, phone in the truck.</p>
+        <p>Quote, schedule, dispatch, and get paid. Office and truck.</p>
         <div class="tree-actions">
           <a class="btn btn-primary" href="https://getprismpro.com" target="_blank" rel="noopener">Visit getprismpro.com <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           <a class="btn btn-invest" data-invest href="https://prism-investor.com" target="_blank" rel="noopener"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg> Invest in Prism</a>
@@ -944,7 +949,7 @@ section { padding: 88px 0; }
       <div class="tree-node reveal" id="node-hsb">
         <div class="tree-dot"><i></i></div>
         <div class="tree-head"><h3>Home Service Business</h3><span class="tree-tag">Bread and butter</span></div>
-        <p>Two holiday-lighting brands out of Florida. Real crews, real seasons, real revenue.</p>
+        <p>Two Florida holiday-lighting brands. Crews, seasons, revenue.</p>
         <div class="tree-children">
           <a class="leaf" href="https://uglysweaterlights.com" target="_blank" rel="noopener">
             <div class="leaf-logo wide"><picture><source type="image/avif" srcset="logos/ugly-sweater-lighting-164.avif" /><source type="image/webp" srcset="logos/ugly-sweater-lighting-164.webp" /><img src="logos/ugly-sweater-lighting-164.png" width="164" height="114" alt="Ugly Sweater Holiday Lighting" loading="lazy" decoding="async" /></picture></div>
@@ -981,30 +986,30 @@ section { padding: 88px 0; }
 
     <div class="inc-grid" id="inc-grid">
       <a class="inc-card reveal" data-delay="1" data-tag="tool" href="/homventory">
-        <div class="inc-top"><div class="inc-logo emoji">🏠</div><span class="status tool">Free tool</span></div>
+        <div class="inc-top"><div class="inc-logo emoji" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></div><span class="status tool">Free tool</span></div>
         <h3>Homventory</h3>
-        <p>Turn listing photos into a tap-to-decide list of what conveys with a home.</p>
+        <p>Listing photos become a tap-to-decide list of what conveys.</p>
         <div class="inc-foot"><span>Open the tool</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></div>
       </a>
 
       <a class="inc-card reveal" data-delay="2" data-tag="live" href="https://quantecpower.com" target="_blank" rel="noopener">
         <div class="inc-top"><div class="inc-logo"><picture><source type="image/avif" srcset="logos/quantec-power-84.avif" /><source type="image/webp" srcset="logos/quantec-power-84.webp" /><img src="logos/quantec-power-84.png" width="84" height="42" alt="Quantec Power" loading="lazy" decoding="async" /></picture></div><span class="status live">Live</span></div>
         <h3>Quantec Power</h3>
-        <p>Power and energy venture. An early bet, still running.</p>
+        <p>Power and energy. Still running.</p>
         <div class="inc-foot"><span>quantecpower.com</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></div>
       </a>
 
       <a class="inc-card reveal" data-delay="3" data-tag="soon" href="https://speeedbiz.com" target="_blank" rel="noopener">
         <div class="inc-top"><div class="inc-logo"><picture><source type="image/avif" srcset="logos/speeebiz-84.avif" /><source type="image/webp" srcset="logos/speeebiz-84.webp" /><img src="logos/speeebiz-84.png" width="84" height="40" alt="Speeedbiz" loading="lazy" decoding="async" /></picture></div><span class="status soon">On the bench</span></div>
         <h3>Speeedbiz</h3>
-        <p>Research an industry, validate an idea, find the path to first dollar. A long-term bet, not active yet.</p>
+        <p>Find the path to first dollar. Not active yet.</p>
         <div class="inc-foot"><span>speeedbiz.com</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></div>
       </a>
 
       <a class="inc-card reveal" data-delay="3" data-tag="soon" href="#" onclick="openChat('Tell me about The Build Podcast'); return false;">
         <div class="inc-top"><div class="inc-logo"><picture><source type="image/avif" srcset="logos/podcast-84.avif" /><source type="image/webp" srcset="logos/podcast-84.webp" /><img src="logos/podcast-84.png" width="84" height="84" alt="The Build Podcast" loading="lazy" decoding="async" /></picture></div><span class="status soon">On the bench</span></div>
         <h3>The Build Podcast</h3>
-        <p>Building real businesses in real places. Recording when the season slows.</p>
+        <p>Real businesses, real places. Recording after the season.</p>
         <div class="inc-foot"><span>Ask me about it</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></div>
       </a>
     </div>
@@ -1017,8 +1022,7 @@ section { padding: 88px 0; }
     <div>
       <div class="eyebrow reveal">Why</div>
       <h2 class="h2 reveal" data-delay="1">Ikigai, the reason behind everything I build.</h2>
-      <p class="sub reveal" data-delay="2">What you love, what you're good at, what the world needs, what pays. Here's where mine lands.</p>
-    </div>
+          </div>
     <div class="ikigai-wheel" id="ikigai" aria-hidden="true">
       <div class="ikigai-circle ikigai-love" data-quad="love"><div><div class="ikigai-circle-label">What I Love</div><div class="ikigai-circle-text">Building, solving problems, competing</div></div></div>
       <div class="ikigai-circle ikigai-good" data-quad="good"><div><div class="ikigai-circle-label">Good At</div><div class="ikigai-circle-text">Strategy, sales, operations, negotiating</div></div></div>
@@ -1043,7 +1047,7 @@ section { padding: 88px 0; }
       <div>
         <div class="eyebrow reveal">Bookshelf</div>
         <h2 class="h2 reveal" data-delay="1">Books that shaped how I think.</h2>
-        <p class="sub reveal" data-delay="2">Tap a cover for the one idea I keep coming back to. <span id="books-count"></span></p>
+        <p class="sub reveal" data-delay="2">Tap a cover. <span id="books-count"></span></p>
       </div>
       <div class="shelf-nav reveal" data-delay="2">
         <button onclick="shelfScroll(-1)" aria-label="Scroll left"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
@@ -1066,7 +1070,7 @@ section { padding: 88px 0; }
         <div class="bm-author" id="ov-author"></div>
         <div class="bm-rating" id="ov-rating"></div>
         <div class="bm-summary" id="ov-summary"></div>
-        <div class="bm-review" id="ov-review"></div>
+        <div class="bm-review" id="ov-review" hidden></div>
       </div>
     </div>
     <div class="bm-label">Key takeaways</div>
@@ -1085,7 +1089,7 @@ section { padding: 88px 0; }
       <div>
         <div class="eyebrow" style="color:#B45309">In your corner</div>
         <h2>Having a hard time? Tell me where you're at.</h2>
-        <p>I've been in dark places, financially tight and mentally drained. No fee, no judgment. Three honest minutes and a free call.</p>
+        <p>I've been broke and burned out. No fee. Three minutes, then a free call.</p>
       </div>
       <button class="btn btn-amber" onclick="openIntake()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg> Start the 3-minute intake</button>
     </div>
@@ -1098,7 +1102,7 @@ section { padding: 88px 0; }
     <button class="modal-close" onclick="closeIntake()" aria-label="Close"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
     <div id="intake-steps">
       <h2 class="intake-title" id="intake-title">Tell me where you're at</h2>
-      <div class="intake-sub">Takes 3 minutes · Goes straight to Micah · Completely private</div>
+      <div class="intake-sub">3 minutes. Private. Comes straight to me.</div>
       <div class="step-indicator"><div class="step-dot active" id="dot-0"></div><div class="step-dot" id="dot-1"></div><div class="step-dot" id="dot-2"></div></div>
 
       <div class="intake-step active" id="step-0">
@@ -1110,7 +1114,7 @@ section { padding: 88px 0; }
       </div>
 
       <div class="intake-step" id="step-1">
-        <div class="intake-hint">Rough numbers are fine. This isn't an audit, it's a starting point.</div>
+        <div class="intake-hint">Rough numbers are fine.</div>
         <div class="int-row">
           <div><label class="int-field-label">Cash on hand</label><div class="int-prefix"><span class="prefix-sym">$</span><input class="int-input" id="int-cash" type="text" placeholder="e.g. 400" /></div></div>
           <div><label class="int-field-label">Monthly take-home income</label><div class="int-prefix"><span class="prefix-sym">$</span><input class="int-input" id="int-income" type="text" placeholder="e.g. 3,200" /></div></div>
@@ -1125,7 +1129,7 @@ section { padding: 88px 0; }
       </div>
 
       <div class="intake-step" id="step-2">
-        <div class="intake-hint">Last step, so Micah can reach you and track your progress.</div>
+        <div class="intake-hint">So I can reach you.</div>
         <div class="int-row">
           <div><label class="int-field-label">Your name</label><input class="int-input" id="int-name" type="text" placeholder="First name is fine" /></div>
           <div><label class="int-field-label">Your email</label><input class="int-input" id="int-email" type="email" placeholder="Where should Micah follow up?" /></div>
@@ -1139,7 +1143,7 @@ section { padding: 88px 0; }
     <div class="intake-success" id="intake-success">
       <div class="success-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></div>
       <h3>Micah's got you.</h3>
-      <p>Your info is on its way to Micah. He'll read it before the call so you don't have to explain everything twice. Now grab a time slot.</p>
+      <p>I'll read this before we talk. Grab a time.</p>
       <button class="btn btn-amber" onclick="bookCall()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg> Book your free call</button>
     </div>
   </div>
@@ -1150,24 +1154,23 @@ section { padding: 88px 0; }
   <div class="wrap">
     <div class="eyebrow pink reveal">Contact</div>
     <h2 class="h2 reveal" data-delay="1">Let's talk.</h2>
-    <p class="sub reveal" data-delay="2">Founder, operator, or investor — pick the door that fits.</p>
-    <div class="contact-grid">
+        <div class="contact-grid">
       <button class="cta-card reveal" data-delay="1" onclick="openChat()">
         <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></div>
         <h3>Chat with me</h3>
-        <p>Ask about Prism, the lighting businesses, or your own idea.</p>
+        <p>Prism, the lighting companies, or your own idea.</p>
         <div class="go">Start chatting <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></div>
       </button>
       <button class="cta-card reveal" data-delay="2" onclick="bookCall()">
         <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg></div>
         <h3>Book a call</h3>
-        <p>30 minutes, no prep, no pitch. Leave with a next step.</p>
+        <p>30 minutes. You leave with a next step.</p>
         <div class="go">Pick a time <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></div>
       </button>
       <a class="cta-card invest reveal" data-delay="3" data-invest href="https://prism-investor.com" target="_blank" rel="noopener">
         <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg></div>
         <h3>Invest in Prism</h3>
-        <p>Private beta, onboarding shops now. If you back operator-led software, let's talk terms.</p>
+        <p>Private beta. Shops are onboarding now.</p>
         <div class="go">Request the deck <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></div>
       </a>
     </div>
@@ -1188,7 +1191,7 @@ section { padding: 88px 0; }
 </footer>
 
 <!-- CHAT -->
-<button id="chat-fab" onclick="toggleChat()" aria-expanded="false" aria-controls="chat-drawer"><span class="fab-dot"></span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg><span id="fab-label">Chat with me</span></button>
+<button id="chat-fab" onclick="toggleChat()" aria-expanded="false" aria-controls="chat-drawer" aria-label="Chat with Micah"><span class="fab-dot"></span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg><span id="fab-label">Chat with me</span></button>
 <div id="chat-drawer" role="dialog" aria-label="Chat with Micah">
   <div class="chat-head">
     <div class="av"><img src="micah.webp" srcset="micah-240.webp 240w, micah.webp 800w" sizes="72px" width="800" height="1175" alt="" loading="lazy" /></div>
@@ -1282,7 +1285,11 @@ const spy = new IntersectionObserver(entries => {
 }, { rootMargin: '-40% 0px -55% 0px' });
 $$('section[id]').forEach(s => spy.observe(s));
 
-function toggleMobileMenu() { $('#mobile-menu').classList.toggle('open'); }
+function toggleMobileMenu() {
+  const open = $('#mobile-menu').classList.toggle('open');
+  const btn = $('.nav-hamburger');
+  if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
 
 // ═══════════════════════════════════════════
 // REVEAL ON SCROLL + word split + counters
@@ -1291,17 +1298,6 @@ const revealObs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); } });
 }, { threshold: 0.12 });
 $$('.reveal').forEach(el => revealObs.observe(el));
-
-$$('.h2').forEach(el => {
-  if (el.children.length) return;
-  el.innerHTML = el.textContent.trim().split(/\s+/).map(w => `<span class="split-word">${w}</span>`).join(' ');
-  const o = new IntersectionObserver(es => es.forEach(e => {
-    if (!e.isIntersecting) return;
-    $$('.split-word', e.target).forEach((w, i) => setTimeout(() => w.classList.add('in'), 60 + i * 55));
-    o.unobserve(e.target);
-  }), { threshold: 0.4 });
-  o.observe(el);
-});
 
 const countObs = new IntersectionObserver(entries => entries.forEach(e => {
   if (!e.isIntersecting) return;
@@ -1652,12 +1648,12 @@ const BOOKS = [
     rating: 5,
     genre: "Negotiation",
     coverColor: "linear-gradient(135deg, #1E293B, #334155)",
-    summary: '"How am I supposed to do that?" is the most powerful negotiation question you can ask.',
-    review: "A former FBI hostage negotiator argues that emotion, not logic, drives every deal. Tactical empathy — genuinely understanding the other side's perspective — gets you further than any rational argument. Calibrated questions and mirroring create space for the other person to reveal what they actually want.",
+    summary: "\"How am I supposed to do that?\" is the most useful question in a negotiation.",
+    review: "",
     takeaways: [
-      "Tactical empathy — naming the other person's emotions out loud — disarms tension and builds trust faster than any logical argument ever could.",
-      "Calibrated questions ('How am I supposed to do that?') give you control without confrontation by making the other side solve your problem.",
-      "The goal isn't 'you're right' — it's 'that's right.' That's the signal the other side feels truly understood, not just placated."
+      "Name the other person's emotion out loud. Trust builds faster than a logical argument.",
+      "\"How am I supposed to do that?\" makes the other side solve your problem.",
+      "Aim for \"that's right,\" not \"you're right.\"",
     ]
   },
   {
@@ -1668,11 +1664,11 @@ const BOOKS = [
     genre: "Investing",
     coverColor: "linear-gradient(135deg, #B45309, #F59E0B)",
     summary: "Risk management matters more than picking winners.",
-    review: "Through conversations with the world's top investors, Rubenstein distills what separates great allocators from the rest: patience, discipline, deep research, and a willingness to be contrarian when everyone else is panicking. The best investors aren't smarter — they're more honest about what they don't know.",
+    review: "",
     takeaways: [
-      "The best investors aren't smarter — they're more disciplined and brutally honest about what they don't know.",
-      "Patience and willingness to be contrarian when everyone else panics is the real edge in investing.",
-      "Every investor interviewed had a clear 'circle of competence' — knowing what you don't touch is as valuable as knowing what you do."
+      "The edge is discipline, and honesty about what you don't know.",
+      "Patience when everyone else panics beats a clever pick.",
+      "A circle of competence includes what you refuse to touch.",
     ]
   },
   {
@@ -1682,12 +1678,12 @@ const BOOKS = [
     rating: 5,
     genre: "Productivity",
     coverColor: "linear-gradient(135deg, #EA580C, #F97316)",
-    summary: "If your business can't run without you, you don't own a business — you own a job.",
-    review: "Most business owners build a job for themselves, not a company. Clockwork shows how to design your business so it runs without you — by identifying your \"Queen Bee Role,\" delegating systematically, and protecting the four key activities that drive the whole operation. The goal: a four-week vacation that the business survives.",
+    summary: "If the business can't run without you, you own a job.",
+    review: "",
     takeaways: [
-      "Find your Queen Bee Role — the one thing only you can do — and fiercely protect it while delegating everything else.",
-      "If your business can't survive a 4-week vacation without you, it's a job. That's the benchmark to design toward.",
-      "Block a recurring 'Analysis Day' to work ON the business — most owners never schedule this time, so it never actually happens."
+      "Protect the one role only you can do. Delegate the rest.",
+      "If it can't survive a four-week vacation, it's a job.",
+      "Put a recurring day on the calendar to work on the business.",
     ]
   },
   {
@@ -1697,12 +1693,12 @@ const BOOKS = [
     rating: 5,
     genre: "Lifestyle Design",
     coverColor: "linear-gradient(135deg, #0891B2, #06B6D4)",
-    summary: "Doing less is not laziness. Focus on the 20% of work that drives 80% of the results.",
-    review: "Ferriss dismantles the idea that you have to defer life until retirement. Using the DEAL framework — Define, Eliminate, Automate, Liberate — he shows how to outsource low-value tasks, create income that doesn't require your constant presence, and design a life of \"mini-retirements\" now rather than later.",
+    summary: "Focus on the 20% of work that drives 80% of the results.",
+    review: "",
     takeaways: [
-      "Apply 80/20 ruthlessly — 20% of your effort drives 80% of results. Eliminate everything else before you even think about optimizing.",
-      "Automate and outsource before you do yourself — most tasks don't need your involvement at all.",
-      "Fear-setting — writing out the actual worst case of a big decision — deflates most fears instantly, since the worst case is rarely permanent."
+      "Cut the work that doesn't drive the result.",
+      "Automate or outsource a task before you do it yourself.",
+      "Write the worst case. Most fears shrink once you see it.",
     ]
   },
   {
@@ -1712,12 +1708,12 @@ const BOOKS = [
     rating: 5,
     genre: "Habits",
     coverColor: "linear-gradient(135deg, #16A34A, #22C55E)",
-    summary: "You don't rise to the level of your goals. You fall to the level of your systems.",
-    review: "Small changes compound into remarkable results — but only if the system is right. Clear explains how habits are built (cue → craving → response → reward) and how to redesign your environment so good behaviors are obvious, attractive, easy, and satisfying. Identity, not outcomes, is the real lever: become the person, and the results follow.",
+    summary: "You fall to the level of your systems.",
+    review: "",
     takeaways: [
-      "Design your environment so good habits are obvious, attractive, easy, and satisfying — friction kills behavior before willpower ever gets a chance.",
-      "Shift from outcome-based goals ('I want to run a marathon') to identity-based habits ('I am a runner'). The identity drives everything.",
-      "The Two-Minute Rule: scale any new habit down to under two minutes. It gets you past the hardest part, which is just starting."
+      "Make the good habit obvious, easy, and satisfying.",
+      "Build the identity (\"I am a runner\"), not only the outcome.",
+      "Start any new habit at under two minutes.",
     ]
   },
   {
@@ -1727,12 +1723,12 @@ const BOOKS = [
     rating: 5,
     genre: "Influence",
     coverColor: "linear-gradient(135deg, #9A3412, #EA580C)",
-    summary: "You can make more friends in two months by being interested in others than in two years trying to get people interested in you.",
-    review: "Published in 1936 and still devastatingly relevant. Carnegie's insight: people are not creatures of logic but of emotion. Genuine interest in others, remembering names, letting people feel heard, and avoiding criticism outperforms any clever argument. The principles sound obvious until you catch yourself doing the opposite.",
+    summary: "You make more friends by being interested in other people than by trying to be interesting.",
+    review: "",
     takeaways: [
-      "Never criticize, condemn, or complain — it creates resentment and changes nothing. People want to feel important, not corrected.",
-      "Remember names and show genuine interest in what others care about. It costs nothing and is more powerful than any persuasion tactic.",
-      "Admit your own mistakes quickly and emphatically before pointing out someone else's — it disarms defensiveness before it starts."
+      "Don't criticize. It creates resentment and changes nothing.",
+      "Remember names, and be interested in what they care about.",
+      "Admit your mistake before you point out theirs.",
     ]
   },
   {
@@ -1742,12 +1738,12 @@ const BOOKS = [
     rating: 5,
     genre: "Wealth Building",
     coverColor: "linear-gradient(135deg, #1D4ED8, #3B82F6)",
-    summary: "Starting up is optional. Entrepreneurship through acquisition skips years of proof-of-concept pain.",
-    review: "Starting a business from scratch is the hardest way to become an entrepreneur. Deibel makes the case for acquisition entrepreneurship — buying an existing, profitable business and growing it — as a faster, lower-risk path to ownership. He walks through how to find, evaluate, finance, and close a deal even without prior M&A experience.",
+    summary: "Buying a business skips years of proving the idea.",
+    review: "",
     takeaways: [
-      "Buying an existing profitable business skips the hardest years of startup — the proof-of-concept is already done, customers exist, and cash is flowing.",
-      "SBA loans and seller financing make acquisition accessible even without large personal capital. You don't need millions to buy a business.",
-      "The real diligence question isn't 'is this a good business' — it's 'why is this owner actually selling.' The honest answer tells you almost everything."
+      "A profitable business already has customers and cash.",
+      "SBA loans and seller financing mean you don't need millions.",
+      "Ask why the owner is selling. That answer is the diligence.",
     ]
   },
   {
@@ -1758,14 +1754,14 @@ const BOOKS = [
     genre: "Entrepreneurship",
     coverColor: "linear-gradient(135deg, #DC2626, #F87171)",
     summary: "Work on your business, not just in it.",
-    review: "The \"entrepreneurial myth\" is that most businesses are started by entrepreneurs — they're not. They're started by technicians who had a good idea and suddenly found themselves running a company they hate. Gerber's fix: think like a franchisor. Document every process, systematize everything, and build a business that works without depending on your personal expertise.",
+    review: "",
     takeaways: [
-      "Document every process as if you're building a franchise — so the business works the same way regardless of who's running it.",
-      "Every owner is pulled between three roles: Entrepreneur (visionary), Manager (systems), Technician (doer). Most get stuck as technicians and wonder why they hate their business.",
-      "Build the prototype as if you'll franchise it on day one, even if you never will — systemizing forces a clarity that 'just wing it' never produces."
+      "Write each process so it runs the same way without you.",
+      "Owners get stuck doing the work, then resent the business.",
+      "Build it as if you'll franchise it, even if you never do.",
     ]
-  }
-  ,{
+  },
+  {
     id: 9,
     title: "The 7 Habits of Highly Effective People",
     author: "Stephen R. Covey",
@@ -1773,11 +1769,11 @@ const BOOKS = [
     genre: "Personal Development",
     coverColor: "linear-gradient(135deg, #1E3A5F, #2E6DA4)",
     summary: "Private victory always comes before public victory.",
-    review: "Covey's framework is built on character, not personality. The seven habits move you from dependence to independence to interdependence — starting with getting control of yourself (be proactive, begin with the end in mind, put first things first) before trying to lead or influence others. The Eisenhower matrix, think win-win, and seek first to understand are worth the whole book alone.",
+    review: "",
     takeaways: [
-      "Focus on your Circle of Influence — what you can actually control — and stop wasting energy on your Circle of Concern.",
-      "Seek first to understand, then to be understood. Most people listen to reply, not to understand. That's why so many conversations go nowhere.",
-      "Sharpen the Saw — deliberately renewing yourself physically, mentally, socially, and spiritually — is what makes the other six habits sustainable."
+      "Spend your energy on what you can actually control.",
+      "Understand the other person before you ask to be understood.",
+      "Renew yourself physically, mentally, and socially, or the other habits fade.",
     ]
   },
   {
@@ -1787,27 +1783,27 @@ const BOOKS = [
     rating: 5,
     genre: "Entrepreneurship",
     coverColor: "linear-gradient(135deg, #065F46, #10B981)",
-    summary: "Build a business that doesn't need you — then decide whether to sell it.",
-    review: "Told as a business parable, Warrillow shows how to transform a service business into a sellable asset by niching down, standardizing your process, and removing yourself as the key dependency. The irony: the moves that make a business sellable — systems, recurring revenue, a team that runs without you — also make it a better business to own.",
+    summary: "Build a business that doesn't need you.",
+    review: "",
     takeaways: [
-      "Niche down and standardize — a business that does one thing exceptionally well is far more valuable than a generalist that does everything.",
-      "The moves that make a business sellable (recurring revenue, documented systems, no key-person dependency) also make it a better business to own.",
-      "The owner being the best salesperson is actually a liability at exit — value goes up when clients trust the company, not the founder personally."
+      "A business that does one thing well is worth more than a generalist.",
+      "Recurring revenue and written systems make it easier to sell, and better to own.",
+      "If clients only trust you, the company is worth less.",
     ]
-  }
-  ,{
+  },
+  {
     id: 11,
     title: "Rich Dad Poor Dad",
     author: "Robert Kiyosaki",
     rating: 5,
     genre: "Wealth Building",
     coverColor: "linear-gradient(135deg, #92400E, #D97706)",
-    summary: "The poor and middle class work for money. The rich have money work for them.",
-    review: "Kiyosaki reframes the entire conversation around money by contrasting two father figures — one highly educated but financially struggling, one a dropout who became wealthy. The core lesson: schools teach you to be an employee, not an owner. Assets put money in your pocket; liabilities take it out. Most people spend their lives buying liabilities and calling them assets.",
+    summary: "The rich have money work for them.",
+    review: "",
     takeaways: [
-      "Assets put money in your pocket; liabilities take it out. Your house, car, and most 'investments' are liabilities — know the difference.",
-      "Schools teach you to be an employee, not an owner. Financial literacy — how money, taxes, and assets actually work — is the real education.",
-      "Fear and the need for security drive most people's financial decisions. Calculated risk-taking, not raw intelligence, is what separates outcomes."
+      "Assets put money in your pocket. Liabilities take it out.",
+      "School trains employees. Money, taxes, and assets are a different education.",
+      "Fear of losing security drives most money decisions.",
     ]
   },
   {
@@ -1817,15 +1813,15 @@ const BOOKS = [
     rating: 5,
     genre: "Investing",
     coverColor: "linear-gradient(135deg, #1E3A5F, #0EA5E9)",
-    summary: "Doing well with money has little to do with how smart you are and a lot to do with how you behave.",
-    review: "Housel argues that financial success is less about spreadsheets and more about behavior — patience, humility, and the ability to avoid catastrophic mistakes. Wealth is what you don't see: the cars not bought, the upgrades not taken. The hardest financial skill is getting the goalposts to stop moving. Compounding only works if you give it time, and most people don't.",
+    summary: "Doing well with money is behavior, not intelligence.",
+    review: "",
     takeaways: [
-      "Wealth is what you don't spend — the cars not bought, the upgrades skipped. Real wealth is invisible; the people who look rich often aren't.",
-      "Staying in the game long enough for compounding to work matters more than finding the highest returns. Most people underestimate time and overestimate returns.",
-      "Save at a rate that lets you sleep at night, not an optimal spreadsheet number — being reasonable consistently beats being rational occasionally."
+      "Wealth is the money you didn't spend.",
+      "Time in the market beats hunting the highest return.",
+      "Save enough that you can sleep. Consistency beats a perfect number.",
     ]
-  }
-  ,{
+  },
+  {
     id: 13,
     title: "Measure What Matters",
     author: "John Doerr",
@@ -1833,12 +1829,12 @@ const BOOKS = [
     genre: "Execution",
     coverColor: "linear-gradient(135deg, #1D4ED8, #60A5FA)",
     cover: "books/measure-what-matters.jpg",
-    summary: "Ideas are easy. Execution is everything. OKRs are how you close the gap.",
-    review: "Doerr introduced OKRs (Objectives and Key Results) to Google when it had 40 employees. The framework is simple: set a clear objective, define 3-5 measurable key results, and review them constantly. What makes this book stick is the case studies — Intel, Google, Bono's ONE Campaign — showing how focused goal-setting at every level of an organization creates alignment and velocity that nothing else can.",
+    summary: "OKRs close the gap between an idea and the work.",
+    review: "",
     takeaways: [
-      "OKRs create alignment from CEO to intern — when everyone knows the objective and how it's being measured, execution accelerates.",
-      "Set goals uncomfortable enough that hitting 70% is still a win. If you're always hitting 100%, your goals aren't ambitious enough.",
-      "Keep OKRs separate from compensation — the moment a number determines someone's bonus, they'll quietly start setting easier goals."
+      "They work when everyone can see the objective and the measure.",
+      "If you always hit 100%, the goal was too easy. 70% can still be a win.",
+      "Don't tie the number to a bonus, or people will set easier goals.",
     ]
   },
   {
@@ -1849,15 +1845,15 @@ const BOOKS = [
     genre: "Strategy",
     coverColor: "linear-gradient(135deg, #1E293B, #475569)",
     cover: "books/your-next-five-moves.jpg",
-    summary: "The best CEOs think like chess grandmasters — always five moves ahead.",
-    review: "Bet-David lays out a strategic framework for business and life built around thinking multiple moves ahead. Know yourself, know your opponent, study power, build the right team, and plan your endgame. What separates good entrepreneurs from great ones isn't hustle — it's the ability to see around corners and position yourself before the opportunity becomes obvious to everyone else.",
+    summary: "Think five moves ahead.",
+    review: "",
     takeaways: [
-      "Know yourself first — your identity, risk tolerance, and core motivation are your strategic foundation before any business decision.",
-      "Think ahead by asking: if I make this move, what will my competitor do? What will I do in response? Map it out five steps, not one.",
-      "Study the people in your inner circle as closely as you study the market — they either accelerate your next five moves or quietly sabotage them."
+      "Know your risk tolerance before you pick the strategy.",
+      "Ask what the competitor does after your move, then plan your reply.",
+      "The people around you either speed the next moves or stall them.",
     ]
-  }
-  ,{
+  },
+  {
     id: 15,
     title: "Ikigai",
     author: "Héctor García and Francesc Miralles",
@@ -1865,12 +1861,12 @@ const BOOKS = [
     genre: "Purpose",
     coverColor: "linear-gradient(135deg, #0D9488, #2DD4BF)",
     cover: "books/ikigai.jpg",
-    summary: "The Japanese secret to a long life isn't a diet or a supplement — it's having a reason to get up every morning.",
-    review: "García and Miralles travel to Ogimi, Okinawa — home to one of the highest concentrations of centenarians on Earth — to understand why. Their answer: ikigai, the intersection of what you love, what you're good at, what the world needs, and what sustains you. The book pairs that framework with the daily habits of the villagers themselves — movement, community, simplicity — as much a lived practice as a philosophy.",
+    summary: "A long life starts with a reason to get up in the morning.",
+    review: "",
     takeaways: [
-      "Ikigai sits at the overlap of what you love, what you're good at, what the world needs, and what you can sustain yourself with — missing any one of the four leaves something unresolved.",
-      "The Okinawan villagers don't have a word for retirement — they never fully stop doing work that matters to them. Purpose, not rest, is what they optimize for.",
-      "Movement matters more than intensity — nobody in Ogimi 'exercises' in the gym sense, they just never fully stop moving through daily life, gardening, and walking."
+      "Purpose sits where what you love, what you're good at, what the world needs, and what pays you overlap.",
+      "In Ogimi, people don't retire from work that matters.",
+      "They keep moving through the day. Intensity matters less.",
     ]
   }
   // ── PASTE NEW BOOKS ABOVE THIS LINE ──
@@ -1917,7 +1913,9 @@ function openBook(id) {
   $('#ov-author').textContent = 'by ' + b.author;
   $('#ov-rating').textContent = starsHTML(b.rating);
   $('#ov-summary').textContent = b.summary;
-  $('#ov-review').textContent = b.review || '';
+  const rev = $('#ov-review');
+  rev.hidden = !b.review;
+  rev.textContent = b.review || '';
   $('#ov-takeaways').innerHTML = (b.takeaways || []).map((t, i) => `<div class="bm-take"><i>${i + 1}</i><div>${t}</div></div>`).join('');
   const idx = BOOKS.findIndex(x => x.id === id);
   $('#btn-prev').disabled = idx === 0; $('#btn-prev').style.opacity = idx === 0 ? .4 : 1;

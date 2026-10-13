@@ -34,7 +34,7 @@
   h1,h2,h3{font-family:Manrope,Inter,sans-serif;letter-spacing:-.02em;line-height:1.1}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
-  .btn{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;padding:14px 22px;border-radius:999px;background:var(--volt);color:var(--ink);transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 0 0 0 rgba(216,248,74,.0)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:600;font-size:15px;padding:14px 22px;min-height:44px;border-radius:999px;background:var(--volt);color:var(--ink);transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 0 0 0 rgba(216,248,74,.0)}
   .btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px -8px rgba(216,248,74,.55)}
   .btn svg{width:16px;height:16px;transition:transform .2s ease}
   .btn:hover svg{transform:translateX(3px)}
@@ -49,7 +49,7 @@
   .brand{display:flex;align-items:center;gap:10px;color:#fff;font-family:Manrope,sans-serif;font-weight:800;font-size:19px;letter-spacing:-.02em}
   .brand svg{width:28px;height:28px}
   .nav-links{display:flex;align-items:center;gap:28px}
-  .nav-links .btn{padding:10px 18px;font-size:14px}
+  .nav-links .btn{padding:12px 18px;font-size:14px;min-height:44px}
 
   /* Hero (the whole page) */
   .hero{position:relative;min-height:calc(100vh - var(--foot-h));display:flex;align-items:center;background:radial-gradient(1200px 600px at 75% 40%, rgba(94,230,208,.10), transparent 60%),radial-gradient(900px 500px at 80% 60%, rgba(216,248,74,.08), transparent 60%),var(--ink);overflow:hidden;padding:calc(var(--nav-h) + 24px) 0 40px}
@@ -122,6 +122,9 @@
     *{animation:none !important;transition:none !important}
     .reveal{opacity:1;transform:none}
   }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--volt); outline-offset: 3px; }
+  h1 { text-wrap: balance; }
+  .lane { min-height: 44px; }
 </style>
 </head>
 <body>
@@ -145,7 +148,7 @@
         <div>
           <span class="eyebrow reveal"><span class="dot"></span> Now booking January 2027</span>
           <h1 class="reveal d1">We get the <em>hard initiatives</em> done.</h1>
-          <p class="lead reveal d2">A hands-on partner for corporate initiatives that have to land.</p>
+          <p class="lead reveal d2">Hands-on, for corporate initiatives that have to land.</p>
           <div class="cta-row reveal d3">
             <a class="btn" href="mailto:micah@tecorpartners.com?subject=Intro%20call%3A%20Tecor%20Partners">Book an intro call
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -164,15 +167,15 @@
       <div class="lanes" id="work">
         <article class="lane reveal">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M7 9l2 2-2 2M12 13h4"/></svg></div>
-          <div><h3>Software initiatives</h3><p>Rollout, enablement, adoption that sticks</p></div>
+          <div><h3>Software initiatives</h3><p>Rollout and adoption</p></div>
         </article>
         <article class="lane reveal d1">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 15h2M14 15h2"/></svg></div>
-          <div><h3>Events</h3><p>Summits, launches, roadshows, event tech</p></div>
+          <div><h3>Events</h3><p>Summits, launches, roadshows</p></div>
         </article>
         <article class="lane reveal d2">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3"/><circle cx="5" cy="17" r="2.5"/><circle cx="19" cy="17" r="2.5"/><path d="M10 9.5 6.5 15M14 9.5l3.5 5.5M7.5 17h9"/></svg></div>
-          <div><h3>Peer and partner programs</h3><p>Councils, roundtables, partner networks</p></div>
+          <div><h3>Peer and partner programs</h3><p>Councils and partner networks</p></div>
         </article>
         <article class="lane reveal d3">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></div>

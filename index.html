@@ -563,6 +563,108 @@ section { padding: 88px 0; }
 .why-point i { width: 10px; height: 10px; border-radius: 3px; margin-top: 5px; flex-shrink: 0; }
 .why-point b { display: block; font-size: 14px; } .why-point span { font-size: 13px; color: var(--muted); }
 
+/* ─── LEVERAGE ─── */
+#leverage { --lev-bg: #0A0F1E; --lev-line: rgba(255,255,255,.14); --lev-accent: #A78BFA; background: var(--lev-bg); color: #fff; position: relative; overflow: hidden; isolation: isolate; padding: 128px 0 120px; }
+#leverage::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(38% 46% at 71% 46%, rgba(123,92,245,.10), transparent 70%); }
+.lev-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.08fr); grid-template-areas: "copy diagram" "panel diagram" "outcome outcome"; column-gap: 72px; align-items: start; }
+.lev-copy { grid-area: copy; } .lev-stage { grid-area: diagram; align-self: center; } .lev-panels { grid-area: panel; }
+.lev-outcome { margin-top: 72px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,.08); display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.08fr); column-gap: 72px; align-items: end; opacity: 0; transform: translateY(8px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.lev-outcome.on { opacity: 1; transform: none; }
+.lev-outcome { grid-area: outcome; }
+.lev-out-main { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 500; line-height: 1.3; letter-spacing: -0.4px; color: #fff; text-wrap: balance; max-width: 440px; }
+.lev-out-main small { display: block; font-family: 'Inter', system-ui, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 10px; }
+.lev-out-proof { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,.55); max-width: 420px; text-wrap: pretty; }
+#leverage .eyebrow { color: rgba(255,255,255,.55); } #leverage .eyebrow::before { background: rgba(255,255,255,.35); }
+#leverage .h2 { color: #fff; font-size: clamp(36px, 4.4vw, 54px); letter-spacing: -1.2px; line-height: 1.06; margin-bottom: 18px; }
+.lev-sub { font-size: 17px; line-height: 1.65; color: rgba(255,255,255,.62); max-width: 440px; text-wrap: pretty; }
+
+/* panels: all stacked in one cell, so height never jumps */
+.lev-panels { display: grid; margin-top: 44px; max-width: 440px; }
+.lev-panel { grid-area: 1 / 1; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.1); opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .45s var(--ease), transform .55s var(--ease), visibility 0s linear .45s; }
+.lev-panel.on { opacity: 1; visibility: visible; transform: none; transition: opacity .55s var(--ease) .08s, transform .65s var(--ease) .08s, visibility 0s; }
+.lev-panel-meta { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.4); font-variant-numeric: tabular-nums; }
+.lev-panel-meta b { color: var(--lev-accent); font-weight: 700; }
+.lev-panel h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; margin: 10px 0 10px; }
+.lev-panel .lev-line-copy { font-size: 16px; line-height: 1.6; color: rgba(255,255,255,.78); text-wrap: pretty; }
+.lev-proof { margin-top: 18px; padding-left: 14px; border-left: 2px solid rgba(167,139,250,.55); }
+.lev-proof small { display: block; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.42); margin-bottom: 4px; }
+.lev-proof p { font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,.66); text-wrap: pretty; }
+
+/* diagram */
+.lev-diagram { position: relative; width: 100%; max-width: 520px; aspect-ratio: 1; margin: 0 auto; }
+.lev-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.lev-ring-base { fill: none; stroke: rgba(255,255,255,.05); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.lev-ring { fill: none; stroke: rgba(255,255,255,.16); stroke-width: .18; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s cubic-bezier(.65,0,.35,1); }
+.lev-ring.on { stroke-dashoffset: 0; }
+.lev-line { stroke: var(--lev-line); stroke-width: .22; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .6s var(--ease), stroke .5s var(--ease), opacity .5s var(--ease); }
+.lev-line.on { stroke-dashoffset: 0; }
+.lev-diagram.has-sel .lev-line.on { opacity: .45; }
+.lev-diagram.has-sel .lev-line.sel { stroke: url(#levLineGrad); stroke-width: .34; opacity: 1; }
+.lev-pulse { fill: #fff; }
+
+.lev-nodes { position: absolute; inset: 0; }
+.lev-node { position: absolute; left: var(--x); top: var(--y); width: 14%; aspect-ratio: 1; padding: 0; margin: 0; border-radius: 50%; cursor: pointer; font: inherit;
+  display: grid; place-items: center; transform: translate(-50%,-50%) scale(.9);
+  background: #11172B; border: 1px solid rgba(255,255,255,.07); color: rgba(255,255,255,.22);
+  transition: transform .6s cubic-bezier(.34,1.35,.64,1), background .5s var(--ease), border-color .5s var(--ease), color .5s var(--ease), box-shadow .6s var(--ease), opacity .5s var(--ease);
+  -webkit-tap-highlight-color: transparent; }
+.lev-node svg { width: 36%; height: 36%; pointer-events: none; }
+.lev-node.on { transform: translate(-50%,-50%) scale(1); color: rgba(255,255,255,.9); border-color: rgba(255,255,255,.16); }
+.lev-node.on:hover { border-color: rgba(255,255,255,.32); }
+.lev-diagram.has-sel .lev-node.on:not(.sel) { opacity: .62; }
+.lev-diagram.has-sel .lev-node.on:not(.sel):hover { opacity: .85; }
+.lev-node.sel { transform: translate(-50%,-50%) scale(1.14); color: #fff; opacity: 1;
+  background: linear-gradient(#171D38, #11172B) padding-box, linear-gradient(135deg, #E8307A, #7B5CF5 55%, #1E8BFF) border-box; border: 1.5px solid transparent;
+  box-shadow: 0 0 0 7px rgba(123,92,245,.10), 0 16px 40px -12px rgba(123,92,245,.65); }
+.lev-node:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.lev-label { position: absolute; left: 50%; top: calc(100% + 11px); transform: translateX(-50%); white-space: nowrap; font-size: 13px; font-weight: 500; letter-spacing: .005em; line-height: 1; color: rgba(255,255,255,.55);
+  text-shadow: 0 0 6px var(--lev-bg), 0 0 12px var(--lev-bg); transition: color .5s var(--ease); pointer-events: none; }
+.lev-node.top .lev-label { top: auto; bottom: calc(100% + 11px); }
+.lev-node.on .lev-label { color: rgba(255,255,255,.84); }
+.lev-node.sel .lev-label { color: #fff; font-weight: 600; }
+
+.lev-core { position: absolute; left: 50%; top: 50%; width: 25%; aspect-ratio: 1; transform: translate(-50%,-50%); border-radius: 50%; pointer-events: none; }
+.lev-core-ring { position: absolute; inset: 0; border-radius: 50%; padding: 2px; background: linear-gradient(135deg, rgba(255,255,255,.55), rgba(255,255,255,.12)); box-shadow: 0 24px 60px -20px rgba(0,0,0,.8); }
+.lev-core-ring img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid var(--lev-bg); display: block; }
+.lev-mult { position: absolute; left: 50%; bottom: -13px; transform: translateX(-50%); display: inline-flex; align-items: baseline; gap: 6px; padding: 5px 11px 6px; border-radius: 99px; background: #fff; color: var(--text); white-space: nowrap; box-shadow: 0 8px 20px rgba(0,0,0,.4); }
+.lev-mult small { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.lev-mult b { font-size: 14px; font-weight: 800; font-variant-numeric: tabular-nums; min-width: 2.4ch; display: inline-block; }
+.lev-mult.bump b { animation: levBump .4s cubic-bezier(.34,1.6,.64,1); }
+@keyframes levBump { 40% { transform: scale(1.22); } }
+.lev-ripple { position: absolute; left: var(--x); top: var(--y); width: 14%; aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(167,139,250,.7); transform: translate(-50%,-50%); pointer-events: none; animation: levRipple .9s var(--ease) forwards; }
+@keyframes levRipple { from { transform: translate(-50%,-50%) scale(1.1); opacity: .8; } to { transform: translate(-50%,-50%) scale(1.9); opacity: 0; } }
+
+.lev-hint { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 26px; font-size: 12.5px; color: rgba(255,255,255,.45); letter-spacing: .01em; transition: opacity .5s var(--ease); }
+.lev-hint i { width: 6px; height: 6px; border-radius: 50%; background: var(--lev-accent); animation: levHint 2s ease-in-out infinite; }
+@keyframes levHint { 0%,100% { box-shadow: 0 0 0 0 rgba(167,139,250,.5); } 50% { box-shadow: 0 0 0 6px rgba(167,139,250,0); } }
+.lev-hint.gone { opacity: 0; }
+.lev-hint .t-touch { display: none; }
+@media (hover: none) { .lev-hint .t-click { display: none; } .lev-hint .t-touch { display: inline; } }
+
+@media (max-width: 1024px) {
+  .lev-grid { grid-template-columns: minmax(0,1fr); grid-template-areas: "copy" "diagram" "panel" "outcome"; }
+  .lev-stage { margin-top: 48px; }
+  .lev-panels { margin-top: 36px; max-width: 560px; }
+  .lev-sub { max-width: 560px; }
+  .lev-outcome { grid-template-columns: 1fr; row-gap: 12px; margin-top: 48px; }
+}
+@media (max-width: 820px) { #leverage { padding: 88px 0 84px; } }
+@media (max-width: 600px) {
+  .lev-stage { margin-top: 40px; }
+  .lev-diagram { max-width: 340px; }
+  .lev-node, .lev-ripple { width: 16%; }
+  .lev-node svg { width: 40%; height: 40%; }
+  .lev-label { font-size: 12px; top: calc(100% + 8px); }
+  .lev-node.top .lev-label { bottom: calc(100% + 8px); }
+  .lev-core { width: 27%; }
+  .lev-mult { padding: 4px 9px 5px; bottom: -12px; } .lev-mult b { font-size: 13px; } .lev-mult small { font-size: 8.5px; }
+  .lev-hint { margin-top: 20px; }
+  .lev-panels { margin-top: 28px; }
+  .lev-panel h3 { font-size: 27px; }
+  .lev-outcome { margin-top: 40px; padding-top: 28px; } .lev-out-main { font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .lev-hint i { animation: none; } }
+
 /* ─── BOOKS (shelf) ─── */
 #books { background: var(--bg-alt); overflow: hidden; }
 .shelf-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 22px; }
@@ -786,6 +888,7 @@ section { padding: 88px 0; }
     <a href="#now" class="nav-link">Right now</a>
     <a href="#incubator" class="nav-link">Incubator</a>
     <a href="#why" class="nav-link">Why</a>
+    <a href="#leverage" class="nav-link">Leverage</a>
     <a href="#books" class="nav-link">Bookshelf</a>
     <a href="/events" class="nav-link">Events</a>
     <a href="/tecor" class="nav-link">Tecor</a>
@@ -801,6 +904,7 @@ section { padding: 88px 0; }
   <a href="#now" onclick="toggleMobileMenu()">Right now</a>
   <a href="#incubator" onclick="toggleMobileMenu()">Incubator</a>
   <a href="#why" onclick="toggleMobileMenu()">Why</a>
+  <a href="#leverage" onclick="toggleMobileMenu()">Leverage</a>
   <a href="#books" onclick="toggleMobileMenu()">Bookshelf</a>
   <a href="/events">Events</a>
   <a href="/tecor">Tecor Partners</a>
@@ -1033,6 +1137,68 @@ section { padding: 88px 0; }
       <li>Paid for: software, service, ownership.</li>
       <li>Ikigai: create freedom by building what matters.</li>
     </ul>
+  </div>
+</section>
+
+<!-- LEVERAGE -->
+<section id="leverage" aria-labelledby="lev-title">
+  <div class="wrap lev-grid">
+    <div class="lev-copy">
+      <div class="eyebrow reveal">How</div>
+      <h2 class="h2 reveal" data-delay="1" id="lev-title">Leverage, engineered.</h2>
+      <p class="lev-sub reveal" data-delay="2">I approach every business as an engineering project. Six levers turn one founder&rsquo;s hours into an enterprise.</p>
+    </div>
+    <div class="lev-stage">
+      <div class="lev-diagram" id="lev-diagram">
+        <svg class="lev-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="levG0" gradientUnits="userSpaceOnUse" x1="50.00" y1="35.80" x2="50.00" y2="23.20"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".55" stop-color="#A78BFA"/><stop offset="1" stop-color="#E8307A"/></linearGradient><linearGradient id="levG1" gradientUnits="userSpaceOnUse" x1="62.30" y1="42.90" x2="73.21" y2="36.60"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".55" stop-color="#A78BFA"/><stop offset="1" stop-color="#E8307A"/></linearGradient><linearGradient id="levG2" gradientUnits="userSpaceOnUse" x1="62.30" y1="57.10" x2="73.21" y2="63.40"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".55" stop-color="#A78BFA"/><stop offset="1" stop-color="#E8307A"/></linearGradient><linearGradient id="levG3" gradientUnits="userSpaceOnUse" x1="50.00" y1="64.20" x2="50.00" y2="76.80"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".55" stop-color="#A78BFA"/><stop offset="1" stop-color="#E8307A"/></linearGradient><linearGradient id="levG4" gradientUnits="userSpaceOnUse" x1="37.70" y1="57.10" x2="26.79" y2="63.40"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".55" stop-color="#A78BFA"/><stop offset="1" stop-color="#E8307A"/></linearGradient><linearGradient id="levG5" gradientUnits="userSpaceOnUse" x1="37.70" y1="42.90" x2="26.79" y2="36.60"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".55" stop-color="#A78BFA"/><stop offset="1" stop-color="#E8307A"/></linearGradient></defs>
+          <circle class="lev-ring-base" cx="50" cy="50" r="36"/>
+          <circle class="lev-ring" cx="50" cy="50" r="36" pathLength="1" transform="rotate(-90 50 50)"/>
+          <line class="lev-line" pathLength="1" x1="50.00" y1="35.80" x2="50.00" y2="23.20"/><line class="lev-line" pathLength="1" x1="62.30" y1="42.90" x2="73.21" y2="36.60"/><line class="lev-line" pathLength="1" x1="62.30" y1="57.10" x2="73.21" y2="63.40"/><line class="lev-line" pathLength="1" x1="50.00" y1="64.20" x2="50.00" y2="76.80"/><line class="lev-line" pathLength="1" x1="37.70" y1="57.10" x2="26.79" y2="63.40"/><line class="lev-line" pathLength="1" x1="37.70" y1="42.90" x2="26.79" y2="36.60"/>
+          <g id="lev-pulses"></g>
+        </svg>
+        <div class="lev-core" aria-hidden="true">
+          <div class="lev-core-ring"><img src="micah-lev-360.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></div>
+          <div class="lev-mult"><small>Output</small><b>1&times;</b></div>
+        </div>
+        <div class="lev-nodes" role="tablist" aria-label="Six levers"><button type="button" class="lev-node top" role="tab" id="lev-tab-0" aria-controls="lev-panel-0" aria-selected="false" tabindex="0" style="--x:50.00%;--y:14.00%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg><span class="lev-label">Systems</span></button><button type="button" class="lev-node" role="tab" id="lev-tab-1" aria-controls="lev-panel-1" aria-selected="false" tabindex="-1" style="--x:81.18%;--y:32.00%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="lev-label">Talent</span></button><button type="button" class="lev-node" role="tab" id="lev-tab-2" aria-controls="lev-panel-2" aria-selected="false" tabindex="-1" style="--x:81.18%;--y:68.00%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 22h18"/><path d="M6 18v-7M10 18v-7M14 18v-7M18 18v-7"/><path d="M12 2l8 5H4z"/></svg><span class="lev-label">Capital</span></button><button type="button" class="lev-node" role="tab" id="lev-tab-3" aria-controls="lev-panel-3" aria-selected="false" tabindex="-1" style="--x:50.00%;--y:86.00%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg><span class="lev-label">Technology</span></button><button type="button" class="lev-node" role="tab" id="lev-tab-4" aria-controls="lev-panel-4" aria-selected="false" tabindex="-1" style="--x:18.82%;--y:68.00%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.2 5.3L20 9.5l-4.4 3.8 1.3 5.7L12 16l-4.9 3 1.3-5.7L4 9.5l5.8-1.2z"/></svg><span class="lev-label">Brand</span></button><button type="button" class="lev-node" role="tab" id="lev-tab-5" aria-controls="lev-panel-5" aria-selected="false" tabindex="-1" style="--x:18.82%;--y:32.00%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span class="lev-label">Distribution</span></button></div>
+      </div>
+      <p class="lev-hint" aria-hidden="true"><i></i><span class="t-click">Select a lever to explore</span><span class="t-touch">Tap a lever to explore</span></p>
+    </div>
+    <div class="lev-panels">
+      <div class="lev-panel" role="tabpanel" id="lev-panel-0" aria-labelledby="lev-tab-0">
+        <div class="lev-panel-meta"><b>01</b><span>of 06</span></div>
+        <h3>Systems</h3>
+        <p class="lev-line-copy">Documented process does the same job right every time, so the business stops depending on the founder's memory.</p>
+        <div class="lev-proof"><small>In practice &middot; Holiday lighting</small><p>December means crews out across town and a phone that never stops. Process is what keeps that day calm.</p></div>
+      </div><div class="lev-panel" role="tabpanel" id="lev-panel-1" aria-labelledby="lev-tab-1">
+        <div class="lev-panel-meta"><b>02</b><span>of 06</span></div>
+        <h3>Talent</h3>
+        <p class="lev-line-copy">Hire people who own an outcome, not a task list, and every hour they put in is an hour that compounds without you.</p>
+        <div class="lev-proof"><small>In practice &middot; Transport company</small><p>Built it from zero to five drivers and a manager running pro sports, wedding and executive transport.</p></div>
+      </div><div class="lev-panel" role="tabpanel" id="lev-panel-2" aria-labelledby="lev-tab-2">
+        <div class="lev-panel-meta"><b>03</b><span>of 06</span></div>
+        <h3>Capital</h3>
+        <p class="lev-line-copy">Cash flow from one business funds the next, so growth comes from operating, not from hoping.</p>
+        <div class="lev-proof"><small>In practice &middot; Holiday lighting and Prism</small><p>Holiday lighting is the cash flow and the live test bed. Prism is where it compounds.</p></div>
+      </div><div class="lev-panel" role="tabpanel" id="lev-panel-3" aria-labelledby="lev-tab-3">
+        <div class="lev-panel-meta"><b>04</b><span>of 06</span></div>
+        <h3>Technology</h3>
+        <p class="lev-line-copy">Software takes the repeatable work off people's plates, so the same team handles far more jobs.</p>
+        <div class="lev-proof"><small>In practice &middot; Prism</small><p>Quoting, scheduling, dispatch and invoicing in one system. Every feature runs on our own trucks first.</p></div>
+      </div><div class="lev-panel" role="tabpanel" id="lev-panel-4" aria-labelledby="lev-tab-4">
+        <div class="lev-panel-meta"><b>05</b><span>of 06</span></div>
+        <h3>Brand</h3>
+        <p class="lev-line-copy">A brand people trust does the selling before anyone picks up the phone, and it stays with the company, not the founder.</p>
+        <div class="lev-proof"><small>In practice &middot; Transport company</small><p>Hospitality was the brand: make every client's time feel special. It's how a small fleet earned big-name work.</p></div>
+      </div><div class="lev-panel" role="tabpanel" id="lev-panel-5" aria-labelledby="lev-tab-5">
+        <div class="lev-panel-meta"><b>06</b><span>of 06</span></div>
+        <h3>Distribution</h3>
+        <p class="lev-line-copy">Owned channels bring customers in on repeat, so growth isn't one big sale at a time.</p>
+        <div class="lev-proof"><small>In practice &middot; Holiday lighting</small><p>Two brands, two front doors: Ugly Sweater Holiday Lighting and Christmas Lighting KY.</p></div>
+      </div>
+    </div>
+    <div class="lev-outcome"><p class="lev-out-main"><small>The result</small>A profitable, scalable, transferable enterprise.</p><p class="lev-out-proof">Done once already. I built a transport company from zero to two Sprinter vans and a team of six, then sold it to a strategic operator.</p></div>
   </div>
 </section>
 
@@ -1435,6 +1601,80 @@ $$('#filters button').forEach(b => b.addEventListener('click', () => {
     center.style.opacity = 0.2 + eased * 0.72;
   }
   window.addEventListener('scroll', update, { passive: true }); window.addEventListener('resize', update); update();
+})();
+
+// ═══════════════════════════════════════════
+// LEVERAGE: intro sequence, then tap/click any lever
+// ═══════════════════════════════════════════
+(function leverage() {
+  const root = $('#lev-diagram'); if (!root) return;
+  const tabs = $$('.lev-node', root), lines = $$('.lev-line', root), panels = $$('#leverage .lev-panel');
+  const ring = $('.lev-ring', root), mult = $('.lev-mult', root), multB = $('b', mult), pulses = $('#lev-pulses');
+  const outcome = $('#leverage .lev-outcome'), hint = $('#leverage .lev-hint'), NS = 'http://www.w3.org/2000/svg';
+  let sel = -1, introDone = false, started = false, visible = false, timers = [], live = [], raf = 0, flow = 0;
+
+  function setMult(n, bump) { multB.textContent = n + '×'; if (bump) { mult.classList.remove('bump'); void mult.offsetWidth; mult.classList.add('bump'); } }
+  function pulse(i, dur, r) {
+    const l = lines[i], c = document.createElementNS(NS, 'circle');
+    c.setAttribute('r', r); c.setAttribute('class', 'lev-pulse'); pulses.appendChild(c);
+    live.push({ c, t0: performance.now(), dur, x1: +l.getAttribute('x1'), y1: +l.getAttribute('y1'), x2: +l.getAttribute('x2'), y2: +l.getAttribute('y2') });
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+  function tick(now) {
+    live = live.filter(p => {
+      const t = Math.min(1, (now - p.t0) / p.dur), e = 1 - Math.pow(1 - t, 2.2);
+      p.c.setAttribute('cx', p.x1 + (p.x2 - p.x1) * e); p.c.setAttribute('cy', p.y1 + (p.y2 - p.y1) * e);
+      p.c.setAttribute('opacity', (Math.sin(Math.PI * t) * .95).toFixed(3));
+      if (t >= 1) { p.c.remove(); return false; } return true;
+    });
+    raf = live.length ? requestAnimationFrame(tick) : 0;
+  }
+  function startFlow() { clearInterval(flow); if (reduceMotion || !visible || sel < 0) return; pulse(sel, 1100, .55); flow = setInterval(() => pulse(sel, 1100, .55), 520); }
+  function ripple(i) { if (reduceMotion) return; const r = document.createElement('span'); r.className = 'lev-ripple'; r.style.cssText = tabs[i].style.cssText; root.appendChild(r); r.addEventListener('animationend', () => r.remove()); }
+
+  function finishIntro() {
+    timers.forEach(clearTimeout); timers = [];
+    tabs.forEach(t => t.classList.add('on')); lines.forEach(l => l.classList.add('on'));
+    ring.classList.add('on'); outcome.classList.add('on'); setMult(64); introDone = true;
+  }
+  function select(i, opts = {}) {
+    if (!introDone) finishIntro();
+    i = (i + tabs.length) % tabs.length;
+    if (i === sel) return;
+    sel = i; root.classList.add('has-sel');
+    tabs.forEach((t, k) => { const on = k === i; t.classList.toggle('sel', on); t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; });
+    lines.forEach((l, k) => { l.classList.toggle('sel', k === i); l.style.stroke = k === i ? `url(#levG${k})` : ''; });
+    panels.forEach((p, k) => { p.classList.toggle('on', k === i); p.inert = k !== i; });
+    if (opts.focus) tabs[i].focus();
+    if (opts.user) hint.classList.add('gone');
+    ripple(i); startFlow();
+  }
+  panels.forEach(p => p.inert = true);
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(i, { user: true }));
+    t.addEventListener('keydown', e => {
+      const k = e.key, cur = sel < 0 ? i : sel;
+      const next = k === 'ArrowRight' || k === 'ArrowDown' ? cur + 1 : k === 'ArrowLeft' || k === 'ArrowUp' ? cur - 1 : k === 'Home' ? 0 : k === 'End' ? tabs.length - 1 : null;
+      if (next === null) return; e.preventDefault(); select(next, { focus: true, user: true });
+    });
+  });
+
+  function intro() {
+    const STEP = 380, START = 250;
+    lines.forEach((l, i) => {
+      timers.push(setTimeout(() => { l.classList.add('on'); pulse(i, 650, .7); }, START + i * STEP));
+      timers.push(setTimeout(() => { tabs[i].classList.add('on'); setMult(Math.pow(2, i + 1), true); }, START + i * STEP + 520));
+    });
+    const end = START + 5 * STEP + 640;
+    timers.push(setTimeout(() => ring.classList.add('on'), end));
+    timers.push(setTimeout(() => { outcome.classList.add('on'); introDone = true; select(0); }, end + 1100));
+  }
+  if (reduceMotion || !('IntersectionObserver' in window)) { visible = true; finishIntro(); select(0); return; }
+  new IntersectionObserver(es => es.forEach(e => {
+    visible = e.isIntersecting;
+    if (visible && !started) { started = true; intro(); }
+    visible ? startFlow() : clearInterval(flow);
+  }), { threshold: 0.35 }).observe(root);
 })();
 
 // ═══════════════════════════════════════════
